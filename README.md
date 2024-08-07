@@ -139,7 +139,7 @@ Most of these sections are mandatory but in each section, there are a lot of opt
 
 The datamodel is complex and allows to describe a lot of different configurations : for example, you can provide provide the description of as many dataset or hardware components that you want. However, it is important to bear in mind that the more precise the report, the more usefull the information will be. For example, if you simply say that you performed 10000 inferences on different images of various sizes, using a supervised algorithm, that you were on the cloud and that you consumed x kWh, this will not allow you to deduce much information about the cost of an inference on a specific piece of data on a specific hardware. It is better to produce reports on a finer scale: I've run this recognition algorithm, I've measured the power consumption of the cpu and gpu of this model, I have made an inference about an image of this certain size...    
 
-Read the schema carefully: some attributes are enumerations with detailed possible values, others are free fields. When this is the case, please describe things in a unique and unambiguous way to facilitate processing. We ask you to use the [snake_case](https://www.logilax.com/snake-case/) notation (e.g don't write "Random forest" or "RandomForest" but "random_forest" instead).
+Read the schema carefully: some attributes are enumerations with detailed possible values, others are free fields. When this is the case, please describe things in a unique and unambiguous way to facilitate processing. We ask you to use the [camel_case](https://en.wikipedia.org/wiki/Camel_case) notation (e.g don't write "Random forest" or "Random_forest" but "randomForest" instead).
 
 
 ## 6. State-of-the-art 
@@ -161,13 +161,13 @@ These could typically inspire the ground for a format of reporting.
 - https://www.iso.org/standard/74438.html
 - https://standards.ieee.org/ieee/3123/10744/
 
-## 7. Examples and schema json validator
+## 7. Schema json validator
 
-The validate-schema.py script (in the folder 'examples') allows you to validate that the json you have created correctly follows the schema we have defined (in the folder 'model'). 
+The validate-schema.py script (in the folder 'tools>schema_validator') allows you to validate that the json you have created correctly follows the schema we have defined (in the folder 'model'). 
 
 ## 8. Automation of the report creation 
 
-To make the use of this data model easier and more efficient, we want to develop a tool that automates the report creation. Initially, it would be a prototype overlaying CodeCarbon (started at the Boavizta hackathon of May). To be continued
+To make the use of this data model easier and more efficient, we want to develop a tool that automates the report creation. Initially, it would be a prototype overlaying CodeCarbon (started at the Boavizta hackathon of May in the folder 'tools>automated_report_creation'). To be continued
 
 ## 9. Open source dataset
 

@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://github.com/Boavizta/ai-power-measures-sharing/blob/feature/hackathon/model/dataset_schema.json",
+    "id": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/dataset_schema.json",
     "title": "dataset",
     "description": "Describe the nature, shape, number of items and other properties of the dataset involved in your task. If you are performing inferences, please indicate the average size of the data sent for a single inference and fill in the number of inferences in the propertiy: inferenceProperties",
     "type": "object",
@@ -40,7 +40,7 @@
             "description": "if you are describing an inference, please describe the type of queries sent to the model",
             "items": {
               "type":"object",
-              "$ref": "https://github.com/Boavizta/ai-power-measures-sharing/blob/feature/hackathon/model/inference_schema.json"
+              "$ref": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/inference_schema.json"
             }
       },
       "source": {

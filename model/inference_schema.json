@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://github.com/Boavizta/ai-power-measures-sharing/blob/feature/hackathon/model/algorithm_schema.json",
+    "id": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/inference_schema.json",
     "title": "query",
     "description": "the type of query sent to the algorithm",
     "type": "object",

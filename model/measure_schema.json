@@ -1,13 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://github.com/Boavizta/ai-power-measures-sharing/blob/feature/hackathon/model/measure_schema.json",
+    "id": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/measure_schema.json",
     "title": "measure",
     "description": "the energy measure obtained from software and/or hardware tools, for a computing task",
     "type": "object",
     "properties": {
       "measurementMethod": {
         "type": "string",
-        "description": "the method used to perform the energy or FLOPS measure, example: codecarbon, carbonai, flops_compute, wattmeter..."
+        "description": "the method used to perform the energy or FLOPS measure, example: codecarbon, carbonai, flops-compute, wattmeter..."
       },
       "manufacturer": {
         "type": "string",
@@ -39,8 +39,8 @@
       },
       "serverSideInference":{
         "type": "string",
-        "enum": [ "ai_server", "inference_server", "both" ],
-        "description": "if you practice inference through an API, do you estimate the consumption of the AI server alone ? (because the AI is deployed on your own server and you have access to the measurement, or because you have estimated it with a tool like EcoLogits). Or do you estimate the consumption from the inference_server side or from both side at the same time ?"
+        "enum": [ "modelServer", "inferenceServer", "both" ],
+        "description": "if you practice inference through an API, do you estimate the consumption of the model server alone ? (because the model is deployed on your own server and you have access to the measurement, or because you have estimated it with a tool like EcoLogits). Or do you estimate the consumption from the inference server side or from both side at the same time ?"
       },
       "unit": {
         "type": "string",

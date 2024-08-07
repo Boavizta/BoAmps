@@ -1,4 +1,5 @@
 {
+	"$schema":"https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/report_schema.json",
 	"header": {
 		"licensing": "Creative Commons 4.0",
 		"formatVersion": "0.1",
@@ -11,12 +12,12 @@
 		}
 	},
 	"task": {
-		"taskType": "supervised_learning",
+		"taskType": "supervisedLearning",
 		"taskFamily": "classification",
 		"taskStage": "training",
 		"algorithms": [
 			{
-				"algorithmName": "random_forest"
+				"algorithmName": "randomForest"
 			}
 		],
 		"dataset": [
@@ -55,7 +56,7 @@
 		"version": "3.9.0"
 	},
 	"infrastructure":{
-		"infraType": "public_cloud",
+		"infraType": "publicCloud",
 		"cloudProvider": "aws",
 		"cloudInstance": "a1.large",
 		"components": [
@@ -73,7 +74,7 @@
 				"memorySize": 64,
 				"manufacturer": "NVIDIA",
 			    "family": "GeForce",
-			    "series": "RTX 4080"
+			    "series": "rtx4080"
 				}
 		]
 	},

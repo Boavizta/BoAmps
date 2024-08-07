@@ -1,13 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://github.com/Boavizta/ai-power-measures-sharing/blob/feature/hackathon/model/algorithm_schema.json",
+    "id": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/algorithm_schema.json",
     "title": "algorithm",
     "description": "the type of algorithm used by the computing task",
     "type": "object",
     "properties": {
       "algorithmName": {
         "type": "string",
-        "description": "the case-sensitive common name of the algorithm, example: random_forest, svm, xgboost..."
+        "description": "the case-sensitive common name of the algorithm, example: randomForest, svm, xgboost..."
       },
       "framework": {
         "type": "string",
@@ -24,9 +24,9 @@
       "hyperparameters": {
         "type": "object",
         "properties": {
-          "tuning_method":{
+          "tuningMethod":{
             "type":"string", 
-            "description": "the method of hyper-parameters tuning used (if any), example: grid_search, randomized_search..."
+            "description": "the method of hyperparameters tuning used (if any), example: gridSearch, randomizedSearch..."
           },
           "values":{
             "type":"array",
