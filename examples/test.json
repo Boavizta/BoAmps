@@ -1,0 +1,1 @@
+{"infrastructure":{"infraType": "publicCloud","cloudProvider": "aws","cloudInstance": "a1.large","components": [{"componentName": "cpu","nbComponent": 4},{"componentName": "gpu","nbComponent": 2}]}}
