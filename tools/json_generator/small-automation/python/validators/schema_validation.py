@@ -5,12 +5,13 @@ from dataset_schema_validator import Dataset
 from hardware_schema_validator import Hardware
 from measure_schema_validator import Measure
 
+
 #Validation for algorithm_schema_validator
 valid_parameternlp = ParametersNLP(nb_tokens_input=1,
                                   nb_words_input=1,
                                   nb_tokens_output=1,
                                   nb_words_output=1,
-                                  context_windows_size=12.2,
+                                  context_windows_size=12,
                                   cache=True)
 
 valid_querry = Query(nb_request=1,ParametersNLP=valid_parameternlp)
@@ -32,7 +33,7 @@ valid_algorith = Algorithm(algorithmName="centroids",
 valid_dataset = Dataset(dataType="tabular",
                         fileType="3gpp",
                         volume=12,
-                        volumeUnit="tera",
+                        volumeUnit="terabyte",
                         items=12,
                         shape=[1,2],
                         inferenceProperties=[valid_querry],
@@ -50,16 +51,16 @@ valid_hardware = Hardware(componentName="cpu",
                           series="10",
                           share=0.4)
 
-valid_measure = Measure(measurementMethod="direct";
-                        manufacturer="nvidia";
+valid_measure = Measure(measurementMethod="both",
+                        manufacturer="nvidia",
                         cpuTrackingMode="native",
                         gpuTrackingMode="native",
-                        averageUtilizationCpu="3.2",
-                        averageUtilizationGpu="2.2",
+                        averageUtilizationCpu=0.8,
+                        averageUtilizationGpu=0.2,
                         serverSideInference="full",
-                        unit="k",
-                        powerCalibrationMeasurement=1.2,
-                        durationCalibrationMeasurement=3.0,
-                        powerCalibrationMeasurement=1.2,
+                        unit="kWh",
+                        powerCalibrationMeasurement=0.4,
+                        durationCalibrationMeasurement=0.3,
+                        powerConsumption=1.2,
                         measurementDuration=1.2,
                         measurementDateTime=1209)
