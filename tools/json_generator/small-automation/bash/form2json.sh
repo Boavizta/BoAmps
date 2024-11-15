@@ -18,8 +18,11 @@ echo "-----------------------------------------------------"
 echo "But du script : Transformer un rapport au format texte en un json suivant le modele de donnees ai power measurements"
 echo ""
 echo "Structure de la commande : "
-echo "./form2json.sh <Fichier formulaire a convertir> > <Nom du fichier de sortie>"
-echo "exemple: ./form2json.sh form_example.txt > json_example.json"
+echo "./form2json.sh <Type de generation> <Fichier formulaire a convertir> > <Nom du fichier de sortie>"
+echo "<Type de generation>"
+echo " -a pour ALL genere un formulaire incluant les champs obligatoires et facultatifs"
+echo " -m pour MANDATORY genere un formulaire incluant les champs obligatoires seulement"
+echo "exemple: ./form2json.sh -a form_example.txt > json_example.json"
 
 }
 
