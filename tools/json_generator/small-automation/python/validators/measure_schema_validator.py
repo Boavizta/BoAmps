@@ -1,6 +1,8 @@
 from pydantic import BaseModel, Field
 from typing import Annotated
 from typing import Optional
+#from \model\measure_schema.json
+
 
 class Measure(BaseModel):
     measurementMethod: Optional[str] = None

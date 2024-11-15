@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
+#from \model\inference_schema.json
+
 
 class ParametersNLP(BaseModel):
     nb_tokens_input: Optional[int] = 0

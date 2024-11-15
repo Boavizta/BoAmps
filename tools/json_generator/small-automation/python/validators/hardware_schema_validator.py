@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Annotated
 from typing import Optional
+#from \model\hardware_schema.json
 
 class Hardware(BaseModel):
     componentName: Optional[str] = None
