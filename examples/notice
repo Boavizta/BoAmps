@@ -1,0 +1,6 @@
+What we need to precise ? 
+
+- for the RAM, create a component (with numberComponent=1) and memorySize=size of RAM
+- for the GPU, we put the memory of ONE GPU in memorySize and we put the number of GPU, if you want the total memory size of the GPUs, you need to multiply the 2.
+
+add measurementScope & tracking mode in measures
