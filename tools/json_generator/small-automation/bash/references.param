@@ -82,6 +82,10 @@ TEST;system;basicField;os;;String;TRUE;;;;;os;name of the operating system
 TEST;system;basicField;distribution;;String;FALSE;;;;;distribution;distribution of the operating system
 TEST;system;basicField;distributionVersion;;String;FALSE;;;;;distributionVersion;distribution's version of the operating system
 TEST;global;basicField;system End;;ObjectEnd;TRUE;;;;;system;
+TEST;global;basicField;software;;Object;FALSE;;;;;software;the infrastructure on which is performed the computing task
+TEST;software;basicField;language;;String;TRUE;;;;;language;name of the programming language used, example : c, java, julia, python...
+TEST;sotware;basicField;version;;String;FALSE;;;;;version;version of the programming language used
+TEST;global;basiField;software End;;ObjectEnd;FALSE;;;;;software;
 TEST;global;basicField;infrastructure;;Object;TRUE;;;;;infrastructure;the infrastructure on which is performed the computing task
 TEST;infrastructure;basicField;infraType;;Enum;TRUE;FALSE;;publicCloud,privateCloud,onPremise,$other;publicCloud;infraType;the type of infrastructure used for the task
 TEST;infrastructure;basicField;cloudProvider;;String;FALSE;FALSE;;;;cloudProvider;If you are on the cloud, the name of your cloud provider, for example : aws, azure, google, ovh...
