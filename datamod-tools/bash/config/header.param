@@ -1,8 +1,0 @@
-Contexte;Categorie;Name;Type;Mandatory;Auto;CMD
-header;licensing;Variable;FALSE;TRUE;Constante
-header;formatVersion;String;FALSE;TRUE;Constante
-header;formatVersionSpecificationUri;Variable;FALSE;TRUE;Constante
-header;reportId;;Variable;TRUE;TRUE;Code
-header;reportDatetime;Variable;FALSE;TRUE;date
-header;reportStatus;Variable;TRUE;FALSE;Manuel
-header;publisher;Variable;FALSE;FALSE;Manuel
