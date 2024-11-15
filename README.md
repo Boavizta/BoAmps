@@ -3,6 +3,34 @@ https://creativecommons.org/licenses/by/4.0/
 
 # Reporting of the AI's energy consumption
 
+## Table Of Content
+
+- [Reporting of the AI's energy consumption](#reporting-of-the-ais-energy-consumption)
+  - [Table Of Content](#table-of-content)
+  - [1. Goal](#1-goal)
+  - [2. Who should participate ?](#2-who-should-participate-)
+  - [3. Energy Measurement](#3-energy-measurement)
+    - [Software-based](#software-based)
+    - [Hardware-based](#hardware-based)
+  - [4. Conditions](#4-conditions)
+    - [Ideal measurement schema](#ideal-measurement-schema)
+    - [Calibration](#calibration)
+    - [Other ideals conditions](#other-ideals-conditions)
+  - [5. Understand the data model](#5-understand-the-data-model)
+    - [Global structure : organization between the various json files](#global-structure--organization-between-the-various-json-files)
+    - [Guidelines to create valuable report](#guidelines-to-create-valuable-report)
+  - [6. State-of-the-art](#6-state-of-the-art)
+    - [On ML tasks categorization](#on-ml-tasks-categorization)
+    - [On ML description frameworks](#on-ml-description-frameworks)
+  - [7. Roadmap for the ecopsystem we'd like to put in place :](#7-roadmap-for-the-ecopsystem-wed-like-to-put-in-place-)
+    - [Schema json validator](#schema-json-validator)
+    - [Json flattener](#json-flattener)
+    - [Json Generator :](#json-generator-)
+      - [Full-automation](#full-automation)
+      - [Small-automation](#small-automation)
+  - [8. Open source dataset](#8-open-source-dataset)
+  - [Let's GO](#lets-go)
+
 ## 1. Goal
 
 The goal described by this document is to setup a simple and resilient digital ecosystem, so as to gather homogeneous, well-formated measures of energy consumption from an atomic software task in general and Machine Learning / Deep Learning / AI / GenAI tasks in particular.
@@ -151,19 +179,31 @@ These could typically inspire the ground for a format of reporting.
 - https://www.iso.org/standard/74438.html
 - https://standards.ieee.org/ieee/3123/10744/
 
-## 7. Schema json validator
+## 7. Roadmap for the ecopsystem we'd like to put in place :
+
+To make the use of this data model easier and more efficient, we want to develop some tools that automates the report creation, to automate the conversion into format usable by datalakes and quick displays, as well as integrate them into codecarbon for a starter. This in multiple formats and languages like Excel with VBA, bash script and python.
+
+![Roadmap Datamod Tools](roadmapDatamodTools.excalidraw.png)
+
+### Schema json validator
 
 The validate-schema.py script (in the folder 'tools>schema_validator') allows you to validate that the json you have created correctly follows the schema we have defined (in the folder 'model'). 
 
-## 8. Json flattener
+### Json flattener
 
 The flatten_json_to_csv.py script (in the folder 'tools>data_flattener') allows you to transform your json BoAmps format into tabular data. 
 
-## 9. Automation of the report creation 
+### Json Generator :
 
-To make the use of this data model easier and more efficient, we want to develop a tool that automates the report creation. Initially, it would be a prototype overlaying CodeCarbon (started at the Boavizta hackathon of May in the folder 'tools>automated_report_creation'). To be continued
+#### Full-automation
 
-## 10. Open source dataset
+Here it would be the destination of th whole chain describe on teh roadmap with maximum automation
+
+#### Small-automation
+
+Here we want to create tools to help fill the datamodel. Initially, it would be a prototype overlaying CodeCarbon (started at the Boavizta hackathon of May in the folder 'tools>automated_report_creation'). To be continued
+
+## 8. Open source dataset
 
 The final objective is to create an open dataset (probably hosted on hugging face) so that anyone can share his consumption data about any task of ml with the whole community. It will help us to understand better what influences consumption and how we can better predict and manage it, in particular by extending tools such as ecologits. To be continued
 
