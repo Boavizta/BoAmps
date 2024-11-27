@@ -271,6 +271,7 @@
     "required": [
       "task",
       "measures",
-      "infrastructure"
+      "infrastructure",
+      "environment"
     ]
   }
