@@ -147,24 +147,19 @@
 		"distribution": "ubuntu",
 		"distributionVersion": ""
 	},
+	"software": {
+		"language": "privateCloud",
+		"version": "aws"
+	},
 	"infrastructure": {
-		" infraType": "privateCloud",
-		"cloudProvider": "aws",
-		"cloudInstance": "a1.large",
+		" infraType": "N°1",
+		"cloudProvider": "cpu",
+		"cloudInstance": "4",
 		"components": [
 			{
-				"componentName": "cpu",
-				"nbComponent": "4",
-				"memorySize": "32",
-				"manufacturer": "",
-				"family": "",
-				"series": "",
-				"share": ""
-			},
-			{
-				"componentName": "gpu",
-				"nbComponent": "1",
-				"memorySize": "64",
+				"componentName": "",
+				"nbComponent": "",
+				"memorySize": "",
 				"manufacturer": "",
 				"family": "",
 				"series": "",
@@ -173,18 +168,18 @@
 		]
 	},
 	"environment": {
-		"country": "France",
+		"country": "",
 		"latitude": "",
 		"longitude": "",
 		"location": "",
 		"powerSupplierType": "",
-		"powerSource": "",
+		"powerSource": "high",
 		"powerSourceCarbonIntensity": ""
 	},
-	"quality": "high",
+	"quality": "ECDSA",
 	"$hash": {
-		"hashAlgorithm": "SHA-384",
-		"cryptographicAlgorithm": "ECDSA",
-		"value": "zfzddz"
+		"hashAlgorithm": "",
+		"cryptographicAlgorithm": "",
+		"value": ""
 	}
 }
