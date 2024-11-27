@@ -1,10 +1,13 @@
-# from pydantic import BaseModel, constr
+from pydantic import BaseModel, Field
+from typing import Annotated
+from typing import Optional
+#from \model\hardware_schema.json
 
-# class Hardware(BaseModel):
-#     componentName: str = constr(min_length=1)
-#     nbComponent: int
-#     memorySize: int
-#     manufacturer: str
-#     family: str
-#     series: str
-#     share: float = constr(ge=0.0, le=1.0)
+class Hardware(BaseModel):
+    componentName: Optional[str] = None
+    nbComponent: Optional[int] = 0
+    memorySize: Optional[int] = 0
+    manufacturer: Optional[str] = None
+    family: Optional[str] = None
+    series: Optional[str] = None
+    share: Optional[Annotated[float, Field(ge=0.0, le=1.0)]] = 0.0
