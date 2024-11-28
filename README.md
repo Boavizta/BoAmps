@@ -212,5 +212,17 @@ Here we want to create tools to help fill the datamodel. Initially, it would be 
 
 The final objective is to create an open dataset (probably hosted on hugging face) so that anyone can share his consumption data about any task of ml with the whole community. It will help us to understand better what influences consumption and how we can better predict and manage it, in particular by extending tools such as ecologits. To be continued
 
+# Schema validator
+
+We provide you with few examples to understand how to create a report by following the schema correctly (in the folder '../../examples'). 
+The script validate-schema.py allows you to check that your report follows the format correctly, and if it doesn't, it details the errors so that you can easily correct them.
+
+To use it, you need to have Python installed, as well as the modules described in the requirements.txt document.
+
+Then, you just need to run : python validate-schema.py <json-report-name>
+
+For example :  python validate-schema.py ..\..\examples\energy-report-example-1.json
+
+
 ## Let's GO 
 Thanks for your attention and your intention to measure the consumption of AI. It is an essential step into better knowledge about the impacts of thoses models.
