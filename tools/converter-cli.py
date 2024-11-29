@@ -1,3 +1,8 @@
+##############################################################
+# BoAmps - an open-data initiative hosted by Boavizta        #
+# (A)I (M)easures of (P)ower consumption (S)haring           #
+##############################################################
+
 # Python command line to perform various conversions
 
 import sys, getopt

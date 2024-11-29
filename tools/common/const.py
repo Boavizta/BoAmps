@@ -1,3 +1,7 @@
+##############################################################
+# BoAmps - an open-data initiative hosted by Boavizta        #
+# (A)I (M)easures of (P)ower consumption (S)haring           #
+##############################################################
 
 # Skinning & colors
 class bcolors:

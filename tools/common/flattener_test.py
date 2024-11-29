@@ -1,3 +1,7 @@
+##############################################################
+# BoAmps - an open-data initiative hosted by Boavizta        #
+# (A)I (M)easures of (P)ower consumption (S)haring           #
+##############################################################
 
 import unittest
 from .flattener import BoAmpsFlattener
@@ -7,7 +11,8 @@ import json
 class BoAmpsFlattenerTest(unittest.TestCase):
 
     def testGetRaw(self):
-        """Tests flattener.
+        """
+            Tests flattener.
         """
         obj = { 
             'foo': 10, 
@@ -36,7 +41,8 @@ class BoAmpsFlattenerTest(unittest.TestCase):
 
 
     def testGetDenumeratedAmbiguous(self):
-        """Tests flattener with denumerated columns.
+        """
+            Tests flattener with denumerated columns.
         """
         obj = { 
             'foo': 10, 
@@ -56,7 +62,8 @@ class BoAmpsFlattenerTest(unittest.TestCase):
         self.assertEqual(out == expected, True)
 
     def testGetDenumeratedNonAmbiguous(self):
-        """Tests flattener with denumerated columns.
+        """
+            Tests flattener with denumerated columns.
         """
         obj = { 
             'foo': 10, 
@@ -80,7 +87,8 @@ class BoAmpsFlattenerTest(unittest.TestCase):
         self.assertEqual(out == expected, True)
 
     def testGetDenumeratedAmbiguousLong(self):
-        """Tests flattener with denumerated columns.
+        """
+            Tests flattener with denumerated columns.
         """
         with open(os.sep.join([ '..', 'examples', 'energy-report-example-1.json'])) as f:            
             obj = json.load(f)

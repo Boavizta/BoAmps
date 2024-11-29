@@ -1,3 +1,8 @@
+##############################################################
+# BoAmps - an open-data initiative hosted by Boavizta        #
+# (A)I (M)easures of (P)ower consumption (S)haring           #
+##############################################################
+
 import flatdict
 import pandas as pd
 
