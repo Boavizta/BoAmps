@@ -19,7 +19,7 @@
       },
       "memorySize": {
         "type":"integer",
-        "description": "the size of the memory of the component in Gbytes, useful to detail the memory associated to ONE of your gpus for example (if we want the total memory, we will multiply the memorySize by nbComponent)."
+        "description": "the size of the memory of the component in Gbytes, useful to detail the memory associated to ONE of your gpus for example (if we want the total memory, we will multiply the memorySize by nbComponent). If the component is CPU do not fill the RAM size here, create another component for RAM, this field is for the embeded memory of a component."
       },
       "manufacturer": {
         "type": "string",
@@ -37,7 +37,7 @@
         "type": "number",
         "minimum": 0,
         "maximum": 1,
-        "description": "the percentage of the physical equipment used by the task"
+        "description": "the percentage of the physical equipment used by the task, this sharing property should be set to 1 by default (if no share) and otherwise to the correct percentage, e.g. 0.5 if you share half-time."
       }
     },
     "required": [
