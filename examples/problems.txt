@@ -1,0 +1,24 @@
+"dataset":[{
+            "dataType": "text",
+            "volume": 0,
+            "volumeUnit":"kilobyte",
+            "inferenceProperties": {
+                "nbRequest": 1,
+                "parametersNLP": [{
+                    "nbTokensInput": 37,
+                    "nbTokensOutput": 103,
+                    "cache": "false"
+                }]
+            }
+        }],
+
+-> volume & volumeUnit sont obligatoires alors que c'est pas nécessaire pour l'inférence
+
+{
+                "componentName": "RAM",
+                "componentType": "ram",
+                "nbComponent": 86.3035926818847,
+                "memorySize": 86.3035926818847,
+                "share": 1
+            }
+-> pour la RAM est-ce qu'il faut mettre dans nbComponent ou dans memorySize ? il faut soit rendre nbComponent non obligatoire, soit le rendre float et pas integer, memory size doit aussi etre float
