@@ -63,7 +63,7 @@ Dans la suite les champs du datamodel son exprimé en fonction des éléments et
 
 **codecarbon_version** : \[measures](measures.1)version = M13
 
-**cpu_count** : \[infrastructure](components.1)nbComponent = "IC12   Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz"
+**cpu_count** : \[infrastructure](components.1)nbComponent =  IC12  = "Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz" ?
 
 **cpu_model** : \[infrastructure](components.1)componentName = IC11
 
