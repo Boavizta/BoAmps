@@ -1,4 +1,4 @@
-# Conversion entre les champs CodeCarbon et les Champ du datamodel
+# Conversion entre les champs CodeCarbon et les Champs du Datamodel
 
 ## Informations
 
