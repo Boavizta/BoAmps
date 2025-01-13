@@ -1,77 +1,93 @@
-run_id : [header]reportId= H4  
+# Conversion entre les champs CodeCarbon et les Champ du datamodel
 
-timestamp : [header]├reportDatetime= H5 ET [measures](measures.1)measurementDateTime= M114
+## Informations
 
-project_name
+Version : v0.1
 
-duration : [measures](measures.1)measurementDuration= M113
+Etat : Travail
 
-emissions
+RAF :
 
-emissions_rate
+- Détailler les elemetns
+- Affiner les réponses 
+- Choisir les numeros d'item judicieusement
+- ...
 
-cpu_power
+## Contenu
 
-gpu_power
+Dans la suite les champs du datamodel son exprimé en fonction des éléments et valeurs du fichier form_example.txt
 
-ram_power
+**run_id** : [header]reportId= H4  
 
-cpu_energy
+**timestamp** :
 
-gpu_energy
+- \[header]├reportDatetime= H5
+- ET
+- \[measures](measures.1)measurementDateTime= M114
 
-ram_energy
+**project_name** :
 
-energy_consumed : [measures](measures.1)
+**duration** : \[measures](measures.1)measurementDuration = M113
 
-powerConsumption=M112
+**emissions** :
 
-country_name : [environment]country= E1
+**emissions_rate** :
 
-country_iso_code
+**cpu_power** :
 
-region
+**gpu_power** :
 
-cloud_provider : [infrastructure]cloudProvider= I2
+**ram_power** :
 
-cloud_region
+**cpu_energy** :
 
-os : [system]os= S1 
+**gpu_energy** :
 
-python_version A METTRE DASN SOFTWARE
+**ram_energy** :
 
-codecarbon_version : [measures](measures.1)version= M13
+**energy_consumed** : \[measures](measures.1)powerConsumption = M112
 
-cpu_count : [infrastructure](components.1)nbComponent= 
-IC12   Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz
+**country_name** : \[environment]country = E1
 
-cpu_model : [infrastructure](components.1)componentName= IC11
+**country_iso_code** :
 
-gpu_count : [infrastructure](components.2)nbComponent= IC12
+**region** :
 
-gpu_model : [infrastructure](components.2)
+**cloud_provider** : \[infrastructure]cloudProvider = I2
 
-componentName= IC11 2 x Tesla V100S-PCIE-32GB
+**cloud_region** :
 
-longitude : [environment]longitude= E3
+**os** : \[system]os = S1
 
-latitude : [environment]latitude= E2
+**python_version** : A METTRE DASN SOFTWARE ?
 
-ram_total_size[infrastructure](components.3)
+**codecarbon_version** : \[measures](measures.1)version = M13
 
-memorySize= IC13
+**cpu_count** : \[infrastructure](components.1)nbComponent = "IC12   Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz"
 
-tracking_mode : [measures](measures.1)
+**cpu_model** : \[infrastructure](components.1)componentName = IC11
 
-cpuTrackingMode=     M14 OU gpuTrackingMode=        M15 ?
+**gpu_count** : \[infrastructure](components.2)nbComponent= IC12
 
-on_cloud
+**gpu_model** : \[infrastructure](components.2)componentName= IC11 = "2 x Tesla V100S-PCIE-32GB"
 
-pue
+**longitude** : \[environment]longitude = E3
 
-Extra : 
-codecarbon ==> [measures](measures.*)
+**latitude** : \[environment]latitude = E2
 
-measurementMethod= M11
+**ram_total_size** : \[infrastructure](components.3)memorySize = IC13
 
-kWh ==> [measures](measures.*)unit= M19
+**tracking_mode** : \[measures](measures.1)
+
+- cpuTrackingMode = M14
+- OU
+- gpuTrackingMode= M15 ?
+
+**on_cloud** :
+
+**pue** :
+
+**Extra** : 
+codecarbon ==> \[measures](measures.*)measurementMethod = M11
+
+**kWh** ==> \[measures](measures.*)unit= M19
