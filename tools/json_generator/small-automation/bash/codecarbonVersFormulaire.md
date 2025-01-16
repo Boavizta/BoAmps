@@ -213,7 +213,7 @@ Some fields were not found including
 - country_iso_code
 - region
 - cloud_provider
-- cloud_region
+- cloud_region How is this different from region? Since we already have the on_cloud field?
 - cpu_model
 - longitude
 - latitude
