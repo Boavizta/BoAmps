@@ -94,27 +94,26 @@ codecarbon ==> \[measures](measures.*)measurementMethod = M11
 
 
 
-Example of a python script to extract these fields:
+Example of a python script to extract these fields while training a regression model:
 
 ```py
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from codecarbon import EmissionsTracker
 import platform
 import os
 import requests
-from codecarbon import EmissionsTracker
+import time
 from datetime import datetime
 import pkg_resources
 
+# Fetch CPU model
 def get_cpu_model():
-    """
-    Fetch the CPU model using platform or /proc/cpuinfo (Linux-specific).
-    """
     try:
-        # Try platform.processor (may return empty on some systems)
         cpu_model = platform.processor()
         if cpu_model:
             return cpu_model
-        
-        # Fallback to reading /proc/cpuinfo
         if os.path.exists("/proc/cpuinfo"):
             with open("/proc/cpuinfo", "r") as f:
                 for line in f:
@@ -124,12 +123,11 @@ def get_cpu_model():
         print(f"Error fetching CPU model: {e}")
     return None
 
+# Extract tracking fields
 def extract_fields(tracker, emissions, duration):
-    # Use a utility function to handle missing attributes
     def get_field_or_none(obj, attr, default=None):
         return getattr(obj, attr, default)
 
-    # Get location information via external API
     def get_location_info():
         try:
             response = requests.get("http://ip-api.com/json/")
@@ -146,34 +144,28 @@ def extract_fields(tracker, emissions, duration):
             pass
         return {"country_name": None, "country_iso_code": None, "region": None, "longitude": None, "latitude": None}
 
-    # Fetch CodeCarbon version
     try:
         codecarbon_version = pkg_resources.get_distribution("codecarbon").version
     except Exception:
         codecarbon_version = None
 
-    # Location information
     location_info = get_location_info()
+    cpu_power = get_field_or_none(tracker, "_cpu_power", 0)
+    gpu_power = get_field_or_none(tracker, "_gpu_power", 0)
+    ram_power = get_field_or_none(tracker, "_ram_power", 0)
+    duration_hours = duration / 3600
 
-    # Extract power values
-    cpu_power = get_field_or_none(tracker, "_cpu_power", 0)  # kW
-    gpu_power = get_field_or_none(tracker, "_gpu_power", 0)  # kW
-    ram_power = get_field_or_none(tracker, "_ram_power", 0)  # kW
-
-    # Calculate energy consumption (kWh)
-    duration_hours = duration / 3600  # Convert seconds to hours
     cpu_energy = cpu_power * duration_hours if cpu_power else None
     gpu_energy = gpu_power * duration_hours if gpu_power else None
     ram_energy = ram_power * duration_hours if ram_power else None
 
-    # Extract fields
     fields = {
         "run_id": get_field_or_none(tracker, "_experiment_id"),
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "project_name": "Linear Regression Training",
         "duration": duration,
         "emissions": emissions,
-        "emissions_rate": emissions / duration if duration else None,  # Calculate manually
+        "emissions_rate": emissions / duration if duration else None,
         "cpu_power": cpu_power,
         "gpu_power": gpu_power,
         "ram_power": ram_power,
@@ -190,33 +182,68 @@ def extract_fields(tracker, emissions, duration):
         "python_version": platform.python_version(),
         "codecarbon_version": codecarbon_version,
         "cpu_count": os.cpu_count(),
-        "cpu_model": get_cpu_model(),  # Updated CPU model extraction
-        "gpu_count": 0,  # No GPU detected
+        "cpu_model": get_cpu_model(),
+        "gpu_count": 0,
         "gpu_model": None,
         "longitude": location_info["longitude"],
         "latitude": location_info["latitude"],
         "ram_total_size": round(os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES") / (1024**3), 2),
         "tracking_mode": get_field_or_none(tracker, "_tracking_mode"),
         "on_cloud": "Yes" if os.environ.get("CLOUD_PROVIDER") else "No",
-        "pue": get_field_or_none(tracker, "_pue", 1.0),  # Default PUE is 1.0
+        "pue": get_field_or_none(tracker, "_pue", 1.0),
         "extra": get_field_or_none(tracker, "_measure_power_method"),
         "kWh": "kWh",
     }
     return fields
 
-# Example usage
+# Generate synthetic data
+torch.manual_seed(42)
+n_samples = 100
+X = torch.rand(n_samples, 1) * 10
+true_slope = 2.5
+true_intercept = 1.0
+noise = torch.randn(n_samples, 1) * 2
+y = true_slope * X + true_intercept + noise
+
+# Define the linear regression model
+class LinearRegressionModel(nn.Module):
+    def __init__(self):
+        super(LinearRegressionModel, self).__init__()
+        self.linear = nn.Linear(1, 1)
+
+    def forward(self, x):
+        return self.linear(x)
+
+# Initialize the model, loss function, and optimizer
+model = LinearRegressionModel()
+criterion = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+# Initialize the CodeCarbon tracker
 tracker = EmissionsTracker(project_name="Linear Regression Training")
 tracker.start()
 
-# Simulate task duration and emissions
-import time
-time.sleep(1)  # Simulate task duration
+# Measure training start time
+start_time = time.time()
+
+# Training loop
+num_epochs = 500
+for epoch in range(num_epochs):
+    y_pred = model(X)
+    loss = criterion(y_pred, y)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+    if (epoch + 1) % 50 == 0:
+        print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}")
+
+# Measure training end time and stop tracker
+end_time = time.time()
+training_duration = end_time - start_time
 emissions = tracker.stop()
-duration = 1  # Replace with actual duration in seconds
 
-fields = extract_fields(tracker, emissions, duration)
-
-# Print extracted fields
+# Extract and print tracking fields
+fields = extract_fields(tracker, emissions, training_duration)
 for key, value in fields.items():
     print(f"{key}: {value}")
 ```
@@ -225,18 +252,18 @@ Output:
 
 ```
 run_id: 5b0fa12a-3dd7-45bb-9766-cc326314d9f1
-timestamp: 2025-01-16 10:15:55
+timestamp: 2025-01-16 10:25:02
 project_name: Linear Regression Training
-duration: 1
-emissions: 7.412917773134365e-07
-emissions_rate: 7.412917773134365e-07
+duration: 0.1512455940246582
+emissions: 1.1263528505851737e-07
+emissions_rate: 7.447177934991875e-07
 cpu_power: Power(kW=0.0425)
 gpu_power: Power(kW=0.0)
 ram_power: Power(kW=0.0050578808784484865)
-cpu_energy: Power(kW=1.1805555555555557e-05)
+cpu_energy: Power(kW=1.785538262791104e-06)
 gpu_energy: Power(kW=0.0)
-ram_energy: Power(kW=1.4049669106801352e-06)
-energy_consumed: 1.3228140711173227e-05
+ram_energy: Power(kW=2.1249505499080597e-07)
+energy_consumed: 2.0099445932032577e-06
 country_name: France
 country_iso_code: FR
 region: Île-de-France
