@@ -91,3 +91,131 @@ Dans la suite les champs du datamodel son exprimé en fonction des éléments et
 codecarbon ==> \[measures](measures.*)measurementMethod = M11
 
 **kWh** ==> \[measures](measures.*)unit= M19
+
+
+
+Example of a python script to extract these fields:
+
+```py
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from codecarbon import EmissionsTracker
+import platform
+import os
+import time
+from datetime import datetime
+import pkg_resources
+
+# Generate synthetic data
+torch.manual_seed(42)
+n_samples = 100
+X = torch.rand(n_samples, 1) * 10
+true_slope = 2.5
+true_intercept = 1.0
+noise = torch.randn(n_samples, 1) * 2
+y = true_slope * X + true_intercept + noise
+
+# Define linear regression model
+class LinearRegressionModel(nn.Module):
+    def __init__(self):
+        super(LinearRegressionModel, self).__init__()
+        self.linear = nn.Linear(1, 1)
+
+    def forward(self, x):
+        return self.linear(x)
+
+# Initialize model, loss, and optimizer
+model = LinearRegressionModel()
+criterion = nn.MSELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.01)
+
+# Initialize CodeCarbon tracker
+tracker = EmissionsTracker(project_name="Linear Regression Training")
+tracker.start()
+
+# Measure training start time
+start_time = time.time()
+
+# Training loop
+num_epochs = 500
+for epoch in range(num_epochs):
+    y_pred = model(X)
+    loss = criterion(y_pred, y)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+# Measure training end time
+end_time = time.time()
+training_duration = end_time - start_time
+
+# Stop tracker
+emissions = tracker.stop()
+
+# Field extraction
+def get_field_or_none(obj, attr, default=None):
+    return getattr(obj, attr, default)
+
+try:
+    codecarbon_version = pkg_resources.get_distribution("codecarbon").version
+except Exception:
+    codecarbon_version = None
+
+fields = {
+    "run_id": get_field_or_none(tracker, "_experiment_id"),
+    "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    "project_name": "Linear Regression Training",
+    "duration": training_duration,
+    "emissions": emissions,
+    "emissions_rate": None,  # Emissions rate is not directly available
+    "cpu_power": get_field_or_none(tracker, "_cpu_power"),
+    "gpu_power": get_field_or_none(tracker, "_gpu_power"),
+    "ram_power": get_field_or_none(tracker, "_ram_power"),
+    "cpu_energy": get_field_or_none(tracker, "_cpu_energy"),
+    "gpu_energy": get_field_or_none(tracker, "_gpu_energy"),
+    "ram_energy": get_field_or_none(tracker, "_ram_energy"),
+    "energy_consumed": float(get_field_or_none(tracker, "_total_energy", 0)),
+    "country_name": None,  # Country name not directly available
+    "country_iso_code": None,  # Country ISO code not directly available
+    "region": None,  # Region not directly available
+    "cloud_provider": os.environ.get("CLOUD_PROVIDER", "None"),
+    "cloud_region": os.environ.get("CLOUD_REGION", "None"),
+    "os": platform.system(),
+    "python_version": platform.python_version(),
+    "codecarbon_version": codecarbon_version,
+    "cpu_count": os.cpu_count(),
+    "cpu_model": platform.processor(),
+    "gpu_count": 0,  # CodeCarbon doesn't provide GPU count in this setup
+    "gpu_model": None,  # GPU model not provided in CPU-only runs
+    "longitude": None,  # Longitude not directly available
+    "latitude": None,  # Latitude not directly available
+    "ram_total_size": round(os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES") / (1024**3), 2),
+    "tracking_mode": get_field_or_none(tracker, "_tracking_mode"),
+    "on_cloud": "Yes" if os.environ.get("CLOUD_PROVIDER") else "No",
+    "pue": get_field_or_none(tracker, "_pue"),
+    "extra": get_field_or_none(tracker, "_measure_power_method"),
+    "kWh": "kWh"  # Assumed as the default unit for power consumption
+}
+
+# Print extracted fields
+for key, value in fields.items():
+    print(f"{key}: {value}")
+```
+
+Tested on CPU only:
+Some fields were not found including
+
+- emissions_rate
+- cpu_energy
+- ram_energy
+- country_name
+- country_iso_code
+- region
+- cloud_provider
+- cloud_region
+- cpu_model
+- longitude
+- latitude
+- on_cloud (No because uses global var but can hardly be extracted)
+- extra
