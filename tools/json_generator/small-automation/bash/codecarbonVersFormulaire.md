@@ -97,125 +97,174 @@ codecarbon ==> \[measures](measures.*)measurementMethod = M11
 Example of a python script to extract these fields:
 
 ```py
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from codecarbon import EmissionsTracker
 import platform
 import os
-import time
+import requests
+from codecarbon import EmissionsTracker
 from datetime import datetime
 import pkg_resources
 
-# Generate synthetic data
-torch.manual_seed(42)
-n_samples = 100
-X = torch.rand(n_samples, 1) * 10
-true_slope = 2.5
-true_intercept = 1.0
-noise = torch.randn(n_samples, 1) * 2
-y = true_slope * X + true_intercept + noise
+def get_cpu_model():
+    """
+    Fetch the CPU model using platform or /proc/cpuinfo (Linux-specific).
+    """
+    try:
+        # Try platform.processor (may return empty on some systems)
+        cpu_model = platform.processor()
+        if cpu_model:
+            return cpu_model
+        
+        # Fallback to reading /proc/cpuinfo
+        if os.path.exists("/proc/cpuinfo"):
+            with open("/proc/cpuinfo", "r") as f:
+                for line in f:
+                    if "model name" in line:
+                        return line.split(":")[1].strip()
+    except Exception as e:
+        print(f"Error fetching CPU model: {e}")
+    return None
 
-# Define linear regression model
-class LinearRegressionModel(nn.Module):
-    def __init__(self):
-        super(LinearRegressionModel, self).__init__()
-        self.linear = nn.Linear(1, 1)
+def extract_fields(tracker, emissions, duration):
+    # Use a utility function to handle missing attributes
+    def get_field_or_none(obj, attr, default=None):
+        return getattr(obj, attr, default)
 
-    def forward(self, x):
-        return self.linear(x)
+    # Get location information via external API
+    def get_location_info():
+        try:
+            response = requests.get("http://ip-api.com/json/")
+            if response.status_code == 200:
+                data = response.json()
+                return {
+                    "country_name": data.get("country"),
+                    "country_iso_code": data.get("countryCode"),
+                    "region": data.get("regionName"),
+                    "longitude": data.get("lon"),
+                    "latitude": data.get("lat"),
+                }
+        except Exception:
+            pass
+        return {"country_name": None, "country_iso_code": None, "region": None, "longitude": None, "latitude": None}
 
-# Initialize model, loss, and optimizer
-model = LinearRegressionModel()
-criterion = nn.MSELoss()
-optimizer = optim.SGD(model.parameters(), lr=0.01)
+    # Fetch CodeCarbon version
+    try:
+        codecarbon_version = pkg_resources.get_distribution("codecarbon").version
+    except Exception:
+        codecarbon_version = None
 
-# Initialize CodeCarbon tracker
+    # Location information
+    location_info = get_location_info()
+
+    # Extract power values
+    cpu_power = get_field_or_none(tracker, "_cpu_power", 0)  # kW
+    gpu_power = get_field_or_none(tracker, "_gpu_power", 0)  # kW
+    ram_power = get_field_or_none(tracker, "_ram_power", 0)  # kW
+
+    # Calculate energy consumption (kWh)
+    duration_hours = duration / 3600  # Convert seconds to hours
+    cpu_energy = cpu_power * duration_hours if cpu_power else None
+    gpu_energy = gpu_power * duration_hours if gpu_power else None
+    ram_energy = ram_power * duration_hours if ram_power else None
+
+    # Extract fields
+    fields = {
+        "run_id": get_field_or_none(tracker, "_experiment_id"),
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "project_name": "Linear Regression Training",
+        "duration": duration,
+        "emissions": emissions,
+        "emissions_rate": emissions / duration if duration else None,  # Calculate manually
+        "cpu_power": cpu_power,
+        "gpu_power": gpu_power,
+        "ram_power": ram_power,
+        "cpu_energy": cpu_energy,
+        "gpu_energy": gpu_energy,
+        "ram_energy": ram_energy,
+        "energy_consumed": float(get_field_or_none(tracker, "_total_energy", 0)),
+        "country_name": location_info["country_name"],
+        "country_iso_code": location_info["country_iso_code"],
+        "region": location_info["region"],
+        "cloud_provider": os.environ.get("CLOUD_PROVIDER", "None"),
+        "cloud_region": os.environ.get("CLOUD_REGION", "None"),
+        "os": platform.system(),
+        "python_version": platform.python_version(),
+        "codecarbon_version": codecarbon_version,
+        "cpu_count": os.cpu_count(),
+        "cpu_model": get_cpu_model(),  # Updated CPU model extraction
+        "gpu_count": 0,  # No GPU detected
+        "gpu_model": None,
+        "longitude": location_info["longitude"],
+        "latitude": location_info["latitude"],
+        "ram_total_size": round(os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES") / (1024**3), 2),
+        "tracking_mode": get_field_or_none(tracker, "_tracking_mode"),
+        "on_cloud": "Yes" if os.environ.get("CLOUD_PROVIDER") else "No",
+        "pue": get_field_or_none(tracker, "_pue", 1.0),  # Default PUE is 1.0
+        "extra": get_field_or_none(tracker, "_measure_power_method"),
+        "kWh": "kWh",
+    }
+    return fields
+
+# Example usage
 tracker = EmissionsTracker(project_name="Linear Regression Training")
 tracker.start()
 
-# Measure training start time
-start_time = time.time()
-
-# Training loop
-num_epochs = 500
-for epoch in range(num_epochs):
-    y_pred = model(X)
-    loss = criterion(y_pred, y)
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
-
-# Measure training end time
-end_time = time.time()
-training_duration = end_time - start_time
-
-# Stop tracker
+# Simulate task duration and emissions
+import time
+time.sleep(1)  # Simulate task duration
 emissions = tracker.stop()
+duration = 1  # Replace with actual duration in seconds
 
-# Field extraction
-def get_field_or_none(obj, attr, default=None):
-    return getattr(obj, attr, default)
-
-try:
-    codecarbon_version = pkg_resources.get_distribution("codecarbon").version
-except Exception:
-    codecarbon_version = None
-
-fields = {
-    "run_id": get_field_or_none(tracker, "_experiment_id"),
-    "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    "project_name": "Linear Regression Training",
-    "duration": training_duration,
-    "emissions": emissions,
-    "emissions_rate": None,  # Emissions rate is not directly available
-    "cpu_power": get_field_or_none(tracker, "_cpu_power"),
-    "gpu_power": get_field_or_none(tracker, "_gpu_power"),
-    "ram_power": get_field_or_none(tracker, "_ram_power"),
-    "cpu_energy": get_field_or_none(tracker, "_cpu_energy"),
-    "gpu_energy": get_field_or_none(tracker, "_gpu_energy"),
-    "ram_energy": get_field_or_none(tracker, "_ram_energy"),
-    "energy_consumed": float(get_field_or_none(tracker, "_total_energy", 0)),
-    "country_name": None,  # Country name not directly available
-    "country_iso_code": None,  # Country ISO code not directly available
-    "region": None,  # Region not directly available
-    "cloud_provider": os.environ.get("CLOUD_PROVIDER", "None"),
-    "cloud_region": os.environ.get("CLOUD_REGION", "None"),
-    "os": platform.system(),
-    "python_version": platform.python_version(),
-    "codecarbon_version": codecarbon_version,
-    "cpu_count": os.cpu_count(),
-    "cpu_model": platform.processor(),
-    "gpu_count": 0,  # CodeCarbon doesn't provide GPU count in this setup
-    "gpu_model": None,  # GPU model not provided in CPU-only runs
-    "longitude": None,  # Longitude not directly available
-    "latitude": None,  # Latitude not directly available
-    "ram_total_size": round(os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES") / (1024**3), 2),
-    "tracking_mode": get_field_or_none(tracker, "_tracking_mode"),
-    "on_cloud": "Yes" if os.environ.get("CLOUD_PROVIDER") else "No",
-    "pue": get_field_or_none(tracker, "_pue"),
-    "extra": get_field_or_none(tracker, "_measure_power_method"),
-    "kWh": "kWh"  # Assumed as the default unit for power consumption
-}
+fields = extract_fields(tracker, emissions, duration)
 
 # Print extracted fields
 for key, value in fields.items():
     print(f"{key}: {value}")
 ```
 
+Output:
+
+```
+run_id: 5b0fa12a-3dd7-45bb-9766-cc326314d9f1
+timestamp: 2025-01-16 10:15:55
+project_name: Linear Regression Training
+duration: 1
+emissions: 7.412917773134365e-07
+emissions_rate: 7.412917773134365e-07
+cpu_power: Power(kW=0.0425)
+gpu_power: Power(kW=0.0)
+ram_power: Power(kW=0.0050578808784484865)
+cpu_energy: Power(kW=1.1805555555555557e-05)
+gpu_energy: Power(kW=0.0)
+ram_energy: Power(kW=1.4049669106801352e-06)
+energy_consumed: 1.3228140711173227e-05
+country_name: France
+country_iso_code: FR
+region: Île-de-France
+cloud_provider: None
+cloud_region: None
+os: Linux
+python_version: 3.13.1
+codecarbon_version: 2.8.2
+cpu_count: 12
+cpu_model: AMD Ryzen 5 7530U with Radeon Graphics
+gpu_count: 0
+gpu_model: None
+longitude: 2.2463
+latitude: 48.7144
+ram_total_size: 13.49
+tracking_mode: machine
+on_cloud: No
+pue: 1.0
+extra: None
+kWh: kWh
+```
+
 Tested on CPU only:
 Some fields were not found including
 
-- emissions_rate
-- cpu_energy
-- ram_energy
-- country_name
-- country_iso_code
-- region
-- cloud_provider
-- cloud_region How is this different from region? Since we already have the on_cloud field?
-- cpu_model
-- longitude
-- latitude
-- on_cloud (No because uses global var but can hardly be extracted)
-- extra
+- cloud_provider -> fetched using CLOUD_PROVIDER OK?
+- cloud_region How is this different from region? Since we already have the on_cloud field? currently fetched using CLOUD_REGION if different?
+- cpu_model -> fetched on my Linux system but needs to be updated for other platforms in python code
+- on_cloud  -> yes if CLOUD_PROVIDER found, OK?
+- extra -> what is this?
+- tracking mode is a field in code carbon _tracking_mode, should we use this or M14/M15?
