@@ -1,5 +1,10 @@
 # Conversion entre les champs CodeCarbon et les Champs du Datamodel
 
+## Prerequisities
+
+If you are using a cloud server, add CLOUD_PROVIDER = "Provider" as a global environment variable on your system.
+Tested on CPU only! What is extra?
+
 ## Informations
 
 Example of a python script to extract these fields while training a regression model:
@@ -195,7 +200,6 @@ country_name: France
 country_iso_code: FR
 region: Île-de-France
 cloud_provider: None
-cloud_region: None
 os: Linux
 python_version: 3.13.1
 codecarbon_version: 2.8.2
@@ -212,16 +216,6 @@ pue: 1.0
 extra: None
 kWh: kWh
 ```
-
-Tested on CPU only:
-Some fields were not found including
-
-- cloud_provider -> fetched using CLOUD_PROVIDER OK?
-- cloud_region How is this different from region? Since we already have the on_cloud field? currently fetched using CLOUD_REGION if different?
-- cpu_model -> fetched on my Linux system but needs to be updated for other platforms in python code
-- on_cloud  -> yes if CLOUD_PROVIDER found, OK?
-- extra -> what is this?
-- tracking mode is a field in code carbon _tracking_mode, should we use this or M14/M15?
 
 # CodeCarbon Tracking Fields Documentation
 
