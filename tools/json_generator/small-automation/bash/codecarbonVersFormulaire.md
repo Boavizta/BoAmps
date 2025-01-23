@@ -15,18 +15,27 @@ import requests
 import time
 from datetime import datetime
 import pkg_resources
+import csv
+import psutil  # For cross-platform RAM and CPU info
 
 # Fetch CPU model
 def get_cpu_model():
+    system = platform.system()
     try:
-        cpu_model = platform.processor()
-        if cpu_model:
-            return cpu_model
-        if os.path.exists("/proc/cpuinfo"):
-            with open("/proc/cpuinfo", "r") as f:
-                for line in f:
-                    if "model name" in line:
-                        return line.split(":")[1].strip()
+        if system == "Linux":
+            if os.path.exists("/proc/cpuinfo"):
+                with open("/proc/cpuinfo", "r") as f:
+                    for line in f:
+                        if "model name" in line:
+                            return line.split(":")[1].strip()
+        elif system == "Windows":
+            import wmi  # Windows Management Instrumentation
+            c = wmi.WMI()
+            for processor in c.Win32_Processor():
+                return processor.Name
+        elif system == "Darwin":  # macOS
+            import subprocess
+            return subprocess.check_output(["sysctl", "-n", "machdep.cpu.brand_string"]).decode().strip()
     except Exception as e:
         print(f"Error fetching CPU model: {e}")
     return None
@@ -67,6 +76,9 @@ def extract_fields(tracker, emissions, duration):
     gpu_energy = gpu_power * duration_hours if gpu_power else None
     ram_energy = ram_power * duration_hours if ram_power else None
 
+    # Get RAM size in GB
+    ram_total_size = round(psutil.virtual_memory().total / (1024**3), 2)
+
     fields = {
         "run_id": get_field_or_none(tracker, "_experiment_id"),
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -95,7 +107,7 @@ def extract_fields(tracker, emissions, duration):
         "gpu_model": None,
         "longitude": location_info["longitude"],
         "latitude": location_info["latitude"],
-        "ram_total_size": round(os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES") / (1024**3), 2),
+        "ram_total_size": ram_total_size,
         "tracking_mode": get_field_or_none(tracker, "_tracking_mode"),
         "on_cloud": "Yes" if os.environ.get("CLOUD_PROVIDER") else "No",
         "pue": get_field_or_none(tracker, "_pue", 1.0),
@@ -150,13 +162,20 @@ end_time = time.time()
 training_duration = end_time - start_time
 emissions = tracker.stop()
 
-# Extract and print tracking fields
+# Extract tracking fields
 fields = extract_fields(tracker, emissions, training_duration)
-for key, value in fields.items():
-    print(f"{key}: {value}")
+
+# Write tracking fields to a CSV file
+csv_file = "tracking_info.csv"
+with open(csv_file, mode="w", newline="") as file:
+    writer = csv.DictWriter(file, fieldnames=fields.keys())
+    writer.writeheader()
+    writer.writerow(fields)
+
+print(f"Tracking information saved to {csv_file}")
 ```
 
-Output:
+Outputs a csv file containing these fields:
 
 ```
 run_id: 5b0fa12a-3dd7-45bb-9766-cc326314d9f1
