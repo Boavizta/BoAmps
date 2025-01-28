@@ -1,125 +1,27 @@
-# Conversion entre les champs CodeCarbon et les Champs du Datamodel
+# Automatically fetch data from CodeCarbon
 
 ## Prerequisities
 
 If you are using a cloud server, add CLOUD_PROVIDER = "Provider" as a global environment variable on your system.
 Tested on CPU only! What is extra?
 
-## Informations
+## Information
 
-Example of a python script to extract these fields while training a regression model:
+Install this package: https://github.com/lukalafaye/BoAmps_Carbon
+
+Usage example: training a regression model and saving Carbon data in BoAmps compatible csv using BoAmps_Carbon package.
+
 
 ```py
+from BoAmps_Carbon.tracker import TrackerUtility
+
+tracker = TrackerUtility(project_name="My Experiment")
+tracker.start_cracker()
+
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from codecarbon import EmissionsTracker
-import platform
-import os
-import requests
-import time
-from datetime import datetime
-import pkg_resources
-import csv
-import psutil  # For cross-platform RAM and CPU info
-
-# Fetch CPU model
-def get_cpu_model():
-    system = platform.system()
-    try:
-        if system == "Linux":
-            if os.path.exists("/proc/cpuinfo"):
-                with open("/proc/cpuinfo", "r") as f:
-                    for line in f:
-                        if "model name" in line:
-                            return line.split(":")[1].strip()
-        elif system == "Windows":
-            import wmi  # Windows Management Instrumentation
-            c = wmi.WMI()
-            for processor in c.Win32_Processor():
-                return processor.Name
-        elif system == "Darwin":  # macOS
-            import subprocess
-            return subprocess.check_output(["sysctl", "-n", "machdep.cpu.brand_string"]).decode().strip()
-    except Exception as e:
-        print(f"Error fetching CPU model: {e}")
-    return None
-
-# Extract tracking fields
-def extract_fields(tracker, emissions, duration):
-    def get_field_or_none(obj, attr, default=None):
-        return getattr(obj, attr, default)
-
-    def get_location_info():
-        try:
-            response = requests.get("http://ip-api.com/json/")
-            if response.status_code == 200:
-                data = response.json()
-                return {
-                    "country_name": data.get("country"),
-                    "country_iso_code": data.get("countryCode"),
-                    "region": data.get("regionName"),
-                    "longitude": data.get("lon"),
-                    "latitude": data.get("lat"),
-                }
-        except Exception:
-            pass
-        return {"country_name": None, "country_iso_code": None, "region": None, "longitude": None, "latitude": None}
-
-    try:
-        codecarbon_version = pkg_resources.get_distribution("codecarbon").version
-    except Exception:
-        codecarbon_version = None
-
-    location_info = get_location_info()
-    cpu_power = get_field_or_none(tracker, "_cpu_power", 0)
-    gpu_power = get_field_or_none(tracker, "_gpu_power", 0)
-    ram_power = get_field_or_none(tracker, "_ram_power", 0)
-    duration_hours = duration / 3600
-
-    cpu_energy = cpu_power * duration_hours if cpu_power else None
-    gpu_energy = gpu_power * duration_hours if gpu_power else None
-    ram_energy = ram_power * duration_hours if ram_power else None
-
-    # Get RAM size in GB
-    ram_total_size = round(psutil.virtual_memory().total / (1024**3), 2)
-
-    fields = {
-        "run_id": get_field_or_none(tracker, "_experiment_id"),
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "project_name": "Linear Regression Training",
-        "duration": duration,
-        "emissions": emissions,
-        "emissions_rate": emissions / duration if duration else None,
-        "cpu_power": cpu_power,
-        "gpu_power": gpu_power,
-        "ram_power": ram_power,
-        "cpu_energy": cpu_energy,
-        "gpu_energy": gpu_energy,
-        "ram_energy": ram_energy,
-        "energy_consumed": float(get_field_or_none(tracker, "_total_energy", 0)),
-        "country_name": location_info["country_name"],
-        "country_iso_code": location_info["country_iso_code"],
-        "region": location_info["region"],
-        "cloud_provider": os.environ.get("CLOUD_PROVIDER", "None"),
-        "cloud_region": os.environ.get("CLOUD_REGION", "None"),
-        "os": platform.system(),
-        "python_version": platform.python_version(),
-        "codecarbon_version": codecarbon_version,
-        "cpu_count": os.cpu_count(),
-        "cpu_model": get_cpu_model(),
-        "gpu_count": 0,
-        "gpu_model": None,
-        "longitude": location_info["longitude"],
-        "latitude": location_info["latitude"],
-        "ram_total_size": ram_total_size,
-        "tracking_mode": get_field_or_none(tracker, "_tracking_mode"),
-        "on_cloud": "Yes" if os.environ.get("CLOUD_PROVIDER") else "No",
-        "pue": get_field_or_none(tracker, "_pue", 1.0),
-        "extra": get_field_or_none(tracker, "_measure_power_method"),
-        "kWh": "kWh",
-    }
-    return fields
 
 # Generate synthetic data
 torch.manual_seed(42)
@@ -144,13 +46,6 @@ model = LinearRegressionModel()
 criterion = nn.MSELoss()
 optimizer = optim.SGD(model.parameters(), lr=0.01)
 
-# Initialize the CodeCarbon tracker
-tracker = EmissionsTracker(project_name="Linear Regression Training")
-tracker.start()
-
-# Measure training start time
-start_time = time.time()
-
 # Training loop
 num_epochs = 500
 for epoch in range(num_epochs):
@@ -162,22 +57,7 @@ for epoch in range(num_epochs):
     if (epoch + 1) % 50 == 0:
         print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}")
 
-# Measure training end time and stop tracker
-end_time = time.time()
-training_duration = end_time - start_time
-emissions = tracker.stop()
-
-# Extract tracking fields
-fields = extract_fields(tracker, emissions, training_duration)
-
-# Write tracking fields to a CSV file
-csv_file = "tracking_info.csv"
-with open(csv_file, mode="w", newline="") as file:
-    writer = csv.DictWriter(file, fieldnames=fields.keys())
-    writer.writeheader()
-    writer.writerow(fields)
-
-print(f"Tracking information saved to {csv_file}")
+tracker.stop_tracker("tracking_info.csv")
 ```
 
 Outputs a csv file containing these fields:
@@ -227,26 +107,26 @@ This document provides a comprehensive explanation of how each key-value pair is
 
 | Key                 | What It Represents                                                              | Path                                          |
 |---------------------|----------------------------------------------------------------------------------|-----------------------------------------------|
-| **run_id**          | A unique identifier for the current run, generated by the CodeCarbon tracker.   | `[header]reportId= H4`                        |
+| **run_id**          | A unique identifier for the current run, generated by the CodeCarbon tracker.   | Could be used for optional measure_id  in [measures]               |
 | **timestamp**       | The current date and time when the tracking data was extracted.                 | `[header]reportDatetime= H5`                  |
-| **project_name**    | The name of the project being tracked (e.g., "Linear Regression Training").     |                                               |
+| **project_name**    | The name of the project being tracked (e.g., "Linear Regression Training").     | Could be used for optional measure_name in [measures]            |
 | **duration**        | The total time (in seconds) taken for the training process.                     | `[measures](measures.1)measurementDuration = M113` |
-| **emissions**       | The total carbon emissions (in kg of CO₂) produced during the training.         |                                               |
-| **emissions_rate**  | The rate of carbon emissions (in kg of CO₂ per second) during the training.     |                                               |
-| **cpu_power**       | The power consumption (in kW) of the CPU during the training.                   |                                               |
-| **gpu_power**       | The power consumption (in kW) of the GPU during the training.                   |                                               |
-| **ram_power**       | The power consumption (in kW) of the RAM during the training.                   |                                               |
-| **cpu_energy**      | The total energy consumed (in kWh) by the CPU during the training.              |                                               |
-| **gpu_energy**      | The total energy consumed (in kWh) by the GPU during the training.              |                                               |
-| **ram_energy**      | The total energy consumed (in kWh) by the RAM during the training.              |                                               |
+| **emissions**       | The total carbon emissions (in kg of CO₂) produced during the training.         |  NTBA  [measures](measures.1)     |
+| **emissions_rate**  | The rate of carbon emissions (in kg of CO₂ per second) during the training.     | NTBA  [measures](measures.1)             |
+| **cpu_power**       | The power consumption (in kW) of the CPU during the training.                   | NTBA [measures](measures.1)cpu_powerConsumption         |
+| **gpu_power**       | The power consumption (in kW) of the GPU during the training.                   | NTBA [measures](measures.1)gpu_powerConsumption         |
+| **ram_power**       | The power consumption (in kW) of the RAM during the training.                   |  NTBA [measures](measures.1)ram_powerConsumption |
+| **cpu_energy**      | The total energy consumed (in kWh) by the CPU during the training.              |  NTBA [measures](measures.1)cpu_energy         |
+| **gpu_energy**      | The total energy consumed (in kWh) by the GPU during the training.              |  NTBA [measures](measures.1)gpu_energy     |
+| **ram_energy**      | The total energy consumed (in kWh) by the RAM during the training.              |  NTBA [measures](measures.1)ram_energy    |
 | **energy_consumed** | The total energy consumed (in kWh) by the system during the training.           | `[measures](measures.1)powerConsumption = M112` |
 | **country_name**    | The name of the country where the training was executed.                        | `[environment]country = E1`                   |
-| **country_iso_code**| The ISO code of the country where the training was executed.                    |                                               |
-| **region**          | The region (e.g., state or province) where the training was executed.           |                                               |
+| **country_iso_code**| The ISO code of the country where the training was executed.                    | NTBA                                              |
+| **region**          | The region (e.g., state or province) where the training was executed.           | NTBA [environment]region                                |
 | **cloud_provider**  | The cloud provider used for the training (if applicable).                       | `[infrastructure]cloudProvider = I2`         |
 | **cloud_region**    | The region of the cloud provider used for the training (if applicable).         | `[environment]country = E1`       |
 | **os**              | The operating system on which the training was executed.                       | `[system]os = S1`                             |
-| **python_version**  | The version of Python used to run the script.                                   |                                               |
+| **python_version**  | The version of Python used to run the script.                                   | [software]version and automatically fill [software]language to Python|
 | **codecarbon_version** | The version of the CodeCarbon library used for tracking.                     | `[measures](measures.1)version = M13`        |
 | **cpu_count**       | The number of CPU cores available on the system.                                | `[infrastructure](components.1)nbComponent = IC12` |
 | **cpu_model**       | The model name of the CPU used for the training.                                | `[infrastructure](components.1)componentName = IC11` |
@@ -257,7 +137,7 @@ This document provides a comprehensive explanation of how each key-value pair is
 | **ram_total_size**  | The total size of the RAM (in GB) available on the system.                      | `[infrastructure](components.3)memorySize = IC13` |
 | **tracking_mode**   | The mode used by CodeCarbon for tracking (e.g., "machine" for local tracking).  | `[measures](measures.1)cpuTrackingMode = M14`<br>`[measures](measures.1)gpuTrackingMode = M15` |
 | **on_cloud**        | Indicates whether the training was executed on a cloud provider (Yes/No).       |`[infrastructure]infraType = I1`|
-| **pue**             | The Power Usage Effectiveness (PUE) of the data center (if applicable).         |                                               |
+| **pue**             | The Power Usage Effectiveness (PUE) of the data center (if applicable).         | NTBA?                                              |
 | **extra**           | Additional information about the power measurement method used by CodeCarbon.   | `[measures](measures.*)measurementMethod = M11` |
 | **kWh**             | The unit of energy measurement (kilowatt-hours).                                | `[measures](measures.*)unit = M19`           |
 
@@ -314,6 +194,9 @@ Install the required Python packages using `pip`:
 
 ```bash
 pip install torch codecarbon psutil wmi
+git clone https://github.com/lukalafaye/BoAmps_Carbon
+cd BoAmps_Carbon
+pip install .
 ```
 
 ---
@@ -339,3 +222,16 @@ Here are the recommended versions of the packages:
 
 
 ---
+
+## Remarks
+
+- NTBA in table means needs to be added in report, lots of variables need to be added as new fields in generated reports by bash script
+- How are measures tied to tasks? Maybe add an optional id_measure in each task to create that connection?
+- Measures should have a new field measure_name to explain what kind of task they are measuring...
+- Maybe add `emissions` and `emissions_rate` fields in measure objects for carbon emissions? or do these belong in powerSourceCarbonIntensity?
+- In measure objects, powerConsumption should be replaced by cpu, gpu, and ram consumption fields as cpu, gpu, and ram work on a task at the same time... 
+- ├averageUtilizationCpu and ├averageUtilizationGpu can be fetched using Carbon maybe?
+- region NTBA in [environment] as well as all the other NTBA...
+- The environment might be different for different measures -> on top of global variable for it in report, add measure_environment fields in each measure object...
+
+Lots of objects depend on a single measure ([system], [software], [infrastructure], [environment]...) ideally tasks should include measures as sub sections, which should include [system], [software], [infrastructure], [environment] as sub sections... 

@@ -1,3 +1,5 @@
+Some proposition of changes can be seen in `codecarbonVersFormulaire.md`.
+
 How to use these scripts to generate the json report following the ai power measurement sharing ?
 
 1. Edit the form_Gen.conf to specify how many objects you want to generate in the form
