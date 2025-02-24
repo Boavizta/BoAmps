@@ -1,0 +1,123 @@
+{
+    "header": {
+        "licensing": "",
+        "formatVersion": "v1",
+        "formatVersionSpecificationUri": "",
+        "reportId": "test021%7Cllama2-13b%7Cf16%7Cllamacpp-1",
+        "reportDatetime": "2025-01-27 17:06:35",
+        "reportStatus": "draft",
+        "publisher": {
+            "name": "SSG",
+            "division": "sustainable AI",
+            "projectName": "GIP",
+            "confidentialityLevel": "internal",
+            "publicKey": ""
+        }
+    },
+    "task": {
+        "taskType": "supervisedLearning",
+        "taskFamily": "chatbot",
+        "taskStage": "inference",
+        "algorithms": [
+            {
+                "algorithmName": "llama2-13b",
+                "framework": "llamacpp",
+                "frameworkVersion": "",
+                "classPath": "https://huggingface.co/meta-llama/Llama-2-13b",
+                "hyperparameters": {
+                    "tuning_method": "",
+                    "values": []
+                },
+                "quantization": ""
+            }
+        ],
+        "dataset": [
+            {
+                "dataType": "text",
+                "fileType": "",
+                "volume": "0",
+                "volumeUnit": "kilobyte",
+                "items": "",
+                "shape": [
+                    {
+                        "item": ""
+                    }
+                ],
+                "inferenceProperties": [
+                    {
+                        "nbRequest": "1",
+                        "nbTokensInput": "37",
+                        "nbWordsInput": "",
+                        "nbTokensOutput": "103",
+                        "nbWordsOutput": "",
+                        "contextWindowSize": "",
+                        "cache": "false"
+                    }
+                ],
+                "source": "",
+                "sourceUri": "",
+                "owner": ""
+            }
+        ],
+        "measuredAccuracy": "",
+        "estimatedAccuracy": null
+    },
+    "measures": [
+        {
+            "measurementMethod": "codecarbon",
+            "manufacturer": "",
+            "version": "2.5.0",
+            "cpuTrackingMode": "",
+            "gpuTrackingMode": "",
+            "averageUtilizationCpu": "",
+            "averageUtilizationGpu": "",
+            "serverSideInference": "",
+            "unit": "kWh",
+            "powerCalibrationMeasurement": "",
+            "durationCalibrationMeasurement": "",
+            "powerConsumption": "0.359554063044399",
+            "measurementDuration": "4.11198234558105",
+            "measurementDateTime": "2024-11-29 11:13:37"
+        }
+    ],
+    "system": {
+        "os": "linux",
+        "distribution": "",
+        "distributionVersion": ""
+    },
+    "software": {
+        "language": "python",
+        "version": "3.10.12"
+    },
+    "infrastructure": {
+        "infraType": "publicCloud",
+        "cloudProvider": "ovh",
+        "cloudInstance": "",
+        "components": [
+            {
+                "componentName": "gpu",
+                "nbComponent": "2",
+                "memorySize": "32",
+                "manufacturer": "tesla",
+                "family": "V100",
+                "series": "PCIE",
+                "share": "1"
+            }
+        ]
+    },
+    "environment": {
+        "country": "France",
+        "latitude": "48.8582",
+        "longitude": "2.3387",
+        "location": "",
+        "powerSupplierType": null,
+        "powerSource": null,
+        "powerSourceCarbonIntensity": ""
+    },
+    "quality": "high",
+    "$hash": {
+        "hashAlgorithm": "SHA-1",
+        "cryptographicAlgorithm": "RSA",
+        "value": "hsqfkcfdskf"
+    }
+}

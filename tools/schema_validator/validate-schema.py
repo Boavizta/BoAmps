@@ -44,11 +44,11 @@ infe_sch = Resource.from_contents(
 # Creating a registry of all sub schema
 registry = Registry().with_resources(
     [
-        ("https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/algorithm_schema.json", algo_sch),
-        ("https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/dataset_schema.json", data_sch),
-        ("https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/measure_schema.json", meas_sch),
-        ("https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/hardware_schema.json", hard_sch),
-        ("https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/inference_schema.json", infe_sch),
+        ("https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/algorithm_schema.json", algo_sch),
+        ("https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/dataset_schema.json", data_sch),
+        ("https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/measure_schema.json", meas_sch),
+        ("https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/hardware_schema.json", hard_sch),
+        ("https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/inference_schema.json", infe_sch),
     ],
 
 )
@@ -58,7 +58,7 @@ registry = Registry().with_resources(
 
 def Usage():
     print(f"{bcolors.FAIL}Error: Wrong number of arguments{bcolors.ENDC}")
-    print("validate-schema is a tool to validate a json against AI-POWER-MEASURES-SHARING schema")
+    print("validate-schema is a tool to validate a json against BoAmps schema")
     print("Usage : ")
     print("      python3 validate-schema.py <JSON FILE to TEST>")
     print("      <JSON FILE to TEST> : json file to test")

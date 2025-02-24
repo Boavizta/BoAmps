@@ -1,5 +1,5 @@
 {
-    "$schema":"https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/report_schema.json",
+    "$schema":"https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/report_schema.json",
     "task": {
       "taskType": "ABCDEFGHIJKLMNOPQRSTU",
       "taskFamily": "ABCDEFGHIJKLMNOPQRS",

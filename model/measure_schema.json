@@ -1,13 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/measure_schema.json",
+    "id": "https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/measure_schema.json",
     "title": "measure",
     "description": "the energy measure obtained from software and/or hardware tools, for a computing task",
     "type": "object",
     "properties": {
       "measurementMethod": {
         "type": "string",
-        "description": "the method used to perform the energy or FLOPS measure, example: codecarbon, carbonai, flops-compute, wattmeter..."
+        "description": "the method used to perform the energy or FLOPS measure, example: codecarbon, carbonai, flops-compute, wattmeter, azure metrics, ovh metrics..."
       },
       "manufacturer": {
         "type": "string",
@@ -37,19 +37,9 @@
         "maximum": 1,
         "description": "the average percentage of use of the GPU during the task, for example: 0.8 if your GPU load was 80% on average"
       },
-      "serverSideInference":{
-        "type": "string",
-        "enum": [ "modelServer", "inferenceServer", "both" ],
-        "description": "if you practice inference through an API, do you estimate the consumption of the model server alone ? (because the model is deployed on your own server and you have access to the measurement, or because you have estimated it with a tool like EcoLogits). Or do you estimate the consumption from the inference server side or from both side at the same time ?"
-      },
-      "unit": {
-        "type": "string",
-        "enum": [ "mWh","Wh", "kWh", "MWh", "GWh", "kJoule", "MJoule", "GJoule", "TJoule", "PJoule", "BTU", "kiloFLOPS", "megaFLOPS", "gigaFLOPS", "teraFLOPS", "petaFLOPS", "exaFLOPS", "zettaFLOPS", "yottaFLOPS" ],
-        "description": "the unit of the power consumption measure of the computing task"
-      },
       "powerCalibrationMeasurement": {
         "type": "number",
-        "description": "the power consumed during the calibration measure if any (to isolate the initial consumption of the hardware)"
+        "description": "the power consumed (in kWh) during the calibration measure if any (to isolate the initial consumption of the hardware)"
       },
       "durationCalibrationMeasurement": {
         "type": "number",
@@ -57,7 +47,7 @@
       },
       "powerConsumption": {
         "type": "number",
-        "description": "the power consumption measure of the computing task"
+        "description": "the power consumption measure of the computing task (in kWh)"
       },
       "measurementDuration": {
         "type": "number",
@@ -70,7 +60,6 @@
     },
     "required": [
       "measurementMethod",
-      "unit",
       "powerConsumption"
     ]
 }

@@ -1,0 +1,64 @@
+{
+    "header": {
+        "licensing": "swvgd",
+        "formatVersion": "sfdf",
+        "formatVersionSpecificationUri": "sdf",
+        "reportId": "sqsfs",
+        "reportStatus": "final",
+        "publisher": {
+            "confidentialityLevel": "public"
+        }
+    },
+    "task": {
+        "taskType": "sdfq",
+        "taskFamily": "qsfsqd",
+        "taskStage": "sdfsq",
+        "algorithms": [
+            {
+                "algorithmName": "qsfdq"
+            }
+        ],
+        "dataset": [
+            {
+                "dataType": "video",
+                "volume": 12,
+                "volumeUnit": "kilobyte",
+                "inferenceProperties": [
+                    {
+                        "nbRequest": 12
+                    }
+                ]
+            }
+        ]
+    },
+    "measures": [
+        {
+            "measurementMethod": "zasds",
+            "unit": "MWh",
+            "powerConsumption": 12
+        }
+    ],
+    "system": {
+        "os": "fdf"
+    },
+    "software": {
+        "language": "dgsf"
+    },
+    "infrastructure": {
+        "infraType": "onPremise",
+        "components": [
+            {
+                "componentType": "zerae",
+                "nbComponent": 14
+            }
+        ]
+    },
+    "environment": {
+        "country": "ezrar"
+    },
+    "$hash": {
+        "hashAlgorithm": "RIPEMD-128",
+        "cryptographicAlgorithm": "ECDSA",
+        "value": "azteez"
+    }
+}

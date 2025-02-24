@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/report_schema.json",
+  "id": "https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/report_schema.json",
   "title": "report",
     "description": "the main object containing all the context pretaining to a computing task",
     "type": "object",
@@ -66,9 +66,7 @@
           }
         },
         "required": [
-          "formatVersion",
-          "reportId",
-          "reportStatus"
+          "reportDatetime"
         ]
       },
       "task": {
@@ -81,7 +79,7 @@
           },
           "taskFamily": {
             "type": "string",
-            "description": "the family of task performed, example : classification, regression, chatbot, summarization, keyword extraction, image recognition..."
+            "description": "the family of task performed, example : classification, regression, chatbot, summarization, keyword extraction, image recognition, embeddings creation..."
           },
           "taskStage": {
             "type": "string",
@@ -89,10 +87,11 @@
           },
           "algorithms": {
             "type": "array",
-            "description": "the main algorithmic approache(s) used by the computing task",
+            "description": "the list of the main algorithmic approache(s) used by the computing task",
+            "minItems": 1,
             "items": {
               "type":"object",
-              "$ref": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/algorithm_schema.json"
+              "$ref": "https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/algorithm_schema.json"
             }
           },
           "dataset": {
@@ -101,7 +100,7 @@
             "minItems": 1,
             "items": {
               "type":"object",
-              "$ref": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/dataset_schema.json"
+              "$ref": "https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/dataset_schema.json"
             }
           },
           "measuredAccuracy": {
@@ -126,11 +125,11 @@
       },
       "measures": {
         "type": "array",
-        "description": "the software and/or hardware measures of the computing task",
+        "description": "the software and/or hardware measures of the energy consumed by the computing task",
         "minItems": 1,
         "items": {
           "type":"object",
-          "$ref": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/measure_schema.json"
+          "$ref": "https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/measure_schema.json"
         },
         "required": [
           "measures"  
@@ -189,14 +188,18 @@
         },
         "cloudInstance":{
           "type":"string",
-          "description": "If you are on the cloud, the name of your cloud instance, for example : a1.large, dasv4-type2..."
+          "description": "If you are on a cloud vm, the name of your cloud instance, for example : a1.large, dasv4-type2..."
+        },
+        "cloudService":{
+          "type":"string",
+          "description": "If you are using an AI cloud service, the name of your cloud service, for example : openAI service..."
         },
         "components": {
           "type": "array",
           "minItems": 1,
           "items": {
             "type": "object",
-            "$ref": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/hardware_schema.json"
+            "$ref": "https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/hardware_schema.json"
           }
         }
         },
@@ -219,6 +222,7 @@
             "type": "number"
           },
           "location": {
+            "description": "More precise location like city, region or datacenter name",
             "type": "string"
           },
           "powerSupplierType": {
@@ -271,7 +275,6 @@
     "required": [
       "task",
       "measures",
-      "infrastructure",
-      "environment"
+      "infrastructure"
     ]
   }
