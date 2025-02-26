@@ -38,8 +38,6 @@ data_sch = Resource.from_contents(open_json("../../model/dataset_schema.json"))
 meas_sch = Resource.from_contents(open_json("../../model/measure_schema.json"))
 hard_sch = Resource.from_contents(
     open_json("../../model/hardware_schema.json"))
-infe_sch = Resource.from_contents(
-    open_json("../../model/inference_schema.json"))
 
 # Creating a registry of all sub schema
 registry = Registry().with_resources(
@@ -48,7 +46,6 @@ registry = Registry().with_resources(
         ("https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/dataset_schema.json", data_sch),
         ("https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/measure_schema.json", meas_sch),
         ("https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/hardware_schema.json", hard_sch),
-        ("https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/inference_schema.json", infe_sch),
     ],
 
 )

@@ -118,7 +118,7 @@ We know that this ideal conditions are not easy to assemble, so we let you provi
 
 ### Global structure
 
-The report_schema.json is composed of few sub schemas : algorithm_schema.json, dataset_schema.json, hardware_schema.json, inference_schema.json & report_schema.json. 
+The report_schema.json is composed of few sub schemas : algorithm_schema.json, dataset_schema.json, hardware_schema.json & report_schema.json. 
 
 The main sections in the report are : 
 - header

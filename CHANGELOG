@@ -20,6 +20,7 @@
     - change shape from array to string to simplify data entry
     - useless to have several inferenceProperties because only one measure related, you might as well fill it in just once, taking the average number of tokens generated, etc. so removed the table
     - inferenceProperties: put directly inside dataset
+- hardware: remove nbComponent from mandatory fields because not necessary to complete it for the RAM (directly fill memeory size)
 - environment: Make this section optional as the real need is energy consumption to be able to perform comparison between configuration, if the person is not interested in transforming the value into carbon footprint, it is not a problem
 - measure:
     - delete "serverSideInference" because we only want measure from server side ? describe this in the readme
