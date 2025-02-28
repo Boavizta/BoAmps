@@ -83,7 +83,7 @@
           },
           "taskStage": {
             "type": "string",
-            "description": "stage of the task, example: training, finetuning, reinforcement, inference, rag..."
+            "description": "stage of the task, example: training, finetuning, inference..."
           },
           "nbRequest": {
             "type": "number",

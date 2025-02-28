@@ -7,11 +7,23 @@
     "properties": {
       "algorithmName": {
         "type": "string",
-        "description": "the case-sensitive common name of the algorithm, example: randomForest, cnn, llama3.1-8b..."
+        "description": "the case-sensitive common name of the algorithm, example: randomForest, cnn, naive bayes..."
       },
       "algorithmUri": {
         "type": "string",
         "description": "the URI of the model, if publicly available"
+      },
+      "foundationModelName": {
+        "type": "string",
+        "description": "if a foundation model is used, its case-sensitive common name, example: llama3.1-8b, gpt4-o..."
+      },
+      "foundationModelUri": {
+        "type": "string",
+        "description": "the URI of the foundation model, if publicly available"
+      },
+      "parametersNumber": {
+        "type": "number",
+        "description" : "number of billions of total parameters of your model, e.g. 8 for llama3.1-8b"
       },
       "framework": {
         "type": "string",
@@ -24,10 +36,6 @@
       "classPath": {
         "type": "string",
         "description": "the full class path of the algorithm within the framework, with elements separated by dots"
-      },
-      "parametersNumber": {
-        "type": "number",
-        "description" : "number of billions of total parameters of your model, e.g. 8 for llama3.1-8b"
       },
       "layersNumber": {
         "type": "number",
@@ -70,8 +78,5 @@
           }
         }
       }
-    },
-    "required": [
-      "algorithmName"
-    ]
+    }
   }

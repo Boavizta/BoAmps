@@ -14,10 +14,11 @@
 		"taskType": "unsupervisedLearning",
 		"taskFamily": "chatbot",
 		"taskStage": "inference",
+		"nbRequest": 1,
 		"algorithms": [
 			{
-				"algorithmName": "llama2-13b",
-				"algorithmUri":"https://huggingface.co/meta-llama/Llama-2-13b-hf",
+				"foundationModelName": "llama2-13b",
+				"foundationModelUri":"https://huggingface.co/meta-llama/Llama-2-13b-hf",
 				"framework": "vllm",
 				"parametersNumber": 13,
 				"quantization": "q16"
@@ -25,11 +26,14 @@
 		],
 		"dataset": [
 			{
-				"nbRequest": 1,
-				"inputDataType": "token",
-				"nbInput":11,
-				"outputDataType": "token",
-				"nbOutput":828
+				"dataUsage": "input",
+				"dataType": "token",
+				"dataQuantity": 11
+			},
+			{
+				"dataUsage": "output",
+				"dataType": "token",
+				"dataQuantity": 828
 			}
 		],
 		"estimatedAccuracy":"veryGood"
@@ -74,6 +78,7 @@
 			},
 			{
 				"componentType": "ram",
+				"nbComponent": 1,
 				"memorySize": 86
 			}
 		]

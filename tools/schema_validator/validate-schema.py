@@ -1,13 +1,8 @@
 # Python program to validate json schema
-
-from pathlib import Path
 import json
-import datetime
 import sys
-import jsonschema
 from referencing import Registry, Resource
-from jsonschema import Draft202012Validator, ValidationError
-from referencing.exceptions import NoSuchResource
+from jsonschema import Draft202012Validator
 
 
 class bcolors:
@@ -57,7 +52,7 @@ def Usage():
     print(f"{bcolors.FAIL}Error: Wrong number of arguments{bcolors.ENDC}")
     print("validate-schema is a tool to validate a json against BoAmps schema")
     print("Usage : ")
-    print("      python3 validate-schema.py <JSON FILE to TEST>")
+    print("      python validate-schema.py <JSON FILE to TEST>")
     print("      <JSON FILE to TEST> : json file to test")
 
 
