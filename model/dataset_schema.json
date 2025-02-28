@@ -5,19 +5,28 @@
     "description": "Describe the nature, shape, number of items and other properties of the dataset involved in your task. If you are performing inferences, please indicate the average size of the data sent for a single inference and fill in the number of inferences in the propertiy: inferenceProperties",
     "type": "object",
     "properties": {
+      "dataUsage":{
+        "type": "string",
+        "enum": [ "input", "output"],
+        "description": "the use of the dataset: is it used as model input or output ?"
+      },
       "dataType":{
         "type": "string",
-        "enum": [ "tabular", "audio", "boolean", "image", "video", "object","text", "other"],
-        "description": "the nature of the data used for training/retraining/finetuning etc, if you're performing inferences, directly go to the field nbRequests"
+        "enum": [ "tabular", "audio", "boolean", "image", "video", "object","text","token", "word", "other"],
+        "description": "the nature of the data used "
       },
       "fileType": {
         "type": "string",
-        "enum": [ "3gp", "3gpp", "3gpp2", "8svx", "aa", "aac", "aax", "act", "afdesign", "afphoto", "ai", "aiff", "alac", "amr", "amv", "ape", "arrow", "asf", "au", "avi", "avif", "awb", "bmp", "bpg", "cd5", "cda", "cdr", "cgm", "clip", "cpt", "csv", "deep", "dirac", "divx", "drawingml", "drw", "dss", "dvf", "ecw", "eps", "fits", "flac", "flif", "flv", "flvf4v", "gem", "gerber", "gif", "gle", "gsm", "heif", "hp-gl", "html", "hvif", "ico", "iklax", "ilbm", "img", "ivs", "jpeg", "json", "kra", "lottie", "m4a", "m4b", "m4p", "m4v", "mathml", "matroska", "mdp", "mmf", "movpkg", "mp3", "mpc", "mpeg1", "mpeg2", "mpeg4", "msv", "mxf", "naplps", "netpbm", "nmf", "nrrd", "nsv", "odg", "ods", "ogg", "opus", "pam", "parquet", "pbm", "pcx", "pdf", "pdn", "pgf", "pgm", "pgml", "pict", "plbm", "png", "pnm", "postscript", "ppm", "psd", "psp", "pstricks", "qcc", "quicktime", "ra", "raw", "realmedia", "regis", "rf64", "roq", "sai", "sgi", "sid", "sql", "sln", "svg", "svi", "swf", "text", "tga", "tiff", "tinyvg", "tta", "vicar", "vivoactive", "vml", "vob", "voc", "vox", "wav", "webm", "webp", "wma", "wmf", "wmv", "wv", "xaml", "xar", "xcf", "xisf", "xls", "xlsx", "xml", "xps", "yaml", "$other", null ],
+        "enum": [ "3gp", "3gpp", "3gpp2", "8svx", "aa", "aac", "aax", "act", "afdesign", "afphoto", "ai", "aiff", "alac", "amr", "amv", "ape", "arrow", "asf", "au", "avi", "avif", "awb", "bmp", "bpg", "cd5", "cda", "cdr", "cgm", "clip", "cpt", "csv", "deep", "dirac", "divx", "drawingml", "drw", "dss", "dvf", "ecw", "eps", "fits", "flac", "flif", "flv", "flvf4v", "gem", "gerber", "gif", "gle", "gsm", "heif", "hp-gl", "html", "hvif", "ico", "iklax", "ilbm", "img", "ivs", "jpeg", "json", "kra", "lottie", "m4a", "m4b", "m4p", "m4v", "mathml", "matroska", "mdp", "mmf", "movpkg", "mp3", "mpc", "mpeg1", "mpeg2", "mpeg4", "msv", "mxf", "naplps", "netpbm", "nmf", "nrrd", "nsv", "odg", "ods", "ogg", "opus", "pam", "parquet", "pbm", "pcx", "pdf", "pdn", "pgf", "pgm", "pgml", "pict", "plbm", "png", "pnm", "postscript", "ppm", "psd", "psp", "pstricks", "qcc", "quicktime", "ra", "raw", "realmedia", "regis", "rf64", "roq", "sai", "sgi", "sid", "sql", "sln", "svg", "svi", "swf", "text", "tga", "tiff", "tinyvg", "tta", "vicar", "vivoactive", "vml", "vob", "voc", "vox", "wav", "webm", "webp", "wma", "wmf", "wmv", "wv", "xaml", "xar", "xcf", "xisf", "xls", "xlsx", "xml", "xps", "yaml", "other", null ],
         "description": "the file type of the dataset"
       },
       "volume": {
         "type": "number",
-        "description": "the size of the dataset (in Go)"
+        "description": "the size of the dataset (in Go), if small quantity just fill the field nbItems"
+      },
+      "nbItems": {
+        "type": "number",
+        "description": "the number of data in the input, e.g. 3 images, audio or tokens"
       },
       "shape": {
         "type": "string",
@@ -25,7 +34,7 @@
       },
       "source": {
         "type": "string",
-        "enum": [ "public", "private", "$other" ],
+        "enum": [ "public", "private", "other" ],
         "description": "the kind of source of the dataset"
       },
       "sourceUri": {
@@ -35,36 +44,10 @@
       "owner": {
         "type": "string",
         "description": "the owner of the dataset if available"
-      },
-      "nbRequest": {
-        "type": "number",
-        "description": "the number of requests the measure corresponds to (for example 100 prompts or 100 images), 0 or empty if you're not measuring the inference stage"
-      },
-      "inputDataType": {
-        "type": "string",
-        "enum": [ "tabular", "audio", "boolean", "image", "video", "object","token", "word", "other"],
-        "description": "the type of data used as the input of the model"
-      },
-      "nbInput": {
-        "type": "number",
-        "description": "the number of data in the input, e.g. 3 images, audio or tokens"
-      },
-      "outputDataType": {
-        "type": "string",
-        "enum": [ "tabular", "audio", "boolean", "image", "video", "object","token", "word", "other"],
-        "description": "the type of data returned by the model"
-      },
-      "nbOutput": {
-        "type": "number",
-        "description": "the number of data generated by the model"
-      },
-      "contextWindowsSize": {
-        "type": "number",
-        "description": "the number of tokens your system keeps in memory to generate the next answer"
-      },
-      "cache": {
-        "type": "boolean",
-        "description": "the presence of a cache function in the system, true or false"
-      }      
-    }
+      }    
+    },
+    "required": [
+      "dataUsage",
+      "dataType"
+    ]
   }

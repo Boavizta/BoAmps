@@ -15,7 +15,7 @@
       },
       "nbComponent": {
         "type": "integer",
-        "description": "the number of items of this component in your infrastructure"
+        "description": "the number of items of this component in your infrastructure, if you have 1 RAM of 32Go, fill 1 here and 32 inside memorySize"
       },
       "memorySize": {
         "type":"integer",
@@ -41,6 +41,7 @@
       }
     },
     "required": [
-      "componentType"
+      "componentType",
+      "nbComponent"
     ]
 }

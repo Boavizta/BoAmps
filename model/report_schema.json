@@ -31,7 +31,7 @@
           },
           "reportStatus": {
             "type": "string",
-            "enum": [ "draft", "final", "corrective", "$other" ],
+            "enum": [ "draft", "final", "corrective", "other" ],
             "description": "the status of this report"
           },
           "publisher": {
@@ -85,6 +85,10 @@
             "type": "string",
             "description": "stage of the task, example: training, finetuning, reinforcement, inference, rag..."
           },
+          "nbRequest": {
+            "type": "number",
+            "description": "the number of requests the measure corresponds to, 0 or empty if you're not measuring the inference stage"
+          },
           "algorithms": {
             "type": "array",
             "description": "the list of the main algorithmic approache(s) used by the computing task",
@@ -96,7 +100,7 @@
           },
           "dataset": {
             "type": "array",
-            "description": "the list of dataset processed by the computing task",
+            "description": "the list of dataset processed by the computing task, if you are working on multipodal training you can add many items to the list to describe it. If you are working on inference, you can add at least one item to describe the input data and another one for the output",
             "minItems": 1,
             "items": {
               "type":"object",
@@ -179,7 +183,7 @@
         "properties": {
         "infraType":{
           "type":"string",
-          "enum":["publicCloud","privateCloud", "onPremise", "$other"],
+          "enum":["publicCloud","privateCloud", "onPremise", "other"],
           "description": "the type of infrastructure used for the task"
         },
         "cloudProvider":{
@@ -227,11 +231,11 @@
           },
           "powerSupplierType": {
             "type": "string",
-            "enum": [ "public", "private", "internal", "$other" ]
+            "enum": [ "public", "private", "internal", "other" ]
           },
           "powerSource": {
             "type": "string",
-            "enum": [ "solar", "wind", "nuclear", "hydroelectric", "gas", "coal", "$other" ]
+            "enum": [ "solar", "wind", "nuclear", "hydroelectric", "gas", "coal", "other" ]
           },
           "powerSourceCarbonIntensity": {
             "type": "number",

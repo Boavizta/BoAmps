@@ -1,6 +1,14 @@
 This energy report format is published under Creative Commons 4.0.
 https://creativecommons.org/licenses/by/4.0/
 
+
+# 1.1.0
+Date: 2025-02-28 
+## Features 
+- Datamodel changes : https://github.com/Boavizta/BoAmps/issues/10
+- Creation of a concrete report example
+- Flattener added
+
 # 1.0.0
 Date: 2024-07-22
 ## Features
