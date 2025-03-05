@@ -5,6 +5,10 @@
     "description": "the type of algorithm used by the computing task",
     "type": "object",
     "properties": {
+      "algorithmDescription": {
+        "type": "string",
+        "description": "the family of task performed, example : classification, regression, chatbot, summarization, keyword extraction, image recognition, embeddings creation, rag..."
+      },
       "algorithmName": {
         "type": "string",
         "description": "the case-sensitive common name of the algorithm, example: randomForest, cnn, naive bayes..."

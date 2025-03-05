@@ -116,24 +116,14 @@ We know that this ideal conditions are not easy to assemble, so we let you provi
 
 ## 5. Understand the data model
 
-### Global structure
+### Global structure : organization between the various json files
 
-The report_schema.json is composed of few sub schemas : algorithm_schema.json, dataset_schema.json, hardware_schema.json & report_schema.json. 
+The report_schema.json is the main file and it makes reference to few sub schemas : algorithm_schema.json, dataset_schema.json, maeasure_schema.json & hardware_schema.json. 
 
-The main sections in the report are : 
-- header
-- tasks
-  - datasets
-    - inferences
-- measures
-- system
-- software
-- infrastructure
-- environment
-- quality
-- hash 
+Here is a diagram of the sections of the report and the links with the file names : 
 
-Most of these sections are mandatory but in each section, there are a lot of optionnal parameters to adapt to a wide variety of configurations. 
+![image](datamodel_diagram.png)
+It might seem like a lot of information to fill in, but the only mandatory parts are in bold with the asterisk. Inside these main parts, there are a lot of optionnal parameters to adapt to a wide variety of configurations. 
 
 ### Guidelines to create valuable report
 

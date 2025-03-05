@@ -73,17 +73,17 @@
         "type": "object",
         "description": "the nature of the task being measured",
         "properties": {
-          "taskType": {
+          "taskStage": {
             "type": "string",
-            "description": "type of the computing task of machine learning, example : datacreation, preprocessing, supervisedLearning, unsupervisedLearning, semiSupervisedLearning ..."
+            "description": "stage of the task, example: datacreation, preprocessing, training, finetuning, inference, retraining..., add a + between stages if several"
           },
           "taskFamily": {
             "type": "string",
-            "description": "the family of task performed, example : classification, regression, chatbot, summarization, keyword extraction, image recognition, embeddings creation..."
+            "description": "machineLearning, deepLearning, multiAgents, symbolicAI... "
           },
-          "taskStage": {
+          "trainingType": {
             "type": "string",
-            "description": "stage of the task, example: training, finetuning, inference..."
+            "description": "type of training (if the stage corresponds to a training) : supervisedLearning, unsupervisedLearning, semiSupervisedLearning, reinforcementLearning, transferLearning ..."
           },
           "nbRequest": {
             "type": "number",
