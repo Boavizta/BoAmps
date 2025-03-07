@@ -60,31 +60,6 @@
       "quantization":{
         "type":"string", 
         "description": "the type of quantization used : fp32, fp16, b16, int8 ... "
-      },
-      "hyperparameters": {
-        "type": "object",
-        "properties": {
-          "tuningMethod":{
-            "type":"string", 
-            "description": "the method of hyperparameters tuning used (if any), example: gridSearch, randomizedSearch..."
-          },
-          "values":{
-            "type":"array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "hyperparameterName": {
-                  "type": "string",
-                  "description": "the name of the hyperparameter, example: c, kernel, gamma, class_weight..."
-                },
-                "hyperparameterValue": {
-                  "type": "string",
-                  "description": "the value of the hyperparameter, example: rbf, 1e-4, 10, linear..."
-                }
-              }
-            } 
-          }
-        }
       }
     }
   }

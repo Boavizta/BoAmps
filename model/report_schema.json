@@ -83,7 +83,7 @@
           },
           "nbRequest": {
             "type": "number",
-            "description": "the number of requests the measure corresponds to, 0 or empty if you're not measuring the inference stage"
+            "description": "if inference stage, the number of requests the measure corresponds to, 0 or empty if you're not measuring the inference stage"
           },
           "algorithms": {
             "type": "array",
@@ -113,7 +113,11 @@
             "type": "string",
             "enum": [ "veryPoor", "poor", "average", "good", "veryGood" ],
             "description": "if you didn't measure the accuracy of your model in concrete percentages, you can give an assessment of the precision between: VERY POOR, POOR, AVERAGE, GOOD, VERY GOOD"
-          }
+          },
+          "taskDescription": {
+            "type": "string",
+            "description": "to fill if you have more details to share about your task"
+          },
         },
         "required": [
           "taskType",
