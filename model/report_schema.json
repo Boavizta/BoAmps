@@ -75,15 +75,11 @@
         "properties": {
           "taskStage": {
             "type": "string",
-            "description": "stage of the task, example: datacreation, preprocessing, training, finetuning, inference, retraining..., add a + between stages if several"
+            "description": "stage of the task, example: datacreation, preprocessing, training, finetuning, inference, retraining..., add a + between stages if several but we do recommand to measure each step independantly"
           },
           "taskFamily": {
             "type": "string",
-            "description": "machineLearning, deepLearning, multiAgents, symbolicAI... "
-          },
-          "trainingType": {
-            "type": "string",
-            "description": "type of training (if the stage corresponds to a training) : supervisedLearning, unsupervisedLearning, semiSupervisedLearning, reinforcementLearning, transferLearning ..."
+            "description": "the family of task you are running, e.g. text classification, image generation, speech recognition, robotics navigation..."
           },
           "nbRequest": {
             "type": "number",

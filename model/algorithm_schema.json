@@ -5,13 +5,17 @@
     "description": "the type of algorithm used by the computing task",
     "type": "object",
     "properties": {
-      "algorithmDescription": {
+      "trainingType": {
         "type": "string",
-        "description": "the family of task performed, example : classification, regression, chatbot, summarization, keyword extraction, image recognition, embeddings creation, rag..."
+        "description": "if applicable, type of training (if the stage corresponds to a training) : supervisedLearning, unsupervisedLearning, semiSupervisedLearning, reinforcementLearning, transferLearning ..."
+      },
+      "algorithmType": {
+        "type": "string",
+        "description": "the purpose, example : embeddings creation, rag, nlp..."
       },
       "algorithmName": {
         "type": "string",
-        "description": "the case-sensitive common name of the algorithm, example: randomForest, cnn, naive bayes..."
+        "description": "the case-sensitive common name of the algorithm, example: randomForest, naive bayes, cnn, rnn, transformers, if you are directly using a foundation model, let it empty and fill the field foundationModelName..."
       },
       "algorithmUri": {
         "type": "string",
