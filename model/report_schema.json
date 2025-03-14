@@ -116,13 +116,12 @@
           },
           "taskDescription": {
             "type": "string",
-            "description": "to fill if you have more details to share about your task"
-          },
+            "description": "free field, to be fillied in if you have more details to share about your task"
+          }
         },
         "required": [
-          "taskType",
-          "taskFamily",
           "taskStage",
+          "taskFamily",
           "algorithms",
           "dataset"
         ]
@@ -226,7 +225,7 @@
             "type": "number"
           },
           "location": {
-            "description": "More precise location like city, region or datacenter name",
+            "description": "more precise location like city, region or datacenter name",
             "type": "string"
           },
           "powerSupplierType": {
@@ -239,7 +238,7 @@
           },
           "powerSourceCarbonIntensity": {
             "type": "number",
-            "description": "Carbon intensity of the electicity you used (in gCO2eq/kWh)"
+            "description": "carbon intensity of the electicity you used (in gCO2eq/kWh)"
           }
         },
         "required": [

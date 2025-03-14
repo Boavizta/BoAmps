@@ -11,7 +11,7 @@
       },
       "algorithmType": {
         "type": "string",
-        "description": "the purpose, example : embeddings creation, rag, nlp..."
+        "description": "the type of algorithm used, example : embeddings creation, rag, nlp, neural network, llm..."
       },
       "algorithmName": {
         "type": "string",
