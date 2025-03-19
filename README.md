@@ -155,11 +155,15 @@ These could typically inspire the ground for a format of reporting.
 
 The validate-schema.py script (in the folder 'tools>schema_validator') allows you to validate that the json you have created correctly follows the schema we have defined (in the folder 'model'). 
 
-## 8. Automation of the report creation 
+## 8. Json flattener
+
+The flatten_json_to_csv.py script (in the folder 'tools>data_flattener') allows you to transform your json BoAmps format into tabular data. 
+
+## 9. Automation of the report creation 
 
 To make the use of this data model easier and more efficient, we want to develop a tool that automates the report creation. Initially, it would be a prototype overlaying CodeCarbon (started at the Boavizta hackathon of May in the folder 'tools>automated_report_creation'). To be continued
 
-## 9. Open source dataset
+## 10. Open source dataset
 
 The final objective is to create an open dataset (probably hosted on hugging face) so that anyone can share his consumption data about any task of ml with the whole community. It will help us to understand better what influences consumption and how we can better predict and manage it, in particular by extending tools such as ecologits. To be continued
 

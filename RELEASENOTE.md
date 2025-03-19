@@ -3,7 +3,7 @@ https://creativecommons.org/licenses/by/4.0/
 
 
 # 1.1.0
-Date: 2025-02-28 
+Date: 2025-03-19 
 ## Features 
 - Datamodel changes : https://github.com/Boavizta/BoAmps/issues/10
 - Creation of a concrete report example
