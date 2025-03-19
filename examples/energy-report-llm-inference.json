@@ -1,0 +1,91 @@
+{
+    "header": {
+        "licensing": "Creative Commons 4.0",
+        "formatVersion": "0.1",
+        "reportId": "2f4643f7-68b5-4fb6-21f0-b5dcda04897d",
+        "reportDatetime": "2025-02-26 16:57:00",
+        "reportStatus": "draft",
+        "publisher": {
+            "name": "sopra steria",
+            "confidentialityLevel": "public"
+        }
+    },
+    "task": {
+        "taskStage": "inference",
+        "taskFamily": "chatbot",
+        "nbRequest": 1,
+        "algorithms": [
+            {
+                "algorithmType": "llm",
+                "foundationModelName": "llama2-13b",
+                "foundationModelUri":"https://huggingface.co/meta-llama/Llama-2-13b-hf",
+                "framework": "vllm",
+                "parametersNumber": 13,
+                "quantization": "q16"
+            }
+        ],
+        "dataset": [
+            {
+                "dataUsage": "input",
+                "dataType": "token",
+                "dataQuantity": 11
+            },
+            {
+                "dataUsage": "output",
+                "dataType": "token",
+                "dataQuantity": 828
+            }
+        ],
+        "estimatedAccuracy":"veryGood"
+    },
+    "measures": [
+        {
+            "measurementMethod": "codecarbon",
+            "version": "2.5.0",
+            "cpuTrackingMode": "constant",
+            "gpuTrackingMode": "nvml",
+            "powerConsumption": 0.00267074,
+            "measurementDuration": 19.09390426,
+            "measurementDateTime": "2024-09-30 09:09:40"
+        }
+    ],
+    "system": {
+        "os": "linux"
+    },
+    "software": {
+        "language": "python",
+        "version": "3.10.12"
+    },
+    "infrastructure":{
+        "infraType": "publicCloud",
+        "cloudProvider": "ovh",
+        "components": [
+            {
+               "componentName": "Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz",
+               "componentType": "cpu",
+               "nbComponent": 30,
+               "manufacturer": "Intel",
+               "family": "Xeon",
+               "series": "Gold 6226R"
+            },
+            {
+                "componentName": "2 x Tesla V100S-PCIE-32GB",
+                "componentType": "gpu",
+                "nbComponent": 2,
+                "memorySize": 32,
+                "manufacturer": "Tesla",
+                "family": "V100"
+            },
+            {
+                "componentType": "ram",
+                "nbComponent": 1,
+                "memorySize": 86
+            }
+        ]
+    },
+    "environment": {
+        "country": "france",
+        "powerSupplierType": "public"
+    },
+    "quality": "high"
+}

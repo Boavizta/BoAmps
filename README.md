@@ -116,24 +116,14 @@ We know that this ideal conditions are not easy to assemble, so we let you provi
 
 ## 5. Understand the data model
 
-### Global structure
+### Global structure : organization between the various json files
 
-The report_schema.json is composed of few sub schemas : algorithm_schema.json, dataset_schema.json, hardware_schema.json, inference_schema.json & report_schema.json. 
+The report_schema.json is the main file and it makes reference to few sub schemas : algorithm_schema.json, dataset_schema.json, maeasure_schema.json & hardware_schema.json. 
 
-The main sections in the report are : 
-- header
-- tasks
-  - datasets
-    - inferences
-- measures
-- system
-- software
-- infrastructure
-- environment
-- quality
-- hash 
+Here is a diagram of the sections of the report and the links with the file names : 
 
-Most of these sections are mandatory but in each section, there are a lot of optionnal parameters to adapt to a wide variety of configurations. 
+![image](datamodel_diagram.png)
+It might seem like a lot of information to fill in, but the only mandatory parts are in bold with the asterisk. Inside these main parts, there are a lot of optionnal parameters to adapt to a wide variety of configurations. 
 
 ### Guidelines to create valuable report
 
@@ -165,11 +155,15 @@ These could typically inspire the ground for a format of reporting.
 
 The validate-schema.py script (in the folder 'tools>schema_validator') allows you to validate that the json you have created correctly follows the schema we have defined (in the folder 'model'). 
 
-## 8. Automation of the report creation 
+## 8. Json flattener
+
+The flatten_json_to_csv.py script (in the folder 'tools>data_flattener') allows you to transform your json BoAmps format into tabular data. 
+
+## 9. Automation of the report creation 
 
 To make the use of this data model easier and more efficient, we want to develop a tool that automates the report creation. Initially, it would be a prototype overlaying CodeCarbon (started at the Boavizta hackathon of May in the folder 'tools>automated_report_creation'). To be continued
 
-## 9. Open source dataset
+## 10. Open source dataset
 
 The final objective is to create an open dataset (probably hosted on hugging face) so that anyone can share his consumption data about any task of ml with the whole community. It will help us to understand better what influences consumption and how we can better predict and manage it, in particular by extending tools such as ecologits. To be continued
 

@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://raw.githubusercontent.com/Boavizta/ai-power-measures-sharing/main/model/hardware_schema.json",
+    "id": "https://raw.githubusercontent.com/Boavizta/BoAmps/main/model/hardware_schema.json",
     "title": "hardware",
     "description": "a hardware subsystem part of the infrastructure running the computing task",
     "type": "object",
@@ -15,7 +15,7 @@
       },
       "nbComponent": {
         "type": "integer",
-        "description": "the number of items of this component in your infrastructure"
+        "description": "the number of items of this component in your infrastructure, if you have 1 RAM of 32Go, fill 1 here and 32 inside memorySize"
       },
       "memorySize": {
         "type":"integer",
