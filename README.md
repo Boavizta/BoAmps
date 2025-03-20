@@ -11,11 +11,11 @@ The purpose thereby followed is to build a large, open, database of energy consu
 
 More concretely, this empiric knowledge may be used in applied research to improve frugal approaches in AI models grid search and avoid energy-intensive tasks.
 
-To unsure that this base is solid and useful, please read carefully the documentation so that everyone can take comparable measurements.
+To ensure that this base is solid and useful, please read carefully the documentation so that everyone can take comparable measurements.
 
 ## 2. Who should participate ? 
 
-People who runs machine learning models can contribute to this dataset. They just need to set up a measurement tool to be able to measure the energy consumption of their machine learning algorithms and our model will allows them to transform the energy consumption into very valuable data. 
+People who run machine learning models can contribute to this dataset. They just need to set up a measurement tool to be able to measure the energy consumption of their machine learning algorithms and our model will allow them to transform the energy consumption into very valuable data. 
 
 ## 3. Energy Measurement
 
@@ -79,12 +79,12 @@ end
 
 id5 <--> id9
 ```
-The ideal condition is to measure the energy consumption of both the server where your AI is deployed and also from the client server that query the AI.
+The ideal condition is to measure the energy consumption of both the server (where your AI is deployed) and the client that queries the AI.
 If the ideal case is not possible, prefer measurements on the AI side because we mainly want to measure the AI model's consumption and not your test tools or scripts. 
 
 ### Calibration
 
-If possible, please make one (or more) calibration measurement and provide it on your report (there are appropriate fields to do it in the measure_schema.json). It allows to seperate the consumption of your machine that is related to your actual ml task from it initial consuption. This is especially necessary when the machine is already being used for another power-hungry task.
+If possible, please make one (or more) calibration measurement and provide it on your report (there are appropriate fields to do it in the measure_schema.json). It allows to seperate the consumption of your machine that is related to your actual ml task from its initial consumption. This is especially necessary when the machine is already being used for another power-hungry task.
 
 **Calibration capture:**
 ```mermaid
@@ -118,16 +118,16 @@ We know that this ideal conditions are not easy to assemble, so we let you provi
 
 ### Global structure : organization between the various json files
 
-The report_schema.json is the main file and it makes reference to few sub schemas : algorithm_schema.json, dataset_schema.json, maeasure_schema.json & hardware_schema.json. 
+The report_schema.json is the main file and it makes reference to few sub schemas : algorithm_schema.json, dataset_schema.json, measure_schema.json & hardware_schema.json. 
 
 Here is a diagram of the sections of the report and the links with the file names : 
 
 ![image](datamodel_diagram.png)
-It might seem like a lot of information to fill in, but the only mandatory parts are in bold with the asterisk. Inside these main parts, there are a lot of optionnal parameters to adapt to a wide variety of configurations. 
+It might seem like a lot of information to fill in, but the only mandatory parts are in bold with the asterisk. Inside these main parts, there are a lot of optional parameters to adapt to a wide variety of configurations. 
 
 ### Guidelines to create valuable report
 
-The datamodel is complex and allows to describe a lot of different configurations : for example, you can provide provide the description of as many dataset or hardware components that you want. However, it is important to bear in mind that the more precise the report, the more usefull the information will be. For example, if you simply say that you performed 10000 inferences on different images of various sizes, using a supervised algorithm, that you were on the cloud and that you consumed x kWh, this will not allow you to deduce much information about the cost of an inference on a specific piece of data on a specific hardware. It is better to produce reports on a finer scale: I've run this recognition algorithm, I've measured the power consumption of the cpu and gpu of this model, I have made an inference about an image of this certain size...    
+The datamodel is complex and allows to describe a lot of different configurations: for example, you can provide the description of as many datasets or hardware components as you want. However, it is important to bear in mind that the more precise the report, the more useful the information will be. For example, if you simply say that you performed 10000 inferences on different images of various sizes, using a supervised algorithm, that you were on the cloud and that you consumed x kWh, this will not allow you to deduce much information about the cost of an inference on a specific piece of data on a specific hardware. It is better to produce reports on a finer scale: I've run this recognition algorithm, I've measured the power consumption of the cpu and gpu of this model, I have made an inference about an image of this certain size...    
 
 Read the schema carefully: some attributes are enumerations with detailed possible values, others are free fields. When this is the case, please describe things in a unique and unambiguous way to facilitate processing. We ask you to use the [camel_case](https://en.wikipedia.org/wiki/Camel_case) notation (e.g don't write "Random forest" or "Random_forest" but "randomForest" instead).
 
@@ -161,11 +161,11 @@ The flatten_json_to_csv.py script (in the folder 'tools>data_flattener') allows 
 
 ## 9. Automation of the report creation 
 
-To make the use of this data model easier and more efficient, we want to develop a tool that automates the report creation. Initially, it would be a prototype overlaying CodeCarbon (started at the Boavizta hackathon of May in the folder 'tools>automated_report_creation'). To be continued
+To make the use of this data model easier and more efficient, we want to develop a tool that automates the report creation. Initially, it would be a prototype overlaying CodeCarbon (started at the Boavizta hackathon of May 2024 in the folder 'tools>automated_report_creation'). To be continued...
 
 ## 10. Open source dataset
 
-The final objective is to create an open dataset (probably hosted on hugging face) so that anyone can share his consumption data about any task of ml with the whole community. It will help us to understand better what influences consumption and how we can better predict and manage it, in particular by extending tools such as ecologits. To be continued
+The final objective is to create an open dataset (probably hosted on hugging face) so that anyone can share his consumption data about any task of ML with the whole community. It will help us to understand better what influences consumption and how we can better predict and manage it, in particular by extending tools such as ecologits. To be continued...
 
 ## Let's GO 
-Thanks for your attention and your intention to measure the consumption of AI. It is an essential step into better knowledge about the impacts of thoses models.
+Thanks for your attention and your intention to measure the consumption of AI. It is an essential step into better knowledge about the impacts of these models.
