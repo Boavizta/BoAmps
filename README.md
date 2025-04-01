@@ -7,9 +7,9 @@ Welcome to our README for Boamps !
 
 With few words Boamps is : 
 - A datamodel to report energy consumption of AI/ML models
-- A OpenData linked with it [HERE](https://huggingface.co/datasets/boavizta/BoAmps_data) to store that generated data
+- A OpenData linked with it [HERE](https://huggingface.co/datasets/boavizta/BoAmps_data) to store that generated data (first temporary test repo)
 - Some tools to help fill the datamodel and validate it ( [HuggingFace tools](https://huggingface.co/spaces/boavizta/BoAmps_report_creation), 
-bash and excel tool for now but other language like python are on the roadmap ... )
+bash and excel tool)
   
   
 You should find here all the information that you want/need to :
@@ -25,8 +25,8 @@ You should find here all the information that you want/need to :
     - [Software-based](#software-based)
     - [Hardware-based](#hardware-based)
   - [4. How and What is to measure ?](#4-how-and-what-is-to-measure-)
-    - [Simple system :](#simple-system-)
-    - [Complexe system with API :](#complexe-system-with-api-)
+    - [Simple system](#simple-system)
+    - [Complex system with API](#complex-system-with-api)
     - [The Calibration process](#the-calibration-process)
     - [For ideals measurements](#for-ideals-measurements)
   - [5. Understand the data model](#5-understand-the-data-model)
@@ -53,13 +53,13 @@ As release in main branch, you will find :
 
 ## 1. Goals
 
-We have two main Goals : 
+We have two main goals : 
 - First one is to standardize the way of reporting energy consumption of ML/AI models by creating a datamodel in json. (This Repo)
-- Second one is to build a large, open, database of energy consumption of IT / AI tasks depending on data nature, algorithms, hardware, etc., in order to improve energy efficiency approaches based on empiric knowledge. Of course based on this datamodel (See our First version in huggingFace HERE)
+- Second one is to build a large, open, database of energy consumption of IT / AI tasks depending on data nature, algorithms, hardware, etc., in order to improve energy efficiency approaches based on empiric knowledge. Of course based on this datamodel (See our first test version on HuggingFace [HERE](https://huggingface.co/datasets/boavizta/BoAmps_data))
 
-Why ? you could ask : 
+Why ?  
 - Globally it is to setup a simple and resilient digital ecosystem, so as to gather homogeneous, well-formated measures of energy consumption from an atomic software task in general and Machine Learning / Deep Learning / AI / GenAI tasks in particular.
-- More concretely, this knowledge may be used in applied research to improve frugal approaches in AI models grid search and avoid energy-intensive tasks. Know More about ML/AI models consumption...
+- More concretely, this knowledge may be used in applied research to improve frugal approaches in AI and avoid energy-intensive tasks, know more about ML/AI models consumption...
 
 So to unsure that this base is solid and useful, please read carefully the documentation so that everyone can take comparable measurements.
 
@@ -86,27 +86,27 @@ It is assumed that the measurement of an atomic task can be achieved by one or s
 
 ## 4. How and What is to measure ?
 
-### Simple system : 
+### Simple system 
 
 Here is some example on where to put your measurement tool depending of the virtualized infrastructure (VM or Container) you have and capabilities :
 
-![image](Resources/SimpleSystemMeasure-001.png)
+![image](resources/SimpleSystemMeasure-001.png)
 
-Here is the same around the Physical Machine :
+Here is the same around the physical machine :
 
-![image](Resources/SimpleSystemMeasure-002.png)
+![image](resources/SimpleSystemMeasure-002.png)
 
 
-### Complexe system with API :
+### Complex system with API
 I have an API server which provide interfaces to my AI/ML model.
-<img src="Resources/SimpleSystemMeasure-003.png" alt="Complex System with API" style="transform: scale(0.6);">
+<img src="resources/SimpleSystemMeasure-003.png" alt="Complex System with API" style="transform: scale(0.6);">
 The ideal condition is to measure the energy consumption of both the server where your AI is deployed and also from the client server that query the AI.
 If the ideal case is not possible, prefer measurements on the AI side because we mainly want to measure the AI model's consumption and not your test tools or scripts. 
 
 ### The Calibration process
 
 If possible, please make one (or more) calibration measurement and provide it on your report (there are appropriate fields to do it in the measure_schema.json). It allows to seperate the consumption of your machine that is related to your actual ml task from it initial consuption. This is especially necessary when the machine is already being used for another power-hungry task.
-<img src="Resources/SimpleSystemMeasure-004.png" alt="Calibration Capture" style="transform: scale(0.7);">
+<img src="resources/SimpleSystemMeasure-004.png" alt="Calibration Capture" style="transform: scale(0.7);">
 
 ### For ideals measurements
 
@@ -122,10 +122,10 @@ We know that this ideal conditions are not easy to assemble, so we let you provi
 
 ### Global structure
 
-The report_schema.json is composed of few sub schemas : algorithm_schema.json, dataset_schema.json, hardware_schema.json, inference_schema.json & report_schema.json. 
+The report_schema.json is composed of few sub schemas : algorithm_schema.json, dataset_schema.json, hardware_schema.json & measureme_schema.json. 
 
 Here is a diagram of the sections of the report and the links with the file names :
-![image](Resources/datamodel_diagram.png)
+![image](resources/datamodel_diagram.png)
 
 It might seem like a lot of information to fill in, but the only mandatory parts are in bold with the asterisk. Inside these main parts, there are a lot of optionnal parameters to adapt to a wide variety of configurations.
 
@@ -133,7 +133,7 @@ It might seem like a lot of information to fill in, but the only mandatory parts
 
 The datamodel is complex and allows to describe a lot of different configurations : for example, you can provide provide the description of as many dataset or hardware components that you want. However, it is important to bear in mind that the more precise the report, the more usefull the information will be. For example, if you simply say that you performed 10000 inferences on different images of various sizes, using a supervised algorithm, that you were on the cloud and that you consumed x kWh, this will not allow you to deduce much information about the cost of an inference on a specific piece of data on a specific hardware. It is better to produce reports on a finer scale: I've run this recognition algorithm, I've measured the power consumption of the cpu and gpu of this model, I have made an inference about an image of this certain size...    
 
-Read the schema carefully: some attributes are enumerations with detailed possible values, others are free fields. When this is the case, please describe things in a unique and unambiguous way to facilitate processing. We ask you to use the [camel_case](https://en.wikipedia.org/wiki/Camel_case) notation (e.g don't write "Random forest" or "Random_forest" but "randomForest" instead).
+Read the schema carefully: some attributes are enumerations with detailed possible values, others are free fields. When this is the case, please describe things in a unique and unambiguous way to facilitate processing. We ask you to use the [camelCase](https://en.wikipedia.org/wiki/Camel_case) notation (e.g don't write "Random forest" or "Random_forest" but "randomForest" instead).
 
 
 ## 6. State-of-the-art 
@@ -179,15 +179,15 @@ To make the use of this data model easier and more efficient, we want to develop
 
 ### For the datamodel 
 
-![Roadmap Datamod Tools](Resources/Roadmap_datamodel.png)
+![Roadmap Datamod Tools](resources/Roadmap_datamodel.png)
 
 ### For the open Data Space
 
-![Roadmap Datamod Tools](Resources/Roadmap_OpenData.png)
+![Roadmap Datamod Tools](resources/Roadmap_OpenData.png)
 
 ### For the datamodel tools :
 
-![Roadmap Datamod Tools](Resources/Functional-Roadmap.png)
+![Roadmap Datamod Tools](resources/Functional-Roadmap.png)
 
 ## Let's GO 
 Thanks for your attention and your intention to measure the consumption of AI. It is an essential step into better knowledge about the impacts of thoses models.
