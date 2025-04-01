@@ -30,7 +30,7 @@ You should find here all the information that you want/need to :
     - [The Calibration process](#the-calibration-process)
     - [For ideals measurements](#for-ideals-measurements)
   - [5. Understand the data model](#5-understand-the-data-model)
-    - [Global structure : organization between the various json files](#global-structure--organization-between-the-various-json-files)
+    - [Global structure](#global-structure)
     - [Guidelines to create valuable report](#guidelines-to-create-valuable-report)
   - [6. State-of-the-art](#6-state-of-the-art)
     - [On ML tasks categorization](#on-ml-tasks-categorization)
@@ -120,9 +120,9 @@ We know that this ideal conditions are not easy to assemble, so we let you provi
 
 ## 5. Understand the data model
 
-### Global structure : organization between the various json files
+### Global structure
 
-The report_schema.json is the main file and it makes reference to few sub schemas : algorithm_schema.json, dataset_schema.json, maeasure_schema.json & hardware_schema.json. 
+The report_schema.json is composed of few sub schemas : algorithm_schema.json, dataset_schema.json, hardware_schema.json, inference_schema.json & report_schema.json. 
 
 Here is a diagram of the sections of the report and the links with the file names :
 ![image](Resources/datamodel_diagram.png)
