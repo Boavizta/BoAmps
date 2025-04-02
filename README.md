@@ -90,23 +90,23 @@ It is assumed that the measurement of an atomic task can be achieved by one or s
 
 Here is some example on where to put your measurement tool depending of the virtualized infrastructure (VM or Container) you have and capabilities :
 
-![image](resources/SimpleSystemMeasure-001.png)
+![image](Resources/SimpleSystemMeasure-001.png)
 
 Here is the same around the physical machine :
 
-![image](resources/SimpleSystemMeasure-002.png)
+![image](Resources/SimpleSystemMeasure-002.png)
 
 
 ### Complex system with API
 I have an API server which provide interfaces to my AI/ML model.
-<img src="resources/SimpleSystemMeasure-003.png" alt="Complex System with API" style="transform: scale(0.6);">
+<img src="Resources/SimpleSystemMeasure-003.png" alt="Complex System with API" style="transform: scale(0.6);">
 The ideal condition is to measure the energy consumption of both the server where your AI is deployed and also from the client server that query the AI.
 If the ideal case is not possible, prefer measurements on the AI side because we mainly want to measure the AI model's consumption and not your test tools or scripts. 
 
 ### The Calibration process
 
 If possible, please make one (or more) calibration measurement and provide it on your report (there are appropriate fields to do it in the measure_schema.json). It allows to seperate the consumption of your machine that is related to your actual ml task from it initial consuption. This is especially necessary when the machine is already being used for another power-hungry task.
-<img src="resources/SimpleSystemMeasure-004.png" alt="Calibration Capture" style="transform: scale(0.7);">
+<img src="Resources/SimpleSystemMeasure-004.png" alt="Calibration Capture" style="transform: scale(0.7);">
 
 ### For ideals measurements
 
@@ -125,7 +125,7 @@ We know that this ideal conditions are not easy to assemble, so we let you provi
 The report_schema.json is composed of few sub schemas : algorithm_schema.json, dataset_schema.json, hardware_schema.json & measureme_schema.json. 
 
 Here is a diagram of the sections of the report and the links with the file names :
-![image](resources/datamodel_diagram.png)
+![image](Resources/datamodel_diagram.png)
 
 It might seem like a lot of information to fill in, but the only mandatory parts are in bold with the asterisk. Inside these main parts, there are a lot of optionnal parameters to adapt to a wide variety of configurations.
 
@@ -179,15 +179,15 @@ To make the use of this data model easier and more efficient, we want to develop
 
 ### For the datamodel 
 
-![Roadmap Datamod Tools](resources/Roadmap_datamodel.png)
+![Roadmap Datamod Tools](Resources/Roadmap_datamodel.png)
 
 ### For the open Data Space
 
-![Roadmap Datamod Tools](resources/Roadmap_OpenData.png)
+![Roadmap Datamod Tools](Resources/Roadmap_OpenData.png)
 
 ### For the datamodel tools :
 
-![Roadmap Datamod Tools](resources/Functional-Roadmap.png)
+![Roadmap Datamod Tools](Resources/Functional-Roadmap.png)
 
 ## Let's GO 
 Thanks for your attention and your intention to measure the consumption of AI. It is an essential step into better knowledge about the impacts of thoses models.
