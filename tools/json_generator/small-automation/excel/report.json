@@ -1,0 +1,185 @@
+{
+	"header": {
+		"licensing": "h1",
+		"formatVersion": "h2",
+		"formatVersionSpecificationUri": "h3",
+		"reportId": "h4",
+		"reportDatetime": "h5",
+		"reportStatus": "final",
+		"publisher": {
+			"name": "p1",
+			"division": "p2",
+			"projectName": "p3",
+			"confidentialityLevel": "p4",
+			"publicKey": "p5"
+		}
+	},
+	"task": {
+		"taskType": "T1",
+		"taskFamily": "T2",
+		"taskStage": "T3",
+		"algorithms": [
+			{
+				"algorithmName": "a1.1",
+				"framework": "a1.2",
+				"frameworkVersion": "a1.3",
+				"classPath": "a1.4",
+				"hyperparameters": {
+					"tuning_method": "a1.5",
+					"values": [
+						{
+							"hyperparameterName": "a1.vn1",
+							"hyperparameterValue": "a1.vv1"
+						}
+					]
+				},
+				"quantization": "q1"
+			},
+			{
+				"algorithmName": "a2.1",
+				"framework": "a2.2",
+				"frameworkVersion": "a2.3",
+				"classPath": "a2.4",
+				"hyperparameters": {
+					"tuning_method": "a2.5",
+					"values": [
+						{
+							"hyperparameterName": "a2.vn1",
+							"hyperparameterValue": "a2.vv1",
+						},
+						{
+							"hyperparameterName": "a2.vn2",
+							"hyperparameterValue": "a2.vv2"
+						}
+					]
+				},
+				"quantization": "q2"
+			}
+		],
+		"dataset": [
+			{
+				"dataType": "boolean",
+				"fileType": "",
+				"volume": "12",
+				"volumeUnit": "Mo",
+				"items": "",
+				"shape": [
+					{
+						"item": "12345",
+					},
+					{
+						"item": "2"
+					}
+				],
+				"inferenceProperties": [
+					{
+						"nbRequest": "12",
+						"parametersNLP": {
+							"nbTokensInput": "200",
+							"nbWordsInput": "100",
+							"nbTokensOutput": "1000",
+							"nbWordsOutput": "2000",
+							"contextWindowSize": "10000",
+						}
+					}
+				],
+				"source": "public",
+				"sourceUri": "",
+				"owner": "sopra"
+			},
+			{
+				"dataType": "tabular",
+				"fileType": "",
+				"volume": "13323",
+				"volumeUnit": "Mo",
+				"items": "",
+				"shape": [
+					{
+						"item": "134",
+					},
+					{
+						"item": "3",
+					},
+					{
+						"item": "245"
+					}
+				],
+				"inferenceProperties": [
+					{
+						"nbRequest": "",
+						"parametersNLP": {
+							"nbTokensInput": "",
+							"nbWordsInput": "",
+							"nbTokensOutput": "",
+							"nbWordsOutput": "",
+							"contextWindowSize": "",
+						}
+					}
+				],
+				"source": "",
+				"sourceUri": "",
+				"owner": ""
+			}
+		],
+		"measuredAccuracy": "0,98",
+		"estimatedAccuracy": "good"
+	},
+	"measures": [
+		{
+			"measurementMethod": "codecarbon",
+			"manufacturer": "",
+			"version": "v2.1",
+			"cpuTrackingMode": "rapl",
+			"gpuTrackingMode": "nvml",
+			"averageUtilizationCpu": "0,7",
+			"averageUtilizationGpu": "0,9",
+			"serverSideInference": "server_side",
+			"unit": "kWh",
+			"powerCalibrationMeasurement": "",
+			"durationCalibrationMeasurement": "",
+			"powerConsumption": "123",
+			"measurementDuration": "8200",
+			"measurementDateTime": ""
+		}
+	],
+	"system": {
+		"os": "linux",
+		"distribution": "ubuntu",
+		"distributionVersion": ""
+	},
+	"software": {
+		"language": "privateCloud",
+		"version": "aws"
+	},
+	"infrastructure": {
+		" infraType": "N°1",
+		"cloudProvider": "cpu",
+		"cloudInstance": "4",
+		"components": [
+			{
+				"componentName": "",
+				"nbComponent": "",
+				"memorySize": "",
+				"manufacturer": "",
+				"family": "",
+				"series": "",
+				"share": ""
+			}
+		]
+	},
+	"environment": {
+		"country": "",
+		"latitude": "",
+		"longitude": "",
+		"location": "",
+		"powerSupplierType": "",
+		"powerSource": "high",
+		"powerSourceCarbonIntensity": ""
+	},
+	"quality": "ECDSA",
+	"$hash": {
+		"hashAlgorithm": "",
+		"cryptographicAlgorithm": "",
+		"value": ""
+	}
+}

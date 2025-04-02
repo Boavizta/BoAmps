@@ -1,0 +1,117 @@
+ID;Context;Category;Name;SubObjects;Type;Mandatory;Auto;CMD;EnumValues;DefaultValue;Question;Comment
+TEST;global;;header;;Object;TRUE;;;;;header;information about the source of the report and publishing organization's details
+TEST;header;basicField;licensing;;String;FALSE;TRUE;;;;licensing;the type of licensing applicable for the sharing of the report
+TEST;header;basicField;formatVersion;;String;TRUE;TRUE;Constante;;;formatVersion;the version of the specification of this set of schemas defining the report's fields
+TEST;header;basicField;formatVersionSpecificationUri;;String;FALSE;TRUE;Constante;;;formatVersionSpecificationUri;the URI of the present specification of this set of schemas
+TEST;header;basicField;reportId;;String;TRUE;TRUE;Code;;;reportId;the unique identifier of this report, preferably as a uuid4 string
+TEST;header;basicField;reportDatetime;;String;FALSE;TRUE;date;;;reportDatetime;the publishing date of this report in format YYYY-MM-DD HH:MM:SS
+TEST;header;basicField;reportStatus;;Enum;TRUE;FALSE;;draft, final, corrective, $other;;reportStatus;the status of this report
+TEST;header;basicField;publisher;;Object;TRUE;;;;;publisher;the details about the publishing organization who produced the report
+TEST;header;publisher;name;;String;FALSE;FALSE;;;;name;name of the organization
+TEST;header;publisher;division;;String;FALSE;FALSE;;;;division;name of the publishing department within the organization
+TEST;header;publisher;projectName;;String;FALSE;FALSE;;;;projectName;name of the publishing project within the organization
+TEST;header;publisher;confidentialityLevel;;Enum;TRUE;FALSE;;public, internal, confidential, secret;;confidentialityLevel;the confidentiality of the report
+TEST;header;publisher;publicKey;;String;FALSE;FALSE;;;;publicKey;the cryptographic public key to check the identity of the publishing organization
+TEST;header;basicField;publisher End;;ObjectEnd;TRUE;;;;;publisher End;
+TEST;global;header;header End;;ObjectEnd;TRUE;;;;;;
+TEST;global;basicField;task;;Object;TRUE; ;;;;task;the nature of the task being measured
+TEST;task;basicField;taskType;;String;TRUE; ;;;;taskType;type of the computing task of machine learning, example : datacreation, preprocessing, supervisedLearning, unsupervisedLearning, semiSupervisedLearning ...
+TEST;task;basicField;taskFamily;;String;TRUE; ;;;;taskFamily;the family of task performed, example : classification, regression, chatbot, summarization, keyword extraction, image recognition...
+TEST;task;basicField;taskStage;;String;TRUE; ;;;;taskStage;stage of the task, example: training, finetuning, reinforcement, inference, rag...
+TEST;task;basicField;algorithms;algorithm;Table;TRUE; ;;;;algorithms ;the main algorithmic approache(s) used by the computing task, Please fill as many columns as you need to describe your components
+TEST;task;algorithm;algorithmName;;String;TRUE; ;;;;algorithmName;the case-sensitive common name of the algorithm, example: randomForest, svm, xgboost...
+TEST;task;algorithm;framework;;String;FALSE; ;;;;framework;the common name of the software framework implementing the algorithm, if any
+TEST;task;algorithm;frameworkVersion;;String;FALSE; ;;;;frameworkVersion;the version of the software framework implementing the algorithm, if any
+TEST;task;algorithm;classPath;;String;FALSE; ;;;;classPath;the full class path of the algorithm within the framework, with elements separated by dots
+TEST;task;algorithm;hyperparameters;;Object;FALSE; ;;;;hyperparameters;
+TEST;task;hyperparameters;tuning_method;;String;FALSE; ;;;;tuning_method;the method of hyperparameters tuning used (if any), example: gridSearch, randomizedSearch...
+TEST;task;hyperparameters;values;value;Table;FALSE; ;;;;values ;Please fill as many columns as you need to describe your components
+TEST;task;value;hyperparameterName;;String;FALSE; ;;;;hyperparameterName;the name of the hyperparameter, example: c, kernel, gamma, class_weight...
+TEST;task;value;hyperparameterValue; ;String;FALSE; ;;;;hyperparameterValue;the value of the hyperparameter, example: rbf, 1e-4, 10, linear...
+TEST;task;hyperparameters;values End;value;TableEnd;FALSE; ;;;;values ;
+TEST;task;algorithm;hyperparameters End;;ObjectEnd;FALSE; ;;;;hyperparameters;
+TEST;task;algorithm;quantization;;Float;TRUE; ;;;;quantization;the data weights (in bits) obtained thanks to the quantization, example: 2, 8, 16...
+TEST;task;basicField;algorithms End;algorithm;TableEnd;TRUE;;;;;algorithms ;
+TEST;task;basicField;dataset;data;Table;TRUE;;;;;dataset;the list of dataset processed by the computing task. Please fill as many columns as you need to describe your components
+TEST;task;data;dataType;;Enum;TRUE;;;tabular, audio, boolean, image, video, object, text, $other;;dataType;the nature of the data, purposedly limited to basic types
+TEST;task;data;fileType;;String;FALSE;;;3gp, 3gpp, 3gpp2, 8svx, aa, aac, aax, act, afdesign, afphoto, ai, aiff, alac, amr, amv, ape, arrow, asf, au, avi, avif, awb, bmp, bpg, cd5, cda, cdr, cgm, clip, cpt, csv, deep, dirac, divx, drawingml, drw, dss, dvf, ecw, eps, fits, flac, flif, flv, flvf4v, gem, gerber, gif, gle, gsm, heif, hp-gl, html, hvif, ico, iklax, ilbm, img, ivs, jpeg, json, kra, lottie, m4a, m4b, m4p, m4v, mathml, matroska, mdp, mmf, movpkg, mp3, mpc, mpeg1, mpeg2, mpeg4, msv, mxf, naplps, netpbm, nmf, nrrd, nsv, odg, ods, ogg, opus, pam, parquet, pbm, pcx, pdf, pdn, pgf, pgm, pgml, pict, plbm, png, pnm, postscript, ppm, psd, psp, pstricks, qcc, quicktime, ra, raw, realmedia, regis, rf64, roq, sai, sgi, sid, sql, sln, svg, svi, swf, text, tga, tiff, tinyvg, tta, vicar, vivoactive, vml, vob, voc, vox, wav, webm, webp, wma, wmf, wmv, wv, xaml, xar, xcf, xisf, xls, xlsx, xml, xps, yaml, $other;;fileType;the file type of the dataset
+TEST;task;data;volume;;Integer;TRUE;;;;;volume;the size of the dataset
+TEST;task;data;volumeUnit;;String;TRUE;;;kilobyte, megabyte, gigabyte, terabyte, petabyte, exabyte, zettabyte, yottabyte;;volumeUnit;the unit of the size of the dataset
+TEST;task;data;items;;Integer;FALSE;;;;;items;the number of items in the dataset
+TEST;task;data;shape;shape;Table;FALSE;;;;;shape;the shape of each dataset item (for instance, an array of size 3, for greyscale images). Please fill as many columns as you need to describe your components
+TEST;task;shape;item;;Integer;FALSE;;;;;item;
+TEST;task;data;shape End;shape;TableEnd;FALSE;;;;;shape;
+TEST;task;data;inferenceProperties;inferenceProperty;Table;TRUE;;;;;inferenceProperties;if you are describing an inference, please describe the type of queries sent to the model. Please fill as many columns as you need to describe your components
+TEST;task;inferenceProperty;nbRequest;;Integer;TRUE;;;;;nbRequest;the number of requests the measure corresponds to (for example 100 prompts or 100 images)
+TEST;task;inferenceProperty;parametersNLP;;Object;FALSE;;;;;parametersNLP;if you are using inference on a NLP task, please fill these properties
+TEST;task;parametersNLP;nbTokensInput;;Integer;FALSE;;;;;nbTokensInput;the number of tokens in the input
+TEST;task;parametersNLP;nbWordsInput;;Integer;FALSE;;;;;nbWordsInput;the number of words in the input
+TEST;task;parametersNLP;nbTokensOutput;;Integer;FALSE;;;;;nbTokensOutput;the number of tokens in the response
+TEST;task;parametersNLP;nbWordsOutput;;Integer;FALSE;;;;;nbWordsOutput;the number of words in the response
+TEST;task;parametersNLP;contextWindowSize;;Integer;FALSE;;;;;contextWindowSize;the number of tokens your system keeps in memory to generate the next answer
+TEST;task;parametersNLP;cache;;Boolean;FALSE;;;;;cache;the presence of a cache function in the system, true or false
+TEST;task;inferenceProperty;parametersNLP End;;ObjectEnd;FALSE;;;;;parametersNLP;
+TEST;task;data;inferenceProperties End;inferenceProperty;TableEnd;TRUE;;;;;inferenceProperties;
+TEST;task;data;source;;String;FALSE;;;public, private, $other;;source;the kind of source of the dataset
+TEST;task;data;sourceUri;;String;FALSE;;;;;sourceUri;the URI of the dataset if available
+TEST;task;data;owner;;String;FALSE;;;;;owner;the owner of the dataset if available
+TEST;task;basicField;dataset End;data;TableEnd;TRUE;;;;;dataset;
+TEST;task;basicField;measuredAccuracy;;Float;FALSE;;;;;measuredAccuracy;the measured accuracy of your model (between 0 and 1)
+TEST;task;basicField;estimatedAccuracy;;Enum;FALSE;;;veryPoor, poor, average, good, veryGood;;estimatedAccuracy;if you didn't measure the accuracy of your model in concrete percentages, you can give an assessment of the precision between: VERY POOR, POOR, AVERAGE, GOOD, VERY GOOD
+TEST;global;basicField;task End;;ObjectEnd;TRUE; ;;;;task;
+TEST;global;basicField;measures;;Object;TRUE; ;;;;task;
+TEST;global;basicField;measures;measure;Table;TRUE;;;;;measures;the software and/or hardware measures of the computing task. Please fill as many columns as you need to describe your components
+TEST;measures;measure;measurementMethod;;String;TRUE;;;;;measurementMethod;the method used to perform the energy or FLOPS measure, example: codecarbon, carbonai, flops-compute, wattmeter...
+TEST;measures;measure;manufacturer;;String;FALSE;;;;;manufacturer;the builder of the measuring tool, if the measurement method is wattmeter
+TEST;measures;measure;version;;String;FALSE;;;;;version;the version of the measuring tool, if any
+TEST;measures;measure;cpuTrackingMode;;String;FALSE;;;;;cpuTrackingMode;the method used to track the consumption of the CPU, example: constant, rapl...
+TEST;measures;measure;gpuTrackingMode;;String;FALSE;;;;;gpuTrackingMode;the method used to track the consumption of the GPU, example: constant, nvml...
+TEST;measures;measure;averageUtilizationCpu;;String;FALSE;;;;;averageUtilizationCpu;the average percentage of use of the CPU during the task, for example: 0.5 if your CPU load was 50% on average
+TEST;measures;measure;averageUtilizationGpu;;String;FALSE;;;;;averageUtilizationGpu;the average percentage of use of the GPU during the task, for example: 0.8 if your GPU load was 80% on average
+TEST;measures;measure;serverSideInference;;String;FALSE;;;;;serverSideInference;if you practice inference through an API, do you estimate the consumption of the model server alone ? (because the model is deployed on your own server and you have access to the measurement, or because you have estimated it with a tool like EcoLogits). Or do you estimate the consumption from the inference server side or from both side at the same time ?
+TEST;measures;measure;unit;;Enum;TRUE;;;Wh, kWh, MWh, GWh, kJoule, MJoule, GJoule, TJoule, PJoule, BTU, kiloFLOPS, megaFLOPS, gigaFLOPS, teraFLOPS, petaFLOPS, exaFLOPS, zettaFLOPS, yottaFLOPS;;unit;the unit of the power consumption measure of the computing task
+TEST;measures;measure;powerCalibrationMeasurement;;Float;FALSE;;;;;powerCalibrationMeasurement;the power consumed during the calibration measure if any (to isolate the initial consumption of the hardware)
+TEST;measures;measure;durationCalibrationMeasurement;;Float;FALSE;;;;;durationCalibrationMeasurement;the duration of the calibration if any (in seconds)
+TEST;measures;measure;powerConsumption;;Float;TRUE;;;;;powerConsumption;the power consumption measure of the computing task
+TEST;measures;measure;measurementDuration;;Float;FALSE;;;;;measurementDuration;the duration of the measurement (in seconds)
+TEST;measures;measure;measurementDateTime;;Float;FALSE;;;;;measurementDateTime;the date when the measurement began, in format YYYY-MM-DD HH:MM:SS
+TEST;global;basicField;measures End;measure;TableEnd;TRUE;;;;;measures;
+TEST;global;basicField;measures;;ObjectEnd;TRUE; ;;;;task;
+TEST;global;basicField;system;;Object;TRUE;;;;;system;system information of the infrastructure on which is run the computing task
+TEST;system;basicField;os;;String;TRUE;;;;;os;name of the operating system
+TEST;system;basicField;distribution;;String;FALSE;;;;;distribution;distribution of the operating system
+TEST;system;basicField;distributionVersion;;String;FALSE;;;;;distributionVersion;distribution's version of the operating system
+TEST;global;basicField;system End;;ObjectEnd;TRUE;;;;;system;
+TEST;global;basicField;software;;Object;FALSE;;;;;software;the infrastructure on which is performed the computing task
+TEST;software;basicField;language;;String;TRUE;;;;;language;name of the programming language used, example : c, java, julia, python...
+TEST;sotware;basicField;version;;String;FALSE;;;;;version;version of the programming language used
+TEST;global;basiField;software End;;ObjectEnd;FALSE;;;;;software;
+TEST;global;basicField;infrastructure;;Object;TRUE;;;;;infrastructure;the infrastructure on which is performed the computing task
+TEST;infrastructure;basicField;infraType;;Enum;TRUE;FALSE;;publicCloud,privateCloud,onPremise,$other;publicCloud;infraType;the type of infrastructure used for the task
+TEST;infrastructure;basicField;cloudProvider;;String;FALSE;FALSE;;;;cloudProvider;If you are on the cloud, the name of your cloud provider, for example : aws, azure, google, ovh...
+TEST;infrastructure;basicField;cloudInstance;;String;FALSE;FALSE;;;;cloudInstance;If you are on the cloud, the name of your cloud instance, for example : a1.large, dasv4-type2...
+TEST;infrastructure;basicField;components;component;Table;TRUE;FALSE;;;;Components;Please fill as many columns as you need to describe your components
+TEST;infrastructure;component;componentName;;String;TRUE;FALSE;;;;componentName;the type of this subsystem part of your infrastructure, example: cpu, gpu, hdd, sdd...
+TEST;infrastructure;component;nbComponent;;Integer;TRUE;FALSE;;;;nbComponent;the number of items of this component in your infrastructure
+TEST;infrastructure;component;memorySize;;Integer;FALSE;FALSE;;;;memorySize;the size of the memory of the component in Gbytes
+TEST;infrastructure;component;manufacturer;;String;FALSE;FALSE;;;;manufacturer;the name of the manufacturer, example: nvidia
+TEST;infrastructure;component;family;;String;FALSE;FALSE;;;;family;the family of this component, example: geforce
+TEST;infrastructure;component;series;;String;FALSE;FALSE;;;;series;the series of this component, example: rtx4080
+TEST;infrastructure;component;share;;Float;FALSE;FALSE;;;;share;the percentage of the physical equipment used by the task (between 0 and 1)
+TEST;global;basicField;components End;component;TableEnd;TRUE;FALSE;;;;Components;
+TEST;global;basicField;infrastructure End;;ObjectEnd;TRUE;;;;;Infrastructure End;
+TEST;global;basicField;environment;;Object;TRUE;;;;;environment;environment of the infrastructure: region of calculation and energy used
+TEST;environment;basicField;country;;String;TRUE;;;;;country;
+TEST;environment;basicField;latitude;;Float;FALSE;;;;;latitude;
+TEST;environment;basicField;longitude;;Float;FALSE;;;;;longitude;
+TEST;environment;basicField;location;;String;FALSE;;;;;location;
+TEST;environment;basicField;powerSupplierType;;Enum;FALSE;;;public, private, internal, $other;;powerSupplierType;
+TEST;environment;basicField;powerSource;;Enum;FALSE;;;solar, wind, nuclear, hydroelectric, gas, coal, $other;;powerSource;
+TEST;environment;basicField;powerSourceCarbonIntensity;;Float;FALSE;;;;;powerSourceCarbonIntensity;
+TEST;global;basicField;environment End;;ObjectEnd;TRUE;;;;;environment End;
+TEST;global;basicField;quality;;Enum;FALSE;;;high, medium, low ;;quality;the quality of the information you provided, 3 possibilities : high (percentage error +/-10%), medium (percentage error +/-25%), low (percentage error +/-50%)
+TEST;global;basicField;$hash;;Object;TRUE;;;;;$hash;
+TEST;$hash;basicField;hashAlgorithm;;Enum;TRUE;;;MD5, RIPEMD-128, RIPEMD-160, RIPEMD-256, RIPEMD-320, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512;;hashAlgorithm;the hash function to apply first to the JSON report
+TEST;$hash;basicField;cryptographicAlgorithm;;Enum;TRUE;;;RSA, DSA, ECDSA, EDDSA;;cryptographicAlgorithm;the public key function to apply to the hash
+TEST;$hash;basicField;value;;String;TRUE;;;;;value;encrypted value of the hash value of the minimized JSON instance string, using the publisher's private key and including all root properties except the $hash property itself
+TEST;global;basicField;$hash End;;ObjectEnd;TRUE;;;;;$hash;

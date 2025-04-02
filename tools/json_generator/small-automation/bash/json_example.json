@@ -1,0 +1,144 @@
+{
+	"header": {
+		"licensing":"H1",
+		"formatVersion":"H2",
+		"formatVersionSpecificationUri":"H3",
+		"reportId":"H4",
+		"reportDatetime":"H5",
+		"reportStatus":"H6",
+		"publisher": {
+			"name":"HP1",
+			"division":"HP2",
+			"projectName":"HP3",
+			"confidentialityLevel":"HP5",
+			"publicKey":"HP7"
+			}
+		},
+	"task": {
+		"taskType":"T1",
+		"taskFamily":"T2",
+		"taskStage":"T3",
+		"algorithms": [
+			{
+			"algorithmName":"TA11",
+			"framework":"TA12",
+			"frameworkVersion":"TA13",
+			"classPath":"TA14",
+			"hyperparameters": {
+				"tuning_method":"TA1H1",
+				"values": [
+					{
+					"hyperparameterName":"TA1HV1",
+					"hyperparameterValue":"TA1HV2"
+					}
+				]
+				},
+			"quantization":"TA15"
+			},
+			{
+			"algorithmName":"TA21",
+			"framework":"TA22",
+			"frameworkVersion":"TA23",
+			"classPath":"TA24",
+			"hyperparameters": {
+				"tuning_method":"TA2H1",
+				"values": [
+					{
+					"hyperparameterName":"TA2H1V1",
+					"hyperparameterValue":"TA2H1V2"
+					}
+				]
+				},
+			"quantization":"TA25"
+			}
+		],
+		"dataset": [
+			{
+			"dataType":"TD11",
+			"fileType":"TD12",
+			"volume":"TD13",
+			"volumeUnit":"TD14",
+			"items":"TD15",
+			"shape": [
+				{
+				"item":"TD1S1"
+				}
+			],
+			"inferenceProperties": [
+				{
+				"nbRequest":"TD1IP1",
+				"parametersNLP": {
+					"nbTokensInput":"TD1IP1P1",
+					"nbWordsInput":"TD1IP1P2",
+					"nbTokensOutput":"TD1IP1P3",
+					"nbWordsOutput":"TD1IP1P4",
+					"contextWindowSize":"TD1IP1P5",
+					"cache":"TD1IP1P6"
+					}
+				}
+			],
+			"source":"TD16",
+			"sourceUri":"TD17",
+			"owner":"TD18"
+			}
+		],
+		"measuredAccuracy":"T4",
+		"estimatedAccuracy":"T5"
+		},
+	"measures": {
+		"measures": [
+			{
+			"measurementMethod":"M11",
+			"manufacturer":"M12",
+			"version":"M13",
+			"cpuTrackingMode":"M14",
+			"gpuTrackingMode":"M15",
+			"averageUtilizationCpu":"M16",
+			"averageUtilizationGpu":"M17",
+			"serverSideInference":"M18",
+			"unit":"M19",
+			"powerCalibrationMeasurement":"M110",
+			"durationCalibrationMeasurement":"M111",
+			"powerConsumption":"M112",
+			"measurementDuration":"M113",
+			"measurementDateTime":"M114"
+			}
+		]
+		},
+	"system": {
+		"os":"S1",
+		"distribution":"S2",
+		"distributionVersion":"S3"
+		},
+	"infrastructure": {
+		"infraType":"I1",
+		"cloudProvider":"I2",
+		"cloudInstance":"I3",
+		"components": [
+			{
+			"componentName":"IC11",
+			"nbComponent":"IC12",
+			"memorySize":"IC13",
+			"manufacturer":"IC14",
+			"family":"IC15",
+			"series":"IC16",
+			"share":"IC17"
+			}
+		]
+		},
+	"environment": {
+		"country":"E1",
+		"latitude":"E2",
+		"longitude":"E3",
+		"location":"E4",
+		"powerSupplierType":"E5",
+		"powerSource":"E6",
+		"powerSourceCarbonIntensity":"E7"
+		},
+	"quality":"H7",
+	"$hash": {
+		"hashAlgorithm":"HA1",
+		"cryptographicAlgorithm":"HA2",
+		"value":"HA3"
+		}
+}
