@@ -1,0 +1,4 @@
+torch 
+codecarbon 
+psutil 
+wmi 
