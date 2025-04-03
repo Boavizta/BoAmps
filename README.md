@@ -100,6 +100,7 @@ Here is the same around the physical machine :
 ### Complex system with API
 I have an API server which provide interfaces to my AI/ML model.
 <img src="Resources/SimpleSystemMeasure-003.png" alt="Complex System with API" style="transform: scale(0.6);">
+
 The ideal condition is to measure the energy consumption of both the server where your AI is deployed and also from the client server that query the AI.
 If the ideal case is not possible, prefer measurements on the AI side because we mainly want to measure the AI model's consumption and not your test tools or scripts. 
 
