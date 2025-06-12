@@ -1,10 +1,10 @@
 #!/bin/bash
 
 ##########################################
-# Script de Generation et mise au format du datamodel AI power measurement sharing
+# Script de mise au format json d'un formulaire texte generé par gen_form.sh lié au datamodel Boamps
 # Author : dfovet
-# Version : 0.1
-# Date : 20240731
+# Version : 0.86
+# Date : 20250609
 #########################################
 
 ##########################################
@@ -18,12 +18,13 @@ echo "-----------------------------------------------------"
 echo "But du script : Transformer un rapport au format texte en un json suivant le modele de donnees ai power measurements"
 echo ""
 echo "Structure de la commande : "
-echo "./form2json.sh <Type de generation> <Fichier formulaire a convertir> > <Nom du fichier de sortie>"
+echo "./form2json.sh <Type de generation> <CSV de reference> <Fichier formulaire a convertir>"
+echo "exemple: ./form2json.sh -a Ref_CodeCarbon.csv report1.txt > json_example.json"
 echo "<Type de generation>"
 echo " -a pour ALL genere un formulaire incluant les champs obligatoires et facultatifs"
-echo " -m pour MANDATORY genere un formulaire incluant les champs obligatoires seulement"
-echo "exemple: ./form2json.sh -a form_example.txt > json_example.json"
-
+echo "<CSV de reference>"
+echo "Fichier descriptif du model de données de preference le même que celui utilisé lors de la generation du formulaire "
+echo "Exemple : Ref_CodeCarbon.csv Pour préremplir dans le formulaire a partir d'un csv CodeCarbon"
 }
 
 ##########################################
@@ -91,17 +92,15 @@ DATETAG=`date +%y%m%d-%H%M`
 BASEDIR=$(pwd)
 BASENAME0=$(basename "$0")
 LOGDIR="$BASEDIR/Log"
-NPARAMS=2
+NPARAMS=3
 LOGFILE="$LOGDIR/$BASENAME0_$2_$DATETAG.log"
 RESULTFILE="$LOGDIR/Result_$BASENAME0_$2_$DATETAG.log"
-ficForm=$2
+ficRef=$2
+ficForm=$3
+nbligneparam=$(wc -l < $ficRef)
 nbtab=0
-HorizT='├'
-HLine='─'
-ELine='└'
 nbtable=0
 nbentry=1
-startChar=$HorizT
 idreadline=10
 refline=2
 indent=0
@@ -116,8 +115,7 @@ refList=();
 #################################################################
 if [[ $# -lt "$NPARAMS" || $# -gt "$NPARAMS" ]]
    then
-       echo "ce script a besoin de $minparams arguments en entree!"
-       echo "Liste des arguments passes en parametre : $@"
+       echo "ce script a besoin de $NPARAMS arguments en entree!"
        usage
 exit 0
 fi
@@ -159,25 +157,15 @@ let "indent++"
 ########################################## 
 # On parcourt le tableau de references et on construit pour chaque ligne la version fichier texte
 #########################################
-for (( refline=2; refline<=113; refline++ ))
+for (( refline=2; refline<=$nbligneparam; refline++ ))
 do
     #On recupere les informations de la ligne du tableau de reference
-    strID=$(readtab ./references.param 1 $refline)
-    strContext=$(readtab ./references.param 2 $refline)
-    strCategorie=$(readtab ./references.param 3 $refline)
-    strName=$(readtab ./references.param 4 $refline)
-    strSubObject=$(readtab ./references.param 5 $refline)
-    strType=$(readtab ./references.param 6 $refline)
-    strMandatory=$(readtab ./references.param 7 $refline)
-    strAuto=$(readtab ./references.param 8 $refline)
-    strCmd=$(readtab ./references.param 9 $refline)
-    strEnum=$(readtab ./references.param 10 $refline)
-    strDefvalue=$(readtab ./references.param 11 $refline)
-    strQuestion=$(readtab ./references.param 12 $refline)
-    strComment=$(readtab ./references.param 13 $refline)
-    strNextType=$(readtab ./references.param 6 $((refline + 1)))
+    strName=$(readtab $ficRef 4 $refline)
+    strType=$(readtab $ficRef 6 $refline)
+    strMandatory=$(readtab $ficRef 7 $refline)
+    strNextType=$(readtab $ficRef 6 $((refline + 1)))
 
-
+    #Ici on teente de gerer le cote mandatory mais pas completement testé dans cette version
     if [[ "$strMandatory" == "TRUE" ]] 
     then       
         strMandatory="MANDATORY"
@@ -185,11 +173,37 @@ do
         strMandatory="OPTIONAL"
     fi
 
-    if [[ "$strNextType" != "ObjectEnd" ]] && [[ "$strNextType" != "TableEnd" ]] && [[ "$strNextType" != "" ]] 
-    then       
+    #On set les characteres de fin de ligne au mieux par rapport au type suivant (changemetn d'objet ou de table
+    if [[ "$strNextType" != "ObjectEnd" ]] && [[ "$strNextType" != "TableEnd" ]] && [[ "$strNextType" != "" ]]
+    then
+        #echo "Debug : in"
         endline=","
     else
         endline=""
+    fi
+
+    #ici on prend en compte si les champt suivant sont vide pour corriger el charactere de fin de ligne cela fonctionne aussi pour les objects et les tables
+    array=("Integer${IFS}Enum${IFS}values End${IFS}String${IFS}Integer${IFS}Float${IFS}Boolean${IFS}ObjectEnd${IFS}TableEnd")
+    isInArray="$strType"
+
+    if [[ "${IFS}${array[*]}${IFS}" =~ "${IFS}${isInArray}${IFS}" ]] && [[ $strNextType != "DocumentEnd" ]]
+    then
+      dim=1
+      videsuiv=1
+      while [[ $videsuiv -eq 1 ]]
+      do
+        if [[ $(readlineval $ficForm $((idreadline + $dim))) == "" ]]
+        then
+          if [[ $(readtab $ficRef 6 $((refline + $dim + 1))) == "TableEnd" ]] || [[ $(readtab $ficRef 6 $((refline + $dim + 1))) == "ObjectEnd" ]] || [[ $(readtab $ficRef 6 $((refline + $dim + 1))) == "DocumentEnd" ]]
+          then
+            endline=""
+            videsuiv=0
+          fi
+          let "dim++"
+        else
+          videsuiv=0
+        fi
+      done
     fi
 
     case $strType in
@@ -202,32 +216,48 @@ do
 
         "Enum")
             value=$(readlineval $ficForm $idreadline)
-            indentification $indent
-            echo "\"$strName\":\"$value\"$endline"
+            if [[ $value != "" ]]
+            then
+              indentification $indent
+              echo "\"$strName\":\"$value\"$endline"
+            fi
             ;;
             
         "String")
             value=$(readlineval $ficForm $idreadline)
-            indentification $indent
-            echo "\"$strName\":\"$value\"$endline"
+            if [[ $value != "" ]]
+            then
+              indentification $indent
+              echo "\"$strName\":\"$value\"$endline"
+            fi
             ;;
             
         "Integer")
             value=$(readlineval $ficForm $idreadline)
-            indentification $indent
-            echo "\"$strName\":\"$value\"$endline"
+            if [[ $value != "" ]]
+            then
+              indentification $indent
+              echo "\"$strName\":$value$endline"
+            fi
+
             ;;
 
         "Float")
             value=$(readlineval $ficForm $idreadline)
-            indentification $indent
-            echo "\"$strName\":\"$value\"$endline"
+            if [[ $value != "" ]]
+            then
+              indentification $indent
+              echo "\"$strName\":$value$endline"
+            fi
             ;;
 
         "Boolean")
             value=$(readlineval $ficForm $idreadline)
-            indentification $indent
-            echo "\"$strName\":\"$value\"$endline"
+            if [[ $value != "" ]]
+            then
+              indentification $indent
+              echo "\"$strName\":\"$value\"$endline"
+            fi
             ;;
 
         "Table")     
@@ -286,7 +316,8 @@ do
                 nbentry=${refList[$((nbtable-1))]}
                 refline=$((reflineList[$((nbtable-1))] - 1))
 
-                echo "$(indentification $indent)}$endline"
+                #echo "$(indentification $indent)}$endline"
+                echo "$(indentification $indent)},"
                 echo "$(indentification $indent){"
 
             else
@@ -312,13 +343,6 @@ do
                 if [ $nbtab -gt 0 ]; then let "nbtab--" ; fi
             fi
 
-            array=("hyperparameters End${IFS}parametersNLP End")
-            isInArray="$strName"
-
-            if [[ "${IFS}${array[*]}${IFS}" =~ "${IFS}${isInArray}${IFS}" ]]; then
-                if [ $nbtab -gt 0 ]; then let "nbtab--" ; fi
-            fi
-            
             echo "$(indentification $indent)}$endline"
             let "indent--"
 

@@ -1,135 +1,139 @@
-[Config]  # NE PAS MODIFIER
- ├nbAlgo=2   # Nombre occurences objet algorithm dans le formulaire
- ├nbAlgoHyperparamVal=1    #Nombre d'occurences object Hyperparameter Value par algorithm dans le formulaire
- ├nbDataset=1    #Nombre occurences object dataset dans le formulaire
- ├nbDatasetShape=1      #Nombre occurences object shape par dataset dans le formulaire
- ├datasetInferenceProperties=1      #Nombre occurences object InferenceProperties par dataset dans le formulaire
- ├nbMeasures=1      #Nombre occurences object Measures dans le formulaire
- ├infraComponents=1    #Nombre occurences object Components dans le formulaire
+[Config]  # DO NOT MODIFY
+ ├nbAlgo=1                                              #Number of Algorithm object occurrences in the form
+ ├nbAlgoHyperparamVal=1                    #Number of Hyperparameter Value object occurrences per Algorithm in the form
+ ├nbDataset=2                                        #Number of Dataset object occurrences in the form
+ ├nbDatasetShape=1                              #Number of Shape object occurrences per Dataset in the form
+ ├datasetInferenceProperties=1      #Number of InferenceProperties object occurrences per Dataset in the form
+ ├nbMeasures=1                                      #Number of Measures object occurrences in the form
+ ├infraComponents=3                            #Number of Components object occurrences in the form
  └
- [header]                                                                                             #MANDATORY : information about the source of the report and publishing organization's details
- ├licensing=H1                                                                                         #OPTIONAL as {String} : the type of licensing applicable for the sharing of the report
- ├formatVersion=H2                                                                                   #MANDATORY as {String} : the version of the specification of this set of schemas defining the report's fields
- ├formatVersionSpecificationUri=H3                                                                     #OPTIONAL as {String} : the URI of the present specification of this set of schemas
- ├reportId= H4                                                                                          #MANDATORY as {String} : the unique identifier of this report, preferably as a uuid4 string
- ├reportDatetime= H5                                                                                    #OPTIONAL as {String} : the publishing date of this report in format YYYY-MM-DD HH:MM:SS
- ├reportStatus= H6                                                                                     #MANDATORY value in {draft, final, corrective, $other} : the status of this report
- |  [publisher]                                                                                      #MANDATORY : the details about the publishing organization who produced the report
- |   ├name=HP1                                                                                          #OPTIONAL as {String} : name of the organization
- |   ├division=HP2                                                                                      #OPTIONAL as {String} : name of the publishing department within the organization
- |   ├projectName= HP3                                                                                   #OPTIONAL as {String} : name of the publishing project within the organization
- |   ├confidentialityLevel= HP5                                                                          #MANDATORY value in {public, internal, confidential, secret} : the confidentiality of the report
- |   ├publicKey=     HP7                                                                           #OPTIONAL as {String} : the cryptographic public key to check the identity of the publishing organization
+[header]                                                                                             #MANDATORY : Information About The Source Of The Report And Publishing Organization'S Details
+ ├licensing=                                                                                         #OPTIONAL as {String} : The Type Of Licensing Applicable For The Sharing Of The Report
+ ├formatVersion=                                                                                     #MANDATORY as {String} : The Version Of The Specification Of This Set Of Schemas Defining The Report'S Fields
+ ├formatVersionSpecificationUri=                                                                     #OPTIONAL as {String} : The Uri Of The Present Specification Of This Set Of Schemas
+ ├reportId=831a17e5-38ce-4bf6-bc25-8667841f36f8                                                      #MANDATORY as {String} : The Unique Identifier Of This Report, Preferably As A Uuid4 String
+ ├reportDatetime=2025-03-04T13:00:02                                                                 #OPTIONAL as {String} : The Publishing Date Of This Report In Format Yyyy-Mm-Dd Hh:Mm:Ss
+ ├reportStatus=                                                                                      #MANDATORY value in {draft, final, corrective, $other} : The Status Of This Report
+ |  [publisher]                                                                                      #MANDATORY : The Details About The Publishing Organization Who Produced The Report
+ |   ├name=                                                                                          #OPTIONAL as {String} : Name Of The Organization
+ |   ├division=                                                                                      #OPTIONAL as {String} : Name Of The Publishing Department Within The Organization
+ |   ├projectName=                                                                                   #OPTIONAL as {String} : Name Of The Publishing Project Within The Organization
+ |   ├confidentialityLevel=                                                                          #MANDATORY value in {public, internal, confidential, secret} : The Confidentiality Of The Report
+ |   ├publicKey=                                                                                     #OPTIONAL as {String} : The Cryptographic Public Key To Check The Identity Of The Publishing Organization
  |   └                                                                                               
  └                                                                                                   
-[task]                                                                                               #MANDATORY : the nature of the task being measured
- ├taskType=  T1                                                                                        #MANDATORY as {String} : type of the computing task of machine learning, example : datacreation, preprocessing, supervisedLearning, unsupervisedLearning, semiSupervisedLearning ...
- ├taskFamily=  T2                                                                                      #MANDATORY as {String} : the family of task performed, example : classification, regression, chatbot, summarization, keyword extraction, image recognition...
- ├taskStage=   T3                                                                                      #MANDATORY as {String} : stage of the task, example: training, finetuning, reinforcement, inference, rag...
- ├(algorithms.1)                                                                                     #MANDATORY : the main algorithmic approache(s) used by the computing task, Please fill as many columns as you need to describe your components
- |   ├algorithmName= TA11                                                                                 #MANDATORY as {String} : the case-sensitive common name of the algorithm, example: randomForest, svm, xgboost...
- |   ├framework=     TA12                                                                                #OPTIONAL as {String} : the common name of the software framework implementing the algorithm, if any
- |   ├frameworkVersion= TA13                                                                             #OPTIONAL as {String} : the version of the software framework implementing the algorithm, if any
- |   ├classPath=           TA14                                                                          #OPTIONAL as {String} : the full class path of the algorithm within the framework, with elements separated by dots
- |   |  [hyperparameters]                                                                            #OPTIONAL : 
- |   |   ├tuning_method=    TA1H1                                                                         #OPTIONAL as {String} : the method of hyperparameters tuning used (if any), example: gridSearch, randomizedSearch...
- |   |   ├(values.1)                                                                                 #OPTIONAL : Please fill as many columns as you need to describe your components
- |   |   |   ├hyperparameterName= TA1HV1                                                                    #OPTIONAL as {String} : the name of the hyperparameter, example: c, kernel, gamma, class_weight...
- |   |   |   ├hyperparameterValue= TA1HV2                                                                   #OPTIONAL as {String} : the value of the hyperparameter, example: rbf, 1e-4, 10, linear...
- |   |   |   └                                                                                       
- |   |   └                                                                                           
- |   ├quantization=  TA15                                                                                #MANDATORY as {Float} : the data weights (in bits) obtained thanks to the quantization, example: 2, 8, 16...
+[task]                                                                                               #MANDATORY : The Nature Of The Task Being Measured
+ ├taskFamily=                                                                                        #MANDATORY as {String} : The Family Of Task You Are Running, E.G. Text Classification, Image Generation, Speech Recognition, Robotics Navigation...
+ ├taskStage=                                                                                         #MANDATORY as {String} : Stage Of The Task, Example: Datacreation, Preprocessing, Training, Finetuning, Inference, Retraining..., Add A + Between Stages If Several But We Do Recommand To Measure Each Step Independantly
+ ├nbRequest=                                                                                         #MANDATORY as {String} : If Inference Stage, The Number Of Requests The Measure Corresponds To, 0 Or Empty If You'Re Not Measuring The Inference Stage
+ ├(algorithms.1)                                                                                     #MANDATORY : The List Of The Main Algorithmic Approache(S) Used By The Computing Task
+ |   ├trainingType=                                                                                  #OPTIONAL as {String} : If Applicable, Type Of Training (If The Stage Corresponds To A Training) : Supervisedlearning, Unsupervisedlearning, Semisupervisedlearning, Reinforcementlearning, Transferlearning ...
+ |   ├algorithmType=                                                                                 #OPTIONAL as {String} : The Type Of Algorithm Used, Example : Embeddings Creation, Rag, Nlp, Neural Network, Llm...
+ |   ├algorithmName=                                                                                 #OPTIONAL as {String} : The Case-Sensitive Common Name Of The Algorithm, Example: Randomforest, Naive Bayes, Cnn, Rnn, Transformers, If You Are Directly Using A Foundation Model, Let It Empty And Fill The Field Foundationmodelname...
+ |   ├algorithmUri=                                                                                  #OPTIONAL as {String} : The Uri Of The Model, If Publicly Available
+ |   ├foundationModelName=                                                                           #OPTIONAL as {String} : If A Foundation Model Is Used, Its Case-Sensitive Common Name, Example: Llama3.1-8B, Gpt4-O...
+ |   ├foundationModelUri=                                                                            #OPTIONAL as {String} : The Uri Of The Foundation Model, If Publicly Available
+ |   ├parametersNumber=                                                                              #OPTIONAL as {Float} : Number Of Billions Of Total Parameters Of Your Model, E.G. 8 For Llama3.1-8B
+ |   ├framework=                                                                                     #OPTIONAL as {String} : The Common Name Of The Software Framework Implementing The Algorithm, If Any
+ |   ├frameworkVersion=                                                                              #OPTIONAL as {String} : The Version Of The Software Framework Implementing The Algorithm, If Any
+ |   ├classPath=                                                                                     #OPTIONAL as {String} : The Full Class Path Of The Algorithm Within The Framework, With Elements Separated By Dots
+ |   ├layersNumber=                                                                                  #OPTIONAL as {Float} : If Deep Learning, Precise The Number Of Layers In Your Network
+ |   ├epochsNumber=                                                                                  #OPTIONAL as {Float} : If Training, The Number Of Complete Passes Through The Training Dataset
+ |   ├optimizer=                                                                                     #OPTIONAL as {String} : The Algorithm Used To Optimize The Models Weights, E.G. Gridsearch, Lora, Adam
+ |   ├quantization=                                                                                  #MANDATORY as {String} : The Type Of Quantization Used : Fp32, Fp16, B16, Int8 ...
  |   └                                                                                               
- ├(algorithms.2)                                                                                     #MANDATORY : the main algorithmic approache(s) used by the computing task, Please fill as many columns as you need to describe your components
- |   ├algorithmName=TA21                                                                                 #MANDATORY as {String} : the case-sensitive common name of the algorithm, example: randomForest, svm, xgboost...
- |   ├framework=TA22                                                                                     #OPTIONAL as {String} : the common name of the software framework implementing the algorithm, if any
- |   ├frameworkVersion=   TA23                                                                           #OPTIONAL as {String} : the version of the software framework implementing the algorithm, if any
- |   ├classPath=   TA24                                                                                  #OPTIONAL as {String} : the full class path of the algorithm within the framework, with elements separated by dots
- |   |  [hyperparameters]                                                                            #OPTIONAL : 
- |   |   ├tuning_method= TA2H1                                                                             #OPTIONAL as {String} : the method of hyperparameters tuning used (if any), example: gridSearch, randomizedSearch...
- |   |   ├(values.1)                                                                                 #OPTIONAL : Please fill as many columns as you need to describe your components
- |   |   |   ├hyperparameterName= TA2H1V1                                                                   #OPTIONAL as {String} : the name of the hyperparameter, example: c, kernel, gamma, class_weight...
- |   |   |   ├hyperparameterValue=  TA2H1V2                                                                 #OPTIONAL as {String} : the value of the hyperparameter, example: rbf, 1e-4, 10, linear...
- |   |   |   └                                                                                       
- |   |   └                                                                                           
- |   ├quantization=  TA25                                                                                #MANDATORY as {Float} : the data weights (in bits) obtained thanks to the quantization, example: 2, 8, 16...
+ ├(dataset.1)                                                                                        #MANDATORY : The List Of Dataset Processed And/Or Generated By The Computing Task, If You Are Working On Multipodal Training You Can Add Many Items To The List To Describe It. If You Are Working On Inference, You Can Add At Least One Item To Describe The Input Data And Another One For The Output
+ |   ├dataUsage=                                                                                     #MANDATORY value in {"""input"", ""output"""} : The Use Of The Dataset: Is It Used As Model Input Or Output ?
+ |   ├dataType=                                                                                      #MANDATORY value in {tabular, audio, boolean, image, video, object, text, $other} : The Nature Of The Data Used
+ |   ├dataFormat=                                                                                    #OPTIONAL value in {} : If The Data Is Passed In The Form Of A File, What Format Is The Data In?
+ |   ├dataSize=                                                                                      #OPTIONAL as {Float} : The Size Of The Dataset (In Go), If Small Quantity Just Fill The Field Nbitems
+ |   ├dataQuantity=                                                                                  #OPTIONAL as {Float} : The Number Of Data In The Dataset, E.G. 3 (Images, Audio Or Tokens)
+ |   ├shape=                                                                                         #OPTIONAL as {String} : The Shape Of Your Dataset, Can Be Found With X.Shape With Dataframes, E.G. (12, 1000) For A 2D Table With 12 Columns And 1000 Rows
+ |   ├source=                                                                                        #OPTIONAL as {String} : The Kind Of Source Of The Dataset
+ |   ├sourceUri=                                                                                     #OPTIONAL as {String} : The Uri Of The Dataset If Available
+ |   ├owner=                                                                                         #OPTIONAL as {String} : The Owner Of The Dataset If Available
  |   └                                                                                               
- ├(dataset.1)                                                                                        #MANDATORY : the list of dataset processed by the computing task. Please fill as many columns as you need to describe your components
- |   ├dataType= TD11                                                                                     #MANDATORY value in {tabular, audio, boolean, image, video, object, text, $other} : the nature of the data, purposedly limited to basic types
- |   ├fileType= TD12                                                                                     #OPTIONAL as {String} : the file type of the dataset
- |   ├volume=  TD13                                                                                      #MANDATORY as {Integer} : the size of the dataset
- |   ├volumeUnit= TD14                                                                                    #MANDATORY as {String} : the unit of the size of the dataset
- |   ├items=  TD15                                                                                       #OPTIONAL as {Integer} : the number of items in the dataset
- |   ├(shape.1)                                                                                      #OPTIONAL : the shape of each dataset item (for instance, an array of size 3, for greyscale images). Please fill as many columns as you need to describe your components
- |   |   ├item= TD1S1                                                                                     #OPTIONAL as {Integer} : 
- |   |   └                                                                                           
- |   ├(inferenceProperties.1)                                                                        #MANDATORY : if you are describing an inference, please describe the type of queries sent to the model. Please fill as many columns as you need to describe your components
- |   |   ├nbRequest= TD1IP1                                                                                #MANDATORY as {Integer} : the number of requests the measure corresponds to (for example 100 prompts or 100 images)
- |   |   |  [parametersNLP]                                                                          #OPTIONAL : if you are using inference on a NLP task, please fill these properties
- |   |   |   ├nbTokensInput= TD1IP1P1                                                                          #OPTIONAL as {Integer} : the number of tokens in the input
- |   |   |   ├nbWordsInput=     TD1IP1P2                                                                     #OPTIONAL as {Integer} : the number of words in the input
- |   |   |   ├nbTokensOutput=   TD1IP1P3                                                                     #OPTIONAL as {Integer} : the number of tokens in the response
- |   |   |   ├nbWordsOutput=  TD1IP1P4                                                                       #OPTIONAL as {Integer} : the number of words in the response
- |   |   |   ├contextWindowSize=    TD1IP1P5                                                                 #OPTIONAL as {Integer} : the number of tokens your system keeps in memory to generate the next answer
- |   |   |   ├cache= TD1IP1P6                                                                               #fsrqefsdfqsdfqqsfdq
- |   |   |   └                                                                                       
- |   |   └                                                                                           
- |   ├source=  TD16                                                                                      #OPTIONAL as {String} : the kind of source of the dataset
- |   ├sourceUri= TD17                                                                                     #OPTIONAL as {String} : the URI of the dataset if available
- |   ├owner=  TD18                                                                                       #OPTIONAL as {String} : the owner of the dataset if available
+ ├(dataset.2)                                                                                        #MANDATORY : The List Of Dataset Processed And/Or Generated By The Computing Task, If You Are Working On Multipodal Training You Can Add Many Items To The List To Describe It. If You Are Working On Inference, You Can Add At Least One Item To Describe The Input Data And Another One For The Output
+ |   ├dataUsage=                                                                                     #MANDATORY value in {"""input"", ""output"""} : The Use Of The Dataset: Is It Used As Model Input Or Output ?
+ |   ├dataType=                                                                                      #MANDATORY value in {tabular, audio, boolean, image, video, object, text, $other} : The Nature Of The Data Used
+ |   ├dataFormat=                                                                                    #OPTIONAL value in {} : If The Data Is Passed In The Form Of A File, What Format Is The Data In?
+ |   ├dataSize=                                                                                      #OPTIONAL as {Float} : The Size Of The Dataset (In Go), If Small Quantity Just Fill The Field Nbitems
+ |   ├dataQuantity=                                                                                  #OPTIONAL as {Float} : The Number Of Data In The Dataset, E.G. 3 (Images, Audio Or Tokens)
+ |   ├shape=                                                                                         #OPTIONAL as {String} : The Shape Of Your Dataset, Can Be Found With X.Shape With Dataframes, E.G. (12, 1000) For A 2D Table With 12 Columns And 1000 Rows
+ |   ├source=                                                                                        #OPTIONAL as {String} : The Kind Of Source Of The Dataset
+ |   ├sourceUri=                                                                                     #OPTIONAL as {String} : The Uri Of The Dataset If Available
+ |   ├owner=                                                                                         #OPTIONAL as {String} : The Owner Of The Dataset If Available
  |   └                                                                                               
- ├measuredAccuracy=  T4                                                                                #OPTIONAL as {Float} : the measured accuracy of your model (between 0 and 1)
- ├estimatedAccuracy= T5                                                                                #OPTIONAL value in {veryPoor, poor, average, good, veryGood} : if you didn't measure the accuracy of your model in concrete percentages, you can give an assessment of the precision between: VERY POOR, POOR, AVERAGE, GOOD, VERY GOOD
+ ├measuredAccuracy=                                                                                  #OPTIONAL as {Float} : The Measured Accuracy Of Your Model (Between 0 And 1)
+ ├estimatedAccuracy=                                                                                 #OPTIONAL value in {veryPoor, poor, average, good, veryGood} : If You Didn'T Measure The Accuracy Of Your Model In Concrete Percentages, You Can Give An Assessment Of The Precision Between: Very Poor, Poor, Average, Good, Very Good
+ ├taskDescription=                                                                                   #OPTIONAL as {String} : Free Field, To Be Fillied In If You Have More Details To Share About Your Task
  └                                                                                                   
-[measures]                                                                                           #MANDATORY : 
- ├(measures.1)                                                                                       #MANDATORY : the software and/or hardware measures of the computing task. Please fill as many columns as you need to describe your components
- |   ├measurementMethod= M11                                                                            #MANDATORY as {String} : the method used to perform the energy or FLOPS measure, example: codecarbon, carbonai, flops-compute, wattmeter...
- |   ├manufacturer=       M12                                                                           #OPTIONAL as {String} : the builder of the measuring tool, if the measurement method is wattmeter
- |   ├version=               M13                                                                        #OPTIONAL as {String} : the version of the measuring tool, if any
- |   ├cpuTrackingMode=     M14                                                                          #OPTIONAL as {String} : the method used to track the consumption of the CPU, example: constant, rapl...
- |   ├gpuTrackingMode=        M15                                                                       #OPTIONAL as {String} : the method used to track the consumption of the GPU, example: constant, nvml...
- |   ├averageUtilizationCpu=  M16                                                                       #OPTIONAL as {String} : the average percentage of use of the CPU during the task, for example: 0.5 if your CPU load was 50% on average
- |   ├averageUtilizationGpu= M17                                                                        #OPTIONAL as {String} : the average percentage of use of the GPU during the task, for example: 0.8 if your GPU load was 80% on average
- |   ├serverSideInference=  M18                                                                         #OPTIONAL as {String} : if you practice inference through an API, do you estimate the consumption of the model server alone ? (because the model is deployed on your own server and you have access to the measurement, or because you have estimated it with a tool like EcoLogits). Or do you estimate the consumption from the inference server side or from both side at the same time ?
- |   ├unit=         M19                                                                                 #MANDATORY value in {Wh, kWh, MWh, GWh, kJoule, MJoule, GJoule, TJoule, PJoule, BTU, kiloFLOPS, megaFLOPS, gigaFLOPS, teraFLOPS, petaFLOPS, exaFLOPS, zettaFLOPS, yottaFLOPS} : the unit of the power consumption measure of the computing task
- |   ├powerCalibrationMeasurement=M110                                                                   #OPTIONAL as {Float} : the power consumed during the calibration measure if any (to isolate the initial consumption of the hardware)
- |   ├durationCalibrationMeasurement=M111                                                                #OPTIONAL as {Float} : the duration of the calibration if any (in seconds)
- |   ├powerConsumption=     M112                                                                         #MANDATORY as {Float} : the power consumption measure of the computing task
- |   ├measurementDuration= M113                                                                          #OPTIONAL as {Float} : the duration of the measurement (in seconds)
- |   ├measurementDateTime= M114                                                                          #OPTIONAL as {Float} : the date when the measurement began, in format YYYY-MM-DD HH:MM:SS
+ ├(measures.1)                                                                                       #MANDATORY : The Software And/Or Hardware Measures Of The Energy Consumed By The Computing Task
+ |   ├measurementMethod=codecarbon                                                                   #MANDATORY as {String} : The Method Used To Perform The Energy Or Flops Measure, Example: Codecarbon, Carbonai, Flops-Compute, Wattmeter, Azure Metrics, Ovh Metrics...
+ |   ├manufacturer=                                                                                  #OPTIONAL as {String} : The Name Of The Manufacturer, Example: Nvidia
+ |   ├version=2.5.0                                                                                  #OPTIONAL as {String} : The Version Of The Measuring Tool, If Any
+ |   ├cpuTrackingMode=machine                                                                        #OPTIONAL as {String} : The Method Used To Track The Consumption Of The Cpu, Example: Constant, Rapl...
+ |   ├gpuTrackingMode=machine                                                                        #OPTIONAL as {String} : The Method Used To Track The Consumption Of The Gpu, Example: Constant, Nvml...
+ |   ├averageUtilizationCpu=                                                                         #OPTIONAL as {String} : The Average Percentage Of Use Of The Cpu During The Task, For Example: 0.5 If Your Cpu Load Was 50% On Average
+ |   ├averageUtilizationGpu=                                                                         #OPTIONAL as {String} : The Average Percentage Of Use Of The Gpu During The Task, For Example: 0.8 If Your Gpu Load Was 80% On Average
+ |   ├powerCalibrationMeasurement=                                                                   #OPTIONAL as {Float} : The Power Consumed (In Kwh) During The Calibration Measure If Any (To Isolate The Initial Consumption Of The Hardware)
+ |   ├durationCalibrationMeasurement=                                                                #OPTIONAL as {Float} : The Duration Of The Calibration If Any (In Seconds)
+ |   ├powerConsumption=0.0004570801720209                                                            #MANDATORY as {Float} : The Power Consumption Measure Of The Computing Task (In Kwh)
+ |   ├measurementDuration=6.52341365814209                                                           #OPTIONAL as {Float} : The Duration Of The Measurement (In Seconds)
+ |   ├measurementDateTime=                                                                           #OPTIONAL as {Float} : The Date When The Measurement Began, In Format Yyyy-Mm-Dd Hh:Mm:Ss
+ |   └                                                                                               
+[system]                                                                                             #MANDATORY : System Information Of The Infrastructure On Which Is Run The Computing Task
+ ├os=Linux-5.15.0-130-generic-x86_64-with-glibc2.35                                                  #MANDATORY as {String} : Name Of The Operating System
+ ├distribution=                                                                                      #OPTIONAL as {String} : Distribution Of The Operating System
+ ├distributionVersion=                                                                               #OPTIONAL as {String} : Distribution'S Version Of The Operating System
+ └                                                                                                   
+[software]                                                                                           #OPTIONAL : Programming Language Information Of The Computing Task
+ ├language=                                                                                          #MANDATORY as {String} : Name Of The Programming Language Used, Example : C, Java, Julia, Python...
+ ├version=                                                                                           #OPTIONAL as {String} : The Version Of The Measuring Tool, If Any
+ └                                                                                                   
+[infrastructure]                                                                                     #MANDATORY : The Infrastructure On Which Is Performed The Computing Task
+ ├infraType=privateCloud                                                                             #MANDATORY value in {publicCloud,privateCloud,onPremise,$other} : The Type Of Infrastructure Used For The Task
+ ├cloudProvider=                                                                                     #OPTIONAL as {String} : If You Are On The Cloud, The Name Of Your Cloud Provider, For Example : Aws, Azure, Google, Ovh...
+ ├cloudInstance=                                                                                     #OPTIONAL as {String} : If You Are On A Cloud Vm, The Name Of Your Cloud Instance, For Example : A1.Large, Dasv4-Type2...
+ ├cloudService=                                                                                      #OPTIONAL as {String} : If You Are Using An Ai Cloud Service, The Name Of Your Cloud Service, For Example : Openai Service...
+ ├(components.1)                                                                                     #MANDATORY : Please Fill As Many Columns As You Need To Describe Your Components
+ |   ├componentName=Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz                                        #OPTIONAL as {String} : The Name Of This Subsystem Part Of Your Infrastructure, Example Returned By Codecarbon: 1 X Nvidia Geforce Gtx 1080 Ti
+ |   ├componentType=cpu                                                                              #MANDATORY as {String} : The Type Of This Subsystem Part Of Your Infrastructure, Example: Cpu, Gpu, Ram, Hdd, Sdd...
+ |   ├nbComponent=15                                                                                 #MANDATORY as {Integer} : The Number Of Items Of This Component In Your Infrastructure, If You Have 1 Ram Of 32Go, Fill 1 Here And 32 Inside Memorysize
+ |   ├memorySize=                                                                                    #OPTIONAL as {Integer} : The Size Of The Memory Of The Component In Gbytes, Useful To Detail The Memory Associated To One Of Your Gpus For Example (If We Want The Total Memory, We Will Multiply The Memorysize By Nbcomponent). If The Component Is Cpu Do Not Fill The Ram Size Here, Create Another Component For Ram, This Field Is For The Embeded Memory Of A Component.
+ |   ├manufacturer=                                                                                  #OPTIONAL as {String} : The Name Of The Manufacturer, Example: Nvidia
+ |   ├family=                                                                                        #OPTIONAL as {String} : The Family Of This Component, Example: Geforce
+ |   ├series=                                                                                        #OPTIONAL as {String} : The Series Of This Component, Example: Gtx1080
+ |   ├share=                                                                                         #OPTIONAL as {Float} : The Percentage Of The Physical Equipment Used By The Task, This Sharing Property Should Be Set To 1 By Default (If No Share) And Otherwise To The Correct Percentage, E.G. 0.5 If You Share Half-Time.
+ |   └                                                                                               
+ ├(components.2)                                                                                     #MANDATORY : Please Fill As Many Columns As You Need To Describe Your Components
+ |   ├componentName=1 x Tesla V100S-PCIE-32GB                                                        #OPTIONAL as {String} : The Name Of This Subsystem Part Of Your Infrastructure, Example Returned By Codecarbon: 1 X Nvidia Geforce Gtx 1080 Ti
+ |   ├componentType=gpu                                                                              #MANDATORY as {String} : The Type Of This Subsystem Part Of Your Infrastructure, Example: Cpu, Gpu, Ram, Hdd, Sdd...
+ |   ├nbComponent=1                                                                                  #MANDATORY as {Integer} : The Number Of Items Of This Component In Your Infrastructure, If You Have 1 Ram Of 32Go, Fill 1 Here And 32 Inside Memorysize
+ |   ├memorySize=                                                                                    #OPTIONAL as {Integer} : The Size Of The Memory Of The Component In Gbytes, Useful To Detail The Memory Associated To One Of Your Gpus For Example (If We Want The Total Memory, We Will Multiply The Memorysize By Nbcomponent). If The Component Is Cpu Do Not Fill The Ram Size Here, Create Another Component For Ram, This Field Is For The Embeded Memory Of A Component.
+ |   ├manufacturer=                                                                                  #OPTIONAL as {String} : The Name Of The Manufacturer, Example: Nvidia
+ |   ├family=                                                                                        #OPTIONAL as {String} : The Family Of This Component, Example: Geforce
+ |   ├series=                                                                                        #OPTIONAL as {String} : The Series Of This Component, Example: Gtx1080
+ |   ├share=                                                                                         #OPTIONAL as {Float} : The Percentage Of The Physical Equipment Used By The Task, This Sharing Property Should Be Set To 1 By Default (If No Share) And Otherwise To The Correct Percentage, E.G. 0.5 If You Share Half-Time.
+ |   └                                                                                               
+ ├(components.3)                                                                                     #MANDATORY : Please Fill As Many Columns As You Need To Describe Your Components
+ |   ├componentName=RAM                                                                              #OPTIONAL as {String} : The Name Of This Subsystem Part Of Your Infrastructure, Example Returned By Codecarbon: 1 X Nvidia Geforce Gtx 1080 Ti
+ |   ├componentType=ram                                                                              #MANDATORY as {String} : The Type Of This Subsystem Part Of Your Infrastructure, Example: Cpu, Gpu, Ram, Hdd, Sdd...
+ |   ├nbComponent=                                                                                   #MANDATORY as {Integer} : The Number Of Items Of This Component In Your Infrastructure, If You Have 1 Ram Of 32Go, Fill 1 Here And 32 Inside Memorysize
+ |   ├memorySize=43.04945373535156                                                                   #OPTIONAL as {Integer} : The Size Of The Memory Of The Component In Gbytes, Useful To Detail The Memory Associated To One Of Your Gpus For Example (If We Want The Total Memory, We Will Multiply The Memorysize By Nbcomponent). If The Component Is Cpu Do Not Fill The Ram Size Here, Create Another Component For Ram, This Field Is For The Embeded Memory Of A Component.
+ |   ├manufacturer=                                                                                  #OPTIONAL as {String} : The Name Of The Manufacturer, Example: Nvidia
+ |   ├family=                                                                                        #OPTIONAL as {String} : The Family Of This Component, Example: Geforce
+ |   ├series=                                                                                        #OPTIONAL as {String} : The Series Of This Component, Example: Gtx1080
+ |   ├share=                                                                                         #OPTIONAL as {Float} : The Percentage Of The Physical Equipment Used By The Task, This Sharing Property Should Be Set To 1 By Default (If No Share) And Otherwise To The Correct Percentage, E.G. 0.5 If You Share Half-Time.
  |   └                                                                                               
  └                                                                                                   
-[system]                                                                                             #MANDATORY : system information of the infrastructure on which is run the computing task
- ├os= S1                                                                                                #MANDATORY as {String} : name of the operating system
- ├distribution= S2                                                                                     #OPTIONAL as {String} : distribution of the operating system
- ├distributionVersion= S3                                                                               #OPTIONAL as {String} : distribution's version of the operating system
+[environment]                                                                                        #MANDATORY : Environment Of The Infrastructure: Region Of Calculation And Energy Used
+ ├country=France                                                                                     #MANDATORY as {String} : 
+ ├latitude=48.8582                                                                                   #OPTIONAL as {Float} : 
+ ├longitude=2.3387                                                                                   #OPTIONAL as {Float} : 
+ ├location=                                                                                          #OPTIONAL as {String} : More Precise Location Like City, Region Or Datacenter Name
+ ├powerSupplierType=                                                                                 #OPTIONAL value in {public, private, internal, $other} : 
+ ├powerSource=                                                                                       #OPTIONAL value in {solar, wind, nuclear, hydroelectric, gas, coal, $other} : 
+ ├powerSourceCarbonIntensity=                                                                        #OPTIONAL as {Float} : Carbon Intensity Of The Electicity You Used (In Gco2Eq/Kwh)
  └                                                                                                   
-[infrastructure]                                                                                     #MANDATORY : the infrastructure on which is performed the computing task
- ├infraType= I1                                                                                        #MANDATORY value in {publicCloud,privateCloud,onPremise,$other} : the type of infrastructure used for the task
- ├cloudProvider= I2                                                                                    #OPTIONAL as {String} : If you are on the cloud, the name of your cloud provider, for example : aws, azure, google, ovh...
- ├cloudInstance= I3                                                                                    #OPTIONAL as {String} : If you are on the cloud, the name of your cloud instance, for example : a1.large, dasv4-type2...
- ├(components.1)                                                                                     #MANDATORY : Please fill as many columns as you need to describe your components
- |   ├componentName= IC11                                                                                 #MANDATORY as {String} : the type of this subsystem part of your infrastructure, example: cpu, gpu, hdd, sdd...
- |   ├nbComponent=  IC12                                                                                 #MANDATORY as {Integer} : the number of items of this component in your infrastructure
- |   ├memorySize=  IC13                                                                                  #OPTIONAL as {Integer} : the size of the memory of the component in Gbytes
- |   ├manufacturer=  IC14                                                                                #OPTIONAL as {String} : the name of the manufacturer, example: nvidia
- |   ├family=     IC15                                                                                   #OPTIONAL as {String} : the family of this component, example: geforce
- |   ├series=  IC16                                                                                      #OPTIONAL as {String} : the series of this component, example: rtx4080
- |   ├share= IC17                                                                                       #dqsfmopgijqsdemofgijdsmoqifjqsdmoij
- |   └                                                                                               
- └                                                                                                   
-[environment]                                                                                        #MANDATORY : environment of the infrastructure: region of calculation and energy used
- ├country= E1                                                                                          #MANDATORY as {String} : 
- ├latitude= E2                                                                                         #OPTIONAL as {Float} : 
- ├longitude= E3                                                                                        #OPTIONAL as {Float} : 
- ├location=  E4                                                                                        #OPTIONAL as {String} : 
- ├powerSupplierType= E5                                                                                 #OPTIONAL value in {public, private, internal, $other} : 
- ├powerSource= E6                                                                                      #OPTIONAL value in {solar, wind, nuclear, hydroelectric, gas, coal, $other} : 
- ├powerSourceCarbonIntensity= E7                                                                        #OPTIONAL as {Float} : 
- └                                                                                                   
-quality= H7                                                                                            #OPTIONAL value in {high, medium, low } : the quality of the information you provided, 3 possibilities : high (percentage error +/-10%), medium (percentage error +/-25%), low (percentage error +/-50%)
-[$hash]                                                                                              #MANDATORY : 
- ├hashAlgorithm= HA1                                                                                     #MANDATORY value in {MD5, RIPEMD-128, RIPEMD-160, RIPEMD-256, RIPEMD-320, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512} : the hash function to apply first to the JSON report
- ├cryptographicAlgorithm= HA2                                                                               #MANDATORY value in {RSA, DSA, ECDSA, EDDSA} : the public key function to apply to the hash
- ├value=  HA3                                                                                        #gfqsmdljkgsdlmfkgjslmkj
- └ 
+quality=                                                                                             #OPTIONAL value in {high, medium, low } : The Quality Of The Information You Provided, 3 Possibilities : High (Percentage Error +/-10%), Medium (Percentage Error +/-25%), Low (Percentage Error +/-50%)

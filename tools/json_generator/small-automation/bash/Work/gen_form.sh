@@ -1,15 +1,14 @@
 #!/bin/bash
 
 ##########################################
-# Script de Generation et mise au format du datamodel AI power
+# Script de Generation de formulaire texte pour le datamodel Boamps
 # Author : dfovet
-# Version : 0.15
-
-# Date : 20241011
+# Version : 0.76
+# Date : 20250609
 #########################################
 
 ##########################################
-# Usage et check du nombre de params
+# Usage
 #########################################
 usage()
 {
@@ -19,11 +18,20 @@ echo "-----------------------------------------------------"
 echo "But du script : Generer un formulaire pour le modele de donnees ai power measurement"
 echo ""
 echo "Structure de la commande : "
-echo "./gen_form.sh <Type de generation> <Fichier de parametres> > <Nom du fichier de sortie>"
-echo "example : ./gen_form.sh -a form_gen.conf > report1.txt"
+echo "./gen_form.sh <Type de generation> <CSV de reference> <Fichier de parametres> <Nom du fichier d'entrée> <Numero de ligne du fichier d'entrée a integrer>"
+echo "example1 : ./gen_form.sh -a Ref_CodeCarbon.csv CodeCarbonCSV.conf > report1.txt"
+echo "example2 : ./gen_form.sh -a Ref_CodeCarbon.csv CodeCarbonCSV.conf emissions.csv 2 > report-codecarbon-prefill.txt"
 echo "<Type de generation>"
 echo " -a pour ALL genere un formulaire incluant les champs obligatoires et facultatifs"
-echo " -m pour MANDATORY genere un formulaire incluant les champs obligatoires seulement"
+echo "<CSV de reference>"
+echo "Fichier descriptif du model de données incluant ou non les references pour remplir le formulaire a partir d'un CSV "
+echo "Exemple : Ref_CodeCarbon.csv Pour préremplir dans le formulaire a partir d'un csv CodeCarbon"
+echo "<Fichier de parametres>"
+echo "Fichier permetant de moduler le nombre de section dans le formulaire"
+echo "<Nom du fichier d'entrée>"
+echo "Fichier d'entrée au format csv qui contient les resultats des tests Green AI Initiative "
+echo "<Numero de ligne du fichier d'entrée a integrer>"
+echo "Le numero de la ligne contenant le resultat a convertir au format boamps"
 }
 
 ##########################################
@@ -56,6 +64,18 @@ readtab()
 }
 
 ##########################################
+# Lire dans un fichier tableau séparé par des ,
+#########################################
+readtab2()
+{
+    i=$2
+    j=$3
+    RES=""
+    RES=$(sed -n ''$j','$j' p' $1 | awk -v idx=$i -F',' '{print $idx}')
+    echo "$RES"
+}
+
+##########################################
 # Ecrire une ligne output formatee avec tabulation et commentaires a tabcomment char du début de ligne
 ##########################################
 write_real_line()
@@ -63,7 +83,6 @@ write_real_line()
     j=0
     tabcomment=100
     tabF=0
-    ajust=0
     if [[ $4 != 0 ]]
     then
         for j in `seq 1 1 $4`
@@ -113,18 +132,76 @@ readlineval()
 }
 
 ##########################################
+# Lire dans un fichier tableau séparé par des ; trouver une certaine colonne en fonction de son nom et prendre la valeur de la ligne demandé
+#gettabcolval $inputcsv $strCmd $ligneinput $nbentry
+#########################################
+gettabcolval()
+{
+  csvfile=$1
+  test=$2
+  rowc=$3 #min=2 because 1 mean the head of csv
+  numit=$4
+  nbsep=0
+  for (( k=0; k<${#test}; k++))
+  do
+    tmp=${test:$k:1}
+    if [[ $tmp == ":" ]]
+    then
+      let "nbsep++"
+    fi
+  done
+  if [[ $test != "no" ]]
+  then
+    if [[ $((nbsep+1)) -ge $numit ]]
+    then
+      VAL1=$(echo $test | awk -v idx=$numit -F':' '{print $idx}')
+      if [[ ${VAL1:0:1} == "#" ]]
+      then
+        RES=$(echo $VAL1 | awk -v idx=2 -F'#' '{print $idx}')
+        echo $RES
+      else
+        j=0
+        csvhead=$(sed -n ''1','1' p' $csvfile)
+        for (( i=1; i<${#csvhead}; i++))
+        do
+        val=$(readtab2 $csvfile $i 1)
+        #echo $val #Debug pour la valeur de la colonne
+          if [[ $val == "" ]]
+          then
+            i=${#csvhead}
+          elif [[ $val == $VAL1 ]]
+          then
+            j=$i
+            i=${#csvhead}
+          fi
+        done
+        if [[ $j -ne 0 ]]
+        then
+          val=$(readtab2 $csvfile $j $rowc)
+          echo $val
+        fi
+      fi
+    fi
+  fi
+}
+
+##########################################
 # Init des variables
 #########################################
 DATETAG=`date +%y%m%d-%H%M`
 BASEDIR=$(pwd)
 BASENAME0=$(basename "$0")
 LOGDIR="$BASEDIR/Log"
-NPARAMS=2
+NPARAMS=3
+NPARAMSMAX=5
 LOGFILE="$LOGDIR/$BASENAME0_$2_$DATETAG.log"
 RESULTFILE="$LOGDIR/Result_$BASENAME0_$2_$DATETAG.log"
-ficConf=$2
+ficRef=$2
+ficConf=$3
+inputcsv=$4
+ligneinput=$5
+nbligneparam=$(wc -l < $ficRef)
 HorizT='├'
-HLine='─'
 ELine='└'
 nbtab=0
 nbtable=0
@@ -138,10 +215,10 @@ refList=();
 #################################################################
 ## Verification du nombre de param
 #################################################################
-if [[ $# -lt "$NPARAMS" || $# -gt "$NPARAMS" ]]
+if [[ $# -lt "$NPARAMS" ]] || [[ $# -gt "$NPARAMSMAX" ]]
    then
-       echo "ce script a besoin de $minparams arguments en entree!"
-       echo "Liste des arguments passes en paramètre : $@"
+       echo "ce script a besoin de $NPARAMS arguments en entree!"
+       echo "Nombre de param : $#"
        usage
 exit 0
 fi
@@ -165,13 +242,13 @@ esac
 #################################################################
 ## Recup des params de generation en fonction des infos du fichier de conf : form_gen.conf
 #################################################################
-nbAlgo=$(($(readlineval $ficConf 2) - 1))
-nbAlgoHyperparamVal=$(($(readlineval $ficConf 3) - 1))
-nbDataset=$(($(readlineval $ficConf 4) - 1))
-nbDatasetShape=$(($(readlineval $ficConf 5) - 1))
-datasetInferenceProperties=$(($(readlineval $ficConf 6) - 1))
-nbMeasures=$(($(readlineval $ficConf 7) - 1))
-infraComponents=$(($(readlineval $ficConf 8) - 1))
+nbAlgo=$(($(readlineval $ficConf 2) ))
+nbAlgoHyperparamVal=$(($(readlineval $ficConf 3) ))
+nbDataset=$(($(readlineval $ficConf 4) ))
+nbDatasetShape=$(($(readlineval $ficConf 5) ))
+datasetInferenceProperties=$(($(readlineval $ficConf 6) ))
+nbMeasures=$(($(readlineval $ficConf 7) ))
+infraComponents=$(($(readlineval $ficConf 8) ))
 
 #################################################################
 ## Declaration dans le fichier de formulaire des param qui ont servi a generer ce formulaire 
@@ -190,23 +267,16 @@ echo " └"
 ########################################## 
 # On parcourt le tableau de références et on construit pour chaque ligne la bonne ligne de formulaire
 #########################################
-for (( refline=2; refline<=113; refline++ ))
+for (( refline=2; refline<=$nbligneparam; refline++ ))
 do
     #On recupère les informations de la ligne du tableau de référence
-    strID=$(readtab ./references.param 1 $refline)
-    strContext=$(readtab ./references.param 2 $refline)
-    strCategorie=$(readtab ./references.param 3 $refline)
-    strName=$(readtab ./references.param 4 $refline)
-    strSubObject=$(readtab ./references.param 5 $refline)
-    strType=$(readtab ./references.param 6 $refline)
-    strMandatory=$(readtab ./references.param 7 $refline)
-    strAuto=$(readtab ./references.param 8 $refline)
-    strCmd=$(readtab ./references.param 9 $refline)
-    strEnum=$(readtab ./references.param 10 $refline)
-    strDefvalue=$(readtab ./references.param 11 $refline)
-    strQuestion=$(readtab ./references.param 12 $refline)
-    strComment=$(readtab ./references.param 13 $refline)
-    strNextType=$(readtab ./references.param 6 $((refline + 1)))
+    strName=$(readtab $ficRef 4 $refline)
+    strType=$(readtab $ficRef 6 $refline)
+    strMandatory=$(readtab $ficRef 7 $refline)
+    strCmd=$(readtab $ficRef 9 $refline)
+    strEnum=$(readtab $ficRef 10 $refline)
+    strQuestion=$(readtab $ficRef 12 $refline)
+    strComment=$(readtab $ficRef 13 $refline)
 
     #Ici on check le cote obligatoire d une entree
     if [[ "$strMandatory" == "TRUE" ]] 
@@ -234,38 +304,69 @@ do
             ;;
 
         "Enum")
+            if [[ -f $inputcsv ]]
+            then
+              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+            else
+              valtmp=""
+            fi
             if [[ $strName = "quality" ]] 
             then
-                inputtmp="$strQuestion="
+                inputtmp="$strQuestion=$valtmp"
                 commenttmp="#$strMandatory value in {$strEnum} : $strComment"
                 write_line "$strMandatory" "$inputtmp" "$commenttmp" $nbtab $mode  
             else
-                inputtmp=" $startChar$strQuestion="
+                inputtmp=" $startChar$strQuestion=$valtmp"
                 commenttmp="#$strMandatory value in {$strEnum} : $strComment"
                 write_line "$strMandatory" "$inputtmp" "$commenttmp" $nbtab $mode  
             fi
             ;;
             
         "String")
-            inputtmp=" $startChar$strQuestion="
+            if [[ -f $inputcsv ]]
+            then
+              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+            else
+              valtmp=""
+            fi
+            inputtmp=" $startChar$strQuestion=$valtmp"
             commenttmp="#$strMandatory as {$strType} : $strComment"
+
             write_line "$strMandatory" "$inputtmp" "$commenttmp" $nbtab $mode  
             ;;
             
         "Integer")
-            inputtmp=" $startChar$strQuestion="
+            if [[ -f $inputcsv ]]
+            then
+              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+            else
+              valtmp=""
+            fi
+            inputtmp=" $startChar$strQuestion=$valtmp"
             commenttmp="#$strMandatory as {$strType} : $strComment"
             write_line "$strMandatory" "$inputtmp" "$commenttmp" $nbtab $mode  
             ;;
 
         "Float")
-            inputtmp=" $startChar$strQuestion="
+            if [[ -f $inputcsv ]]
+            then
+              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+            else
+              valtmp=""
+            fi
+            inputtmp=" $startChar$strQuestion=$valtmp"
             commenttmp="#$strMandatory as {$strType} : $strComment"
-            write_line "$strMandatory" "$inputtmp" "$commenttmp" $nbtab $mode  
+            write_line "$strMandatory" "$inputtmp" "$commenttmp" $nbtab $mode
             ;;
         
         "Boolean")
-            inputtmp=" $startChar$strQuestion="
+            if [[ -f $inputcsv ]]
+            then
+              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+            else
+              valtmp=""
+            fi
+            inputtmp=" $startChar$strQuestion=$valtmp"
             commenttmp="#$strMandatory as {$strType} : $strComment"
             write_line "$strMandatory" "$inputtmp" "$commenttmp" $nbtab $mode  
             ;;
@@ -349,7 +450,7 @@ do
 
             write_line "$strMandatory" " $ELine" "" $nbtab $mode 
 
-            array=("hyperparameters End${IFS}parametersNLP End")
+            array=("hyperparameters End${IFS}inferenceProperties End${IFS}parametersNLP End")
             isInArray="$strName"
 
             if [[ "${IFS}${array[*]}${IFS}" =~ "${IFS}${isInArray}${IFS}" ]]; then
