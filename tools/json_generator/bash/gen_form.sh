@@ -3,8 +3,8 @@
 ##########################################
 # Script for generating a text form for the Boamps data model
 # Author : dfovet
-# Version : 0.76
-# Date : 20250609
+# Version : 0.81
+# Date : 20250717
 #########################################
 
 ##########################################
@@ -304,7 +304,7 @@ do
         "Enum")
             if [[ -f $inputcsv ]]
             then
-              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+              valtmp=$(gettabcolval $inputcsv "$strCmd" $ligneinput $nbentry)
             else
               valtmp=""
             fi
@@ -323,7 +323,7 @@ do
         "String")
             if [[ -f $inputcsv ]]
             then
-              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+              valtmp=$(gettabcolval $inputcsv "$strCmd" $ligneinput $nbentry)
             else
               valtmp=""
             fi
@@ -336,7 +336,7 @@ do
         "Integer")
             if [[ -f $inputcsv ]]
             then
-              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+              valtmp=$(gettabcolval $inputcsv "$strCmd" $ligneinput $nbentry)
             else
               valtmp=""
             fi
@@ -348,7 +348,7 @@ do
         "Float")
             if [[ -f $inputcsv ]]
             then
-              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+              valtmp=$(gettabcolval $inputcsv "$strCmd" $ligneinput $nbentry)
             else
               valtmp=""
             fi
@@ -360,7 +360,7 @@ do
         "Boolean")
             if [[ -f $inputcsv ]]
             then
-              valtmp=$(gettabcolval $inputcsv $strCmd $ligneinput $nbentry)
+              valtmp=$(gettabcolval $inputcsv "$strCmd" $ligneinput $nbentry)
             else
               valtmp=""
             fi

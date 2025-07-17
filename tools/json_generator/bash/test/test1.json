@@ -1,0 +1,60 @@
+{
+	"header": {
+		"reportId":"831a17e5-38ce-4bf6-bc25-8667841f36f8",
+		"reportDatetime":"2025-03-04T13:00:02",
+		"publisher": {
+			}
+		},
+	"task": {
+		"algorithms": [
+			{
+			}
+		],
+		"dataset": [
+			{
+			},
+			{
+			}
+		]
+		},
+	"measures": [
+		{
+		"measurementMethod":"codecarbon",
+		"version":"2.5.0",
+		"cpuTrackingMode":"machine",
+		"gpuTrackingMode":"machine",
+		"powerConsumption":0.0004570801720209,
+		"measurementDuration":6.52341365814209
+		}
+	],
+	"system": {
+		"os":"Linux-5.15.0-130-generic-x86_64-with-glibc2.35"
+		},
+	"software": {
+		},
+	"infrastructure": {
+		"infraType":"privateCloud",
+		"components": [
+			{
+			"componentName":"Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz",
+			"componentType":"cpu",
+			"nbComponent":15
+			},
+			{
+			"componentName":"1 x Tesla V100S-PCIE-32GB",
+			"componentType":"gpu",
+			"nbComponent":1
+			},
+			{
+			"componentName":"RAM",
+			"componentType":"ram",
+			"memorySize":43.04945373535156
+			}
+		]
+		},
+	"environment": {
+		"country":"France",
+		"latitude":48.8582,
+		"longitude":2.3387
+		}
+}

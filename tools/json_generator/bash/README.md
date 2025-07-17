@@ -5,6 +5,8 @@ It works by generating a pre-filled form with data from the cumulative CSV gener
 - example1 : ./gen_form.sh -a Ref_CodeCarbon.csv CodeCarbonCSV.conf > report1.txt
 - example2 : ./gen_form.sh -a Ref_CodeCarbon.csv CodeCarbonCSV.conf emissions.csv 2 > report-codecarbon-prefill.txt
 
+There you can manually fill up the missing information in the form file. You can also save the form for later use.
+
 Then, to obtain the Boamp format (current version), you need to transform the forms into JSON using the `form2json.sh` tool.
 - exemple: ./form2json.sh -a Ref_CodeCarbon.csv report1.txt > json_example.json
 
@@ -17,6 +19,8 @@ There are several options for filling the `cmd` column:
 - String containing : (without # in the string): represents a list separated by :, each element (CSV column) will be put in the form iteration according to its position in the described list.
 - If no column matches an entry of type String, float, etc. (outside object and end), put: no (to fill nothing in the form).
 - You can also hybridize # and : to make a list where in the first iteration, you put a fixed value, but in the second, you put the element (CSV column).
+
+**Note : The `Ref_CodeCarbon.csv` file is a reference file that contains in the cmd fields instruction to prefill the form with the CodeCarbon CSV output format.**
 
 ## Example commands
 
@@ -37,3 +41,14 @@ Here is a list and information about the sample or example files provided :
 
 ## Troubleshooting:
 - if you have this error: "/bin/bash^M: bad interpreter: No such file or directory" -> use this command: `sed -i -e 's/\r$//' <script_name>`
+
+## Change log
+
+**gen_form.sh:**
+- v0.81 : 
+  - Correction to accept in the cmd column string with spaces with for the # option
+
+**form2json.sh:**
+- v0.87 : 
+  - Correction to accept string with spaces in the form and put it inside the json trimming only space before and after the string and not all the spaces.
+  - Correction to don't put a last comma in the JSON file if the quality field is not null
