@@ -33,14 +33,14 @@ echo "Example: Ref_CodeCarbon.csv To pre-fill the form from a CodeCarbon csv"
 tolog()
 {
 LOGTIMETAG=`date +%Y\;%m\;%d\;%H\;%M\;%S\;%N`
-echo "$LOGTIMETAG--$1" >> $2
+echo "$LOGTIMETAG--$1" >> "$2"
 echo "$LOGTIMETAG--$1"
 }
 
 tolognodate()
 {
 LOGTIMETAG=`date +%Y\;%m\;%d\;%H\;%M\;%S\;%N`
-echo "$1" >> $2
+echo "$1" >> "$2"
 echo "$LOGTIMETAG--$1"
 }
 
@@ -52,7 +52,7 @@ readtab()
     i=$2
     j=$3
     RES=""
-    RES=$(sed -n ''$j','$j' p' $1 | awk -v idx=$i -F';' '{print $idx}')
+    RES=$(sed -n ''$j','$j' p' "$1" | awk -v idx=$i -F';' '{print $idx}')
     echo "$RES"
 }
 
@@ -63,8 +63,8 @@ readlineval()
 {
     j=$2
     RES=""
-    #echo "<some text>=someuser@somedomain.com #<some text>" | sed 's/.*=\(.*\)#.*/\1/'
-    RES=$(sed -n ''$j','$j' p' $1 | sed 's/.*=\(.*\)#.*/\1/' | sed 's/^ *//;s/ *$//')
+    #echo "<some text>=someuser@somedomain.com #<some text>" | sed 's/.*=$ .* $ #.*/\1/'
+    RES=$(sed -n ''$j','$j' p' "$1" | sed 's/.*=$ .* $ #.*/\1/' | sed 's/^ *//;s/ *$//')
     echo "$RES"
 }
 
@@ -95,9 +95,9 @@ LOGDIR="$BASEDIR/Log"
 NPARAMS=3
 LOGFILE="$LOGDIR/$BASENAME0_$2_$DATETAG.log"
 RESULTFILE="$LOGDIR/Result_$BASENAME0_$2_$DATETAG.log"
-ficRef=$2
-ficForm=$3
-nbligneparam=$(wc -l < $ficRef)
+ficRef="$2"
+ficForm="$3"
+nbligneparam=$(wc -l < "$ficRef")
 nbtab=0
 nbtable=0
 nbentry=1
@@ -124,14 +124,14 @@ fi
 ## Select execution mode
 ##########################################
 case $1 in 
-	"-a")
-		mode="A"
-		;;
-	"-m")
-		mode="M"
-		;;
-	*)
-		echo "BAD Argument : $1"
+    "-a")
+        mode="A"
+        ;;
+    "-m")
+        mode="M"
+        ;;
+    *)
+        echo "BAD Argument : $1"
         usage
         exit 0
 esac
@@ -139,13 +139,13 @@ esac
 ##########################################
 ## Retrieve generation params based on info from the form file to convert
 ##########################################
-nbAlgo=$(readlineval $ficForm 2)
-nbAlgoHyperparamVal=$(readlineval $ficForm 3)
-nbDataset=$(readlineval $ficForm 4)
-nbDatasetShape=$(readlineval $ficForm 5)
-datasetInferenceProperties=$(readlineval $ficForm 6)
-nbMeasures=$(readlineval $ficForm 7)
-infraComponents=$(readlineval $ficForm 8)
+nbAlgo=$(readlineval "$ficForm" 2)
+nbAlgoHyperparamVal=$(readlineval "$ficForm" 3)
+nbDataset=$(readlineval "$ficForm" 4)
+nbDatasetShape=$(readlineval "$ficForm" 5)
+datasetInferenceProperties=$(readlineval "$ficForm" 6)
+nbMeasures=$(readlineval "$ficForm" 7)
+infraComponents=$(readlineval "$ficForm" 8)
 
 ##########################################
 ## Writing the start of the json file
@@ -155,106 +155,43 @@ echo "{"
 let "indent++"
 
 ##########################################
-# We go through the reference table and build for each line the correct json lines
+## Loop to read the reference file
 ##########################################
-for (( refline=2; refline<=$nbligneparam; refline++ ))
+for ((refline=2; refline<=$nbligneparam; refline++))
 do
-    #On recupere les informations de la ligne du tableau de reference
-    strName=$(readtab $ficRef 4 $refline)
-    strType=$(readtab $ficRef 6 $refline)
-    strMandatory=$(readtab $ficRef 7 $refline)
-    strNextType=$(readtab $ficRef 6 $((refline + 1)))
 
-    #Ici on teente de gerer le cote mandatory mais pas completement testé dans cette version
-    if [[ "$strMandatory" == "TRUE" ]] 
-    then       
-        strMandatory="MANDATORY"
-    else
-        strMandatory="OPTIONAL"
-    fi
+    strName=$(readtab "$ficRef" 1 $refline)
+    strType=$(readtab "$ficRef" 2 $refline)
+    strMandatory=$(readtab "$ficRef" 3 $refline)
+    strPath=$(readtab "$ficRef" 4 $refline)
+    strKeyword=$(readtab "$ficRef" 5 $refline)
+    strDescription=$(readtab "$ficRef" 6 $refline)
+    strExample=$(readtab "$ficRef" 7 $refline)
 
-    #On set les characteres de fin de ligne au mieux par rapport au type suivant (changemetn d'objet ou de table
-    if [[ "$strNextType" != "ObjectEnd" ]] && [[ "$strNextType" != "TableEnd" ]] && [[ "$strNextType" != "" ]]
+    # Endline management
+    if [[ $refline == $nbligneparam ]]
     then
-        #echo "Debug : in"
-        endline=","
-    else
         endline=""
+    else 
+        endline=","
     fi
 
-    #ici on prend en compte si les champt suivant sont vide pour corriger el charactere de fin de ligne cela fonctionne aussi pour les objects et les tables
-    array=("Integer${IFS}Enum${IFS}values End${IFS}String${IFS}Integer${IFS}Float${IFS}Boolean${IFS}ObjectEnd${IFS}TableEnd")
-    isInArray="$strType"
-
-    if [[ "${IFS}${array[*]}${IFS}" =~ "${IFS}${isInArray}${IFS}" ]] && [[ $strNextType != "DocumentEnd" ]]
+    # Check the mandatory attribute to decide to export or not if the mode is set to mandatory only
+    if [[ $mode == "M" && $strMandatory != "Y" ]]
     then
-      dim=1
-      videsuiv=1
-      while [[ $videsuiv -eq 1 ]]
-      do
-        if [[ $(readlineval $ficForm $((idreadline + $dim))) == "" ]]
-        then
-          if [[ $(readtab $ficRef 6 $((refline + $dim + 1))) == "TableEnd" ]] || [[ $(readtab $ficRef 6 $((refline + $dim + 1))) == "ObjectEnd" ]] || [[ $(readtab $ficRef 6 $((refline + $dim + 1))) == "DocumentEnd" ]]
-          then
-            endline=""
-            videsuiv=0
-          fi
-          let "dim++"
-        else
-          videsuiv=0
-        fi
-      done
-    else
-      endline=""
+        let "idreadline++"
+        continue
     fi
 
-    case $strType in
-            
+    case $strType in 
         "Object")
-            indentification $indent
-            echo "\"$strName\": {"
+            echo "$(indentification $indent)\"$strName\": {"
+            let "nbtab++"
             let "indent++"
             ;;
 
-        "Enum")
-            value=$(readlineval $ficForm $idreadline)
-            if [[ $value != "" ]]
-            then
-              indentification $indent
-              echo "\"$strName\":\"$value\"$endline"
-            fi
-            ;;
-            
         "String")
-            value=$(readlineval $ficForm $idreadline)
-            if [[ $value != "" ]]
-            then
-              indentification $indent
-              echo "\"$strName\":\"$value\"$endline"
-            fi
-            ;;
-            
-        "Integer")
-            value=$(readlineval $ficForm $idreadline)
-            if [[ $value != "" ]]
-            then
-              indentification $indent
-              echo "\"$strName\":$value$endline"
-            fi
-
-            ;;
-
-        "Float")
-            value=$(readlineval $ficForm $idreadline)
-            if [[ $value != "" ]]
-            then
-              indentification $indent
-              echo "\"$strName\":$value$endline"
-            fi
-            ;;
-
-        "Boolean")
-            value=$(readlineval $ficForm $idreadline)
+            value=$(readlineval "$ficForm" $idreadline)
             if [[ $value != "" ]]
             then
               indentification $indent
@@ -357,9 +294,10 @@ do
     value=""
     let "idreadline++"
 
-    done
+done
 
-#########################################
+##########################################
 # Finalisation of the json file
 ##########################################
 echo "}"
+
