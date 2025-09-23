@@ -12,8 +12,6 @@
 		],
 		"dataset": [
 			{
-			},
-			{
 			}
 		]
 		},
@@ -39,16 +37,6 @@
 			"componentName":"Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz",
 			"componentType":"cpu",
 			"nbComponent":15
-			},
-			{
-			"componentName":"1 x Tesla V100S-PCIE-32GB",
-			"componentType":"gpu",
-			"nbComponent":1
-			},
-			{
-			"componentName":"RAM",
-			"componentType":"ram",
-			"memorySize":43.04945373535156
 			}
 		]
 		},
