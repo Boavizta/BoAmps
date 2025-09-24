@@ -23,6 +23,11 @@ This tool converts energy consumption data from various formats (e.g., CodeCarbo
 
 The `gen_form.sh` script creates a text form with the appropriate BoAmps fields, automatically populated with your input data.
 
+1. Insert your own input data (e.g Codecarbon CSV file)
+2. Customize the config_file (boamps_auto_prefill_codecarbon.csv) if necessary (if you're input data is not at the codecarbon report format)
+3. Customize the fields_config (to detail how many algorithms, data, measure etc you want to describe in your report)
+4. Run the script :
+   
 **Usage:**
 ```bash
 ./scripts/gen_form.sh -a <config_file> <fields_config> <input_data> <line_number> > <output_form>
@@ -30,7 +35,7 @@ The `gen_form.sh` script creates a text form with the appropriate BoAmps fields,
 
 **Example:**
 ```bash
-./scripts/gen_form.sh -a ./data/conf/boamps_auto_prefill_codecarbon.csv ./data/conf/config_nb_fields_boamps.conf ./data/input/codecarbon_file.csv 2 > ./data/output/form_prefilled.txt
+./scripts/gen_form.sh -a ./data/conf/boamps_auto_prefill_codecarbon.csv ./data/conf/config_nb_fields_boamps.conf ./data/input/codecarbon_file.csv 1 > ./data/output/form_prefilled.txt
 ```
 
 **Parameters:**
