@@ -32,7 +32,7 @@ echo "Example: config_nb_fields_boamps.conf to pre fill the form with the right 
 echo "<Input File Name>"
 echo "Input file in csv format containing the results of your power measurements"
 echo "<Input File Line Number to Integrate>"
-echo "The line number containing the result to convert to boamps format"
+echo "The line number containing the result to convert to boamps format, the header is the line 0 so you need to write 1 to have the first line of data"
 }
 
 ##########################################
@@ -199,6 +199,7 @@ ficRef=$2
 ficConf=$3
 inputcsv=$4
 ligneinput=$5
+let "ligneinput++"
 nbligneparam=$(wc -l < $ficRef)
 HorizT='├'
 ELine='└'
@@ -242,12 +243,11 @@ esac
 ## Retrieve generation params based on info from the config file: form_gen.conf
 #################################################################
 nbAlgo=$(($(readlineval $ficConf 2) ))
-nbAlgoHyperparamVal=$(($(readlineval $ficConf 3) ))
-nbDataset=$(($(readlineval $ficConf 4) ))
-nbDatasetShape=$(($(readlineval $ficConf 5) ))
-datasetInferenceProperties=$(($(readlineval $ficConf 6) ))
-nbMeasures=$(($(readlineval $ficConf 7) ))
-infraComponents=$(($(readlineval $ficConf 8) ))
+nbDataset=$(($(readlineval $ficConf 3) ))
+nbDatasetShape=$(($(readlineval $ficConf 4) ))
+datasetInferenceProperties=$(($(readlineval $ficConf 5) ))
+nbMeasures=$(($(readlineval $ficConf 6) ))
+infraComponents=$(($(readlineval $ficConf 7) ))
 
 #################################################################
 ## Declaration in the form file of the params used to generate this form
@@ -255,7 +255,6 @@ infraComponents=$(($(readlineval $ficConf 8) ))
 #################################################################
 echo "[Config]  # DO NOT MODIFY"
 echo " ├nbAlgo=$nbAlgo                                              #Number of Algorithm object occurrences in the form"
-echo " ├nbAlgoHyperparamVal=$nbAlgoHyperparamVal                    #Number of Hyperparameter Value object occurrences per Algorithm in the form"
 echo " ├nbDataset=$nbDataset                                        #Number of Dataset object occurrences in the form"
 echo " ├nbDatasetShape=$nbDatasetShape                              #Number of Shape object occurrences per Dataset in the form"
 echo " ├datasetInferenceProperties=$datasetInferenceProperties      #Number of InferenceProperties object occurrences per Dataset in the form"
@@ -417,7 +416,6 @@ do
 
             #Here, to allow generating a number of occurrences of certain objects, we capture the position in the array of the object start
             if [[ $strName == "algorithms End" ]]; then nbIter=$nbAlgo ; fi
-            if [[ $strName == "values End" ]]; then nbIter=$nbAlgoHyperparamVal ; fi
             if [[ $strName == "shape End" ]]; then nbIter=$nbDatasetShape ; fi
             if [[ $strName == "inferenceProperties End" ]]; then nbIter=$datasetInferenceProperties ; fi
             if [[ $strName == "components End" ]]; then nbIter=$infraComponents ; fi

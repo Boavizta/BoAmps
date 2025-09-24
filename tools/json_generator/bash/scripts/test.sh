@@ -10,14 +10,14 @@
 #########################################
 # Test for gen_form.sh
 #########################################
-./gen_form.sh -a ./../data/conf/boamps_auto_prefill_codecarbon.csv ./../data/conf/config_nb_fields_boamps.conf ./../data/input/codecarbon_file.csv 2 > ./../data/output/form_prefilled.txt
-
+./scripts/gen_form.sh -a ./data/conf/boamps_auto_prefill_codecarbon.csv ./data/conf/config_nb_fields_boamps.conf ./data/input/codecarbon_file.csv 2 > data/output/form_prefilled.txt
 #########################################
 # Test for form2json.sh
 #########################################
-./form2json.sh -a ./../data/conf/boamps_auto_prefill_codecarbon.csv ./../data/output/form_prefilled.txt > ./../data/output/boamps_report.json
+./scripts/form2json.sh -a ./data/conf/boamps_auto_prefill_codecarbon.csv ./data/output/form_prefilled.txt > ./data/output/boamps_report.json
 
 #########################################
 # Validate schema knowing that errors are expected but not inside code carbon datas
 #########################################
-python3 ../../../schema_validator/validate-schema.py ../data/ouput/boamps_report.json
+cd ..\..\schema_validator\ 
+python ./validate-schema.py ..\json_generator\bash\data\output\boamps_report.json

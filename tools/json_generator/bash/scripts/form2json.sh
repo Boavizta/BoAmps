@@ -101,7 +101,7 @@ nbligneparam=$(wc -l < $ficRef)
 nbtab=0
 nbtable=0
 nbentry=1
-idreadline=10
+idreadline=9
 refline=2
 indent=0
 endline=""
@@ -140,12 +140,11 @@ esac
 ## Retrieve generation params based on info from the form file to convert
 ##########################################
 nbAlgo=$(readlineval $ficForm 2)
-nbAlgoHyperparamVal=$(readlineval $ficForm 3)
-nbDataset=$(readlineval $ficForm 4)
-nbDatasetShape=$(readlineval $ficForm 5)
-datasetInferenceProperties=$(readlineval $ficForm 6)
-nbMeasures=$(readlineval $ficForm 7)
-infraComponents=$(readlineval $ficForm 8)
+nbDataset=$(readlineval $ficForm 3)
+nbDatasetShape=$(readlineval $ficForm 4)
+datasetInferenceProperties=$(readlineval $ficForm 5)
+nbMeasures=$(readlineval $ficForm 6)
+infraComponents=$(readlineval $ficForm 7)
 
 ##########################################
 ## Writing the start of the json file
@@ -306,7 +305,6 @@ do
             tableList=(${tableList[@]:0:$nbtable} ${tableList[@]:$(($nbtable + 1))})
 
             if [[ $strName == "algorithms End" ]]; then nbIter=$nbAlgo ; fi
-            if [[ $strName == "values End" ]]; then nbIter=$nbAlgoHyperparamVal ; fi
             if [[ $strName == "shape End" ]]; then nbIter=$nbDatasetShape ; fi
             if [[ $strName == "inferenceProperties End" ]]; then nbIter=$datasetInferenceProperties ; fi
             if [[ $strName == "components End" ]]; then nbIter=$infraComponents ; fi

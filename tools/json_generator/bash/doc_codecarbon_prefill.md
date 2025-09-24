@@ -2,9 +2,7 @@
 
 ## Information
 
-`example-carbon.py` trains a regression model and saves Carbon data in a BoAmps compatible csv using the [https://github.com/lukalafaye/BoAmps_Carbon](https://github.com/lukalafaye/BoAmps_Carbon) package.
-It will outputs a csv file containing these fields:
-
+CodeCarbon outputs a csv file containing these fields:
 ```
 run_id: 5b0fa12a-3dd7-45bb-9766-cc326314d9f1
 timestamp: 2025-01-16 10:25:02
@@ -115,35 +113,7 @@ The table will be soon be updated with paths to variables in the report.txt gene
 31. **`pue`**: Extracted from the tracker using `get_field_or_none(tracker, "_pue")`.
 33. **`kWh`**: Hardcoded as "kWh" (unit of energy measurement).
 
----
-
-## Run python example
-
-### Prerequisities
-
-Install the required Python packages using `pip`:
-
-```bash
-pip install requirements.txt
-git clone https://github.com/lukalafaye/BoAmps_Carbon
-cd BoAmps_Carbon
-pip install .
-```
-
-Run python script:
-```py
-python example-carbon.py
-```
-
----
-
-### Operating System Dependencies
-
-- **Linux**: No additional dependencies required.
-- **Windows**: The `wmi` library requires the `pywin32` package, which is installed automatically with `wmi`.
-- **macOS**: No additional dependencies required.
-
----
+-----
 
 ## Remarks
 
