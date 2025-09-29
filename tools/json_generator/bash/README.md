@@ -6,6 +6,10 @@ Convert your energy consumption data to the BoAmps format with this conversion t
 
 This tool converts energy consumption data from various formats (e.g., CodeCarbon CSV) to the standardized BoAmps JSON format. While the core scripts are format-agnostic, the provided configuration files are specifically designed for CodeCarbon CSV output. For other formats, you'll need to customize the configuration files.
 
+If you want to discover the BoAmps model or create your first report from scratch, I recommend that you use this tool instead, as it is easier to learn : https://huggingface.co/spaces/boavizta/BoAmps_report_creation.
+
+Once you know the datamodel and you collected energy consumption data on a larger scale, you can use this tool to generate BoAmps reports in an industrialized manner.
+
 ### Two-Step Conversion Process
 
 1. **Form Generation**: Creates a human-readable text form pre-filled with your data
@@ -24,7 +28,7 @@ This tool converts energy consumption data from various formats (e.g., CodeCarbo
 The `gen_form.sh` script creates a text form with the appropriate BoAmps fields, automatically populated with your input data.
 
 1. Insert your own input data (e.g Codecarbon CSV file)
-2. Customize the config_file (boamps_auto_prefill_codecarbon.csv) if necessary (if you're input data is not at the codecarbon report format)
+2. Customize the config_file (boamps_auto_prefill_codecarbon.csv). Necessary if you're input data is not at the codecarbon report format or if you have a more comprehensive file with additional information you want to use (such as information about the algorithm or the amount of data used). As an example, we give you the file `boamps_auto_prefill_codecarbon_customized.csv` which is completed (in the CMD column) to use more fields as there is more columns in the `codecarbon_suppl_info.csv` than in the classical codecarbon generated file.
 3. Customize the fields_config (to detail how many algorithms, data, measure etc you want to describe in your report)
 4. Run the script :
    
@@ -46,6 +50,8 @@ The `gen_form.sh` script creates a text form with the appropriate BoAmps fields,
 - <output_form>: Output form file
 
 ⏱️ **Processing time**: May take a few minutes
+
+If you want to process a whole codecarbon file with many lines, you need to run the command one time for each line and change the <line_number>.
 
 ### Step 2: Convert Form to JSON
 
