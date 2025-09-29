@@ -29,6 +29,7 @@ The `gen_form.sh` script creates a text form with the appropriate BoAmps fields,
 
 1. Insert your own input data (e.g Codecarbon CSV file)
 2. Customize the config_file (boamps_auto_prefill_codecarbon.csv). Necessary if you're input data is not at the codecarbon report format or if you have a more comprehensive file with additional information you want to use (such as information about the algorithm or the amount of data used). As an example, we give you the file `boamps_auto_prefill_codecarbon_customized.csv` which is completed (in the CMD column) to use more fields as there is more columns in the `codecarbon_suppl_info.csv` than in the classical codecarbon generated file.
+WARNING: Don't use empty column names
 3. Customize the fields_config (to detail how many algorithms, data, measure etc you want to describe in your report)
 4. Run the script :
    

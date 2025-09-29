@@ -39,7 +39,7 @@ ID;Context;Category;Name;SubObjects;Type;Mandatory;Auto;CMD;EnumValues;DefaultVa
 38;task;data;dataType;;Enum;TRUE;;#token:#token;tabular,audio,boolean,image,video,object,text,$other;;dataType;The Nature Of The Data Used,,,,,,,,
 39;task;data;dataFormat;;Enum;FALSE;;no;;;dataFormat;If The Data Is Passed In The Form Of A File,What Format Is The Data In?,,,,,,,,
 40;task;data;dataSize;;Float;FALSE;;no;;;dataSize;The Size Of The Dataset (In Go),If Small Quantity Just Fill The Field Nbitems,,,,,,,,
-41;task;data;dataQuantity;;Float;FALSE;;prompt_token_number,result_number_token;;;dataQuantity;The Number Of Data In The Dataset,E.G. 3 (Images,Audio Or Tokens),,,,,,,
+41;task;data;dataQuantity;;Float;FALSE;;prompt_token_number:result_number_token;;;dataQuantity;The Number Of Data In The Dataset,E.G. 3 (Images,Audio Or Tokens),,,,,,,
 42;task;data;shape;;String;FALSE;;no;;;shape;The Shape Of Your Dataset,Can Be Found With X.Shape With Dataframes,E.G. (12,1000) For A 2D Table With 12 Columns And 1000 Rows,,,,,,
 43;task;data;source;;String;FALSE;;no;public,private,$other;;source;The Kind Of Source Of The Dataset,,,,,,,
 44;task;data;sourceUri;;String;FALSE;;no;;;sourceUri;The Uri Of The Dataset If Available,,,,,,,,,
