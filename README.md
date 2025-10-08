@@ -37,11 +37,11 @@ You should find here all the information that you want/need to :
     - [On ML description frameworks](#on-ml-description-frameworks)
   - [7. The tools](#7-the-tools)
     - [Schema validator](#schema-validator)
-    - [Json Generator :](#json-generator-)
+    - [Json Generator](#json-generator-)
   - [8. Roadmaps :](#8-roadmaps-)
     - [For the datamodel](#for-the-datamodel)
     - [For the open Data Space](#for-the-open-data-space)
-    - [For the datamodel tools :](#for-the-datamodel-tools-)
+    - [For the datamodel tools](#for-the-datamodel-tools-)
   - [Let's GO](#lets-go)
 
 ## 0. Version
@@ -55,7 +55,8 @@ As release in main branch, you will find :
 
 We have two main goals : 
 - First one is to standardize the way of reporting energy consumption of ML/AI models by creating a datamodel in json. (This Repo)
-- Second one is to build a large, open, database of energy consumption of IT / AI tasks depending on data nature, algorithms, hardware, etc., in order to improve energy efficiency approaches based on empiric knowledge. Of course based on this datamodel (See our first test version on HuggingFace [HERE](https://huggingface.co/datasets/boavizta/BoAmps_data))
+- Second one is to build a large, open, database of energy consumption of IT / AI tasks depending on data nature, algorithms, hardware, etc., in order to improve energy efficiency approaches based on empiric knowledge. Of course based on this datamodel (See our first test version on HuggingFace [HERE](https://huggingface.co/datasets/boavizta/open_data_boamps))
+- To create these reports, we have built 2 tools : a simplified tool for people discovering the project or wanting to create only few boamps report manually (available [here on HuggingFace](https://huggingface.co/spaces/boavizta/BoAmps_report_creation) & a more advanced tool to convert bigger amount of datat collected (coming from automatic benchmarks for example) into files having the boamps format (available here in this repo in the folder /tools/json_generator/bash).
 
 Why ?  
 - Globally it is to setup a simple and resilient digital ecosystem, so as to gather homogeneous, well-formated measures of energy consumption from an atomic software task in general and Machine Learning / Deep Learning / AI / GenAI tasks in particular.
