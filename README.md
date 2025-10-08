@@ -7,7 +7,7 @@ Welcome to our README for Boamps !
 
 With few words Boamps is : 
 - A datamodel to report energy consumption of AI/ML models
-- A OpenData linked with it [HERE](https://huggingface.co/datasets/boavizta/BoAmps_data) to store that generated data (first temporary test repo)
+- A OpenData linked with it [HERE](https://huggingface.co/datasets/boavizta/open_data_boamps) to store that generated data (first temporary test repo)
 - Some tools to help fill the datamodel and validate it ( [HuggingFace tools](https://huggingface.co/spaces/boavizta/BoAmps_report_creation), 
 bash and excel tool)
   
