@@ -35,12 +35,12 @@ WARNING: Don't use empty column names
    
 **Usage:**
 ```bash
-./scripts/gen_form.sh -a <config_file> <fields_config> <input_data> <line_number> > <output_form>
+./gen_form.sh -a <config_file> <fields_config> <input_data> <line_number> > <output_form>
 ```
 
 **Example:**
 ```bash
-./scripts/gen_form.sh -a ./data/conf/boamps_auto_prefill_codecarbon.csv ./data/conf/config_nb_fields_boamps.conf ./data/input/codecarbon_file.csv 1 > ./data/output/form_prefilled.txt
+./gen_form.sh -a ./data/conf/boamps_auto_prefill_codecarbon.csv ./data/conf/config_nb_fields_boamps.conf ./data/input/codecarbon_file.csv 1 > ./data/output/form_prefilled.txt
 ```
 
 **Parameters:**
@@ -60,12 +60,12 @@ After reviewing and completing the generated form, use `form2json.sh` to create 
 
 **Usage:**
 ```bash
-./scripts/form2json.sh -a <config_file> <completed_form> > <output_json>
+./form2json.sh -a <config_file> <completed_form> > <output_json>
 ```
 
 **Example:**
 ```bash
-./scripts/form2json.sh -a ./data/conf/boamps_auto_prefill_codecarbon.csv ./data/output/form_prefilled.txt > ./data/output/boamps_report.json
+./form2json.sh -a ./data/conf/boamps_auto_prefill_codecarbon.csv ./data/output/form_prefilled.txt > ./data/output/boamps_report.json
 ```
 You may have to wait few minutes to have the full form generated.
 
@@ -111,6 +111,12 @@ This configuration file maps your input data fields to BoAmps schema fields. The
 | `#val1:col2:#val3` | Mixed list (static + dynamic) | `#PyTorch:model_name:#Classification` |
 | `no` | Skip field | `no` |
 
+**Included Example:**
+```bash
+./gen_form.sh -a ./data/conf/boamps_auto_prefill_codecarbon_customized.csv ./data/conf/config_nb_fields_boamps.conf ./data/input/codecarbon_suppl_info.csv 1 > ./data/output/form_prefilled.txt
+```
+
+
 ### Customizing Form Structure (`config_nb_fields_boamps.conf`)
 
 Configure the number of sections in your form:
@@ -142,12 +148,17 @@ chmod +x scripts/*.sh
 ## 📝 Version History
 
 ### gen_form.sh
-- **v0.81**: Fixed handling of strings with spaces in `cmd` column with `#` option
-
+- **v0.X**: 
+  - Fixed handling of strings with spaces in `cmd` column with `#` option
+  - Fixed taking two different type of input file one with ; and , as separator => now all the file have , separators
+  - Fixed errors when cmd target was last collumn name 
+  - ...
+  
 ### form2json.sh  
-- **v0.87**: 
+- **v0.X**: 
   - Improved string handling with spaces (preserves internal spaces, trims edges only)
   - Fixed JSON formatting to avoid trailing commas when quality field is null
+  - ...
 
 
 ## 📚 Additional Resources

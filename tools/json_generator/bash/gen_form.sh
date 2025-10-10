@@ -3,8 +3,8 @@
 ##########################################
 # Script for generating a text form for the Boamps data model
 # Author : dfovet
-# Version : 0.81
-# Date : 20250717
+# Version : 1.0
+# Date : 20251010
 #########################################
 
 ##########################################
@@ -19,8 +19,8 @@ echo "Purpose of the script: Generate a form for the ai power measurement data m
 echo ""
 echo "Command structure: "
 echo "./gen_form_en.sh <Generation Type> <Reference CSV> <Parameter File> <Input File Name> <Input File Line Number to Integrate>"
-echo "example1 : ./gen_form.sh -a boamps_auto_prefill_codecarbon.csv CodeCarbonCSV.conf > report1.txt"
-echo "example2 : ./gen_form.sh -a boamps_auto_prefill_codecarbon.csv CodeCarbonCSV.conf emissions.csv 2 > report-codecarbon-prefill.txt"
+echo "example1 : ./gen_form.sh -a data/conf/boamps_auto_prefill_codecarbon.csv data/conf/config_nb_fields_boamps.conf > report1.txt"
+echo "example2 : ./gen_form.sh -a data/conf/boamps_auto_prefill_codecarbon.csv data/conf/config_nb_fields_boamps.conf data/input/codecarbon_file.csv 2 > report-codecarbon-prefill.txt"
 echo "<Generation Type>"
 echo " -a for ALL generates a form including mandatory and optional fields"
 echo "<Reference CSV>"
@@ -53,27 +53,13 @@ echo "$LOGTIMETAG--$1"
 }
 
 ##########################################
-# Read from a file table separated by ;
-#########################################
-readtab()
-{
-    i=$2
-    j=$3
-    RES=""
-    RES=$(sed -n ''$j','$j' p' $1 | awk -v idx=$i -F';' '{print $idx}')
-    echo "$RES"
-}
-
-##########################################
 # Read from a file table separated by ,
 #########################################
-readtab2()
-{
-    i=$2
-    j=$3
-    RES=""
-    RES=$(sed -n ''$j','$j' p' $1 | awk -v idx=$i -F',' '{print $idx}')
-    echo "$RES"
+readtab() {
+  local csvfile="$1"
+  local col="$2"
+  local row="$3"
+  awk -F',' "NR==$row {gsub(/[\r\n]+/,\"\"); for(i=1;i<=NF;i++) gsub(/^ +| +$/, \"\", \$i); print \$${col}}" "$csvfile"
 }
 
 ##########################################
@@ -164,7 +150,7 @@ gettabcolval()
         csvhead=$(sed -n ''1','1' p' $csvfile)
         for (( i=1; i<${#csvhead}; i++))
         do
-        val=$(readtab2 $csvfile $i 1)
+        val=$(readtab $csvfile $i 1)
           if [[ $val == "" ]]
           then
             i=${#csvhead}
@@ -176,7 +162,7 @@ gettabcolval()
         done
         if [[ $j -ne 0 ]]
         then
-          val=$(readtab2 $csvfile $j $rowc)
+          val=$(readtab $csvfile $j $rowc)
           echo $val
         fi
       fi
@@ -229,9 +215,6 @@ fi
 case $1 in
  "-a")
   mode="A"
-  ;;
- "-m")
-  mode="M"
   ;;
  *)
   echo "BAD Argument : $1"
