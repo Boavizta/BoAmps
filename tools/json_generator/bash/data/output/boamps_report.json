@@ -1,0 +1,91 @@
+{
+	"header": {
+		"licensing":"Creative Commons 4.0",
+		"formatVersion":"0.1",
+		"reportId":"fe49c3d9-624a-4061-911d-1526893f1892",
+		"reportDatetime":"2024-09-26T10:46:51",
+		"reportStatus":"draft",
+		"publisher": {
+			"name":"sopra steria",
+			"confidentialityLevel":"public"
+			}
+		},
+	"task": {
+		"taskFamily":"chatbot",
+		"taskStage":"inference",
+		"nbRequest":1,
+		"algorithms": [
+			{
+			"algorithmType":"llm",
+			"foundationModelName":"llama2-13b",
+			"foundationModelUri":"https://huggingface.co/meta-llama/Llama-2-13b-hf",
+			"parametersNumber":13,
+			"quantization":"q16"
+			}
+		],
+		"dataset": [
+			{
+			"dataUsage":"input",
+			"dataType":"token",
+			"dataQuantity":8
+			},
+			{
+			"dataUsage":"output",
+			"dataType":"token",
+			"dataQuantity":150
+			}
+		],
+		"estimatedAccuracy":"veryGood"
+		},
+	"measures": [
+		{
+		"measurementMethod":"codecarbon",
+		"version":"2.5.0",
+		"cpuTrackingMode":"machine",
+		"gpuTrackingMode":"machine",
+		"powerConsumption":0.0004784439185735,
+		"measurementDuration":3.508045196533203
+		}
+	],
+	"system": {
+		"os":"Linux-5.15.0-116-generic-x86_64-with-glibc2.35"
+		},
+	"software": {
+		"language":"python",
+		"version":"3.10.12"
+		},
+	"infrastructure": {
+		"infraType":"publicCloud",
+		"cloudProvider":"ovh",
+		"components": [
+			{
+			"componentName":"Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz",
+			"componentType":"cpu",
+			"nbComponent":30,
+			"manufacturer":"Intel",
+			"family":"Xeon",
+			"series":"Gold 6226R"
+			},
+			{
+			"componentName":"2 x Tesla V100S-PCIE-32GB",
+			"componentType":"gpu",
+			"nbComponent":2,
+			"memorySize":32,
+			"manufacturer":"Tesla",
+			"family":"V100"
+			},
+			{
+			"componentName":"RAM",
+			"componentType":"ram",
+			"nbComponent":1,
+			"memorySize":86.3035888671875
+			}
+		]
+		},
+	"environment": {
+		"country":"France",
+		"latitude":48.8582,
+		"longitude":2.3387
+		},
+	"quality":"high"
+}

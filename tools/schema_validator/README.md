@@ -7,7 +7,7 @@ To use it, you need to have Python installed, as well as the modules described i
 
 Then, you just need to run : python validate-schema.py <json-report-name>
 
-For example :  python validate-schema.py ..\..\examples\energy-report-example-1.json
+For example :  python ./validate-schema.py ..\..\examples\energy-report-llm-inference.json
 
 
 

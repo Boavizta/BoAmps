@@ -3,8 +3,8 @@
 ##########################################
 # Script for generating a text form for the Boamps data model
 # Author : dfovet
-# Version : 0.81
-# Date : 20250717
+# Version : 1.0
+# Date : 20251010
 #########################################
 
 ##########################################
@@ -19,19 +19,20 @@ echo "Purpose of the script: Generate a form for the ai power measurement data m
 echo ""
 echo "Command structure: "
 echo "./gen_form_en.sh <Generation Type> <Reference CSV> <Parameter File> <Input File Name> <Input File Line Number to Integrate>"
-echo "example1 : ./gen_form.sh -a Ref_CodeCarbon.csv CodeCarbonCSV.conf > report1.txt"
-echo "example2 : ./gen_form.sh -a Ref_CodeCarbon.csv CodeCarbonCSV.conf emissions.csv 2 > report-codecarbon-prefill.txt"
+echo "example1 : ./gen_form.sh -a data/conf/boamps_auto_prefill_codecarbon.csv data/conf/config_nb_fields_boamps.conf > report1.txt"
+echo "example2 : ./gen_form.sh -a data/conf/boamps_auto_prefill_codecarbon.csv data/conf/config_nb_fields_boamps.conf data/input/codecarbon_file.csv 2 > report-codecarbon-prefill.txt"
 echo "<Generation Type>"
 echo " -a for ALL generates a form including mandatory and optional fields"
 echo "<Reference CSV>"
 echo "Descriptive file of the data model including or not the references to fill the form from a CSV"
-echo "Example: Ref_CodeCarbon.csv To pre-fill the form from a CodeCarbon csv"
+echo "Example: boamps_auto_prefill_codecarbon.csv To pre-fill the form from a CodeCarbon csv"
 echo "<Parameter File>"
 echo "File allowing to modulate the number of sections in the form"
+echo "Example: config_nb_fields_boamps.conf to pre fill the form with the right number of tables to describe an inference"
 echo "<Input File Name>"
-echo "Input file in csv format containing the results of Green AI Initiative tests"
+echo "Input file in csv format containing the results of your power measurements"
 echo "<Input File Line Number to Integrate>"
-echo "The line number containing the result to convert to boamps format"
+echo "The line number containing the result to convert to boamps format, the header is the line 0 so you need to write 1 to have the first line of data"
 }
 
 ##########################################
@@ -52,27 +53,13 @@ echo "$LOGTIMETAG--$1"
 }
 
 ##########################################
-# Read from a file table separated by ;
-#########################################
-readtab()
-{
-    i=$2
-    j=$3
-    RES=""
-    RES=$(sed -n ''$j','$j' p' $1 | awk -v idx=$i -F';' '{print $idx}')
-    echo "$RES"
-}
-
-##########################################
 # Read from a file table separated by ,
 #########################################
-readtab2()
-{
-    i=$2
-    j=$3
-    RES=""
-    RES=$(sed -n ''$j','$j' p' $1 | awk -v idx=$i -F',' '{print $idx}')
-    echo "$RES"
+readtab() {
+  local csvfile="$1"
+  local col="$2"
+  local row="$3"
+  awk -F',' "NR==$row {gsub(/[\r\n]+/,\"\"); for(i=1;i<=NF;i++) gsub(/^ +| +$/, \"\", \$i); print \$${col}}" "$csvfile"
 }
 
 ##########################################
@@ -163,7 +150,7 @@ gettabcolval()
         csvhead=$(sed -n ''1','1' p' $csvfile)
         for (( i=1; i<${#csvhead}; i++))
         do
-        val=$(readtab2 $csvfile $i 1)
+        val=$(readtab $csvfile $i 1)
           if [[ $val == "" ]]
           then
             i=${#csvhead}
@@ -175,7 +162,7 @@ gettabcolval()
         done
         if [[ $j -ne 0 ]]
         then
-          val=$(readtab2 $csvfile $j $rowc)
+          val=$(readtab $csvfile $j $rowc)
           echo $val
         fi
       fi
@@ -198,6 +185,7 @@ ficRef=$2
 ficConf=$3
 inputcsv=$4
 ligneinput=$5
+let "ligneinput++"
 nbligneparam=$(wc -l < $ficRef)
 HorizT='├'
 ELine='└'
@@ -228,9 +216,6 @@ case $1 in
  "-a")
   mode="A"
   ;;
- "-m")
-  mode="M"
-  ;;
  *)
   echo "BAD Argument : $1"
         usage
@@ -241,12 +226,11 @@ esac
 ## Retrieve generation params based on info from the config file: form_gen.conf
 #################################################################
 nbAlgo=$(($(readlineval $ficConf 2) ))
-nbAlgoHyperparamVal=$(($(readlineval $ficConf 3) ))
-nbDataset=$(($(readlineval $ficConf 4) ))
-nbDatasetShape=$(($(readlineval $ficConf 5) ))
-datasetInferenceProperties=$(($(readlineval $ficConf 6) ))
-nbMeasures=$(($(readlineval $ficConf 7) ))
-infraComponents=$(($(readlineval $ficConf 8) ))
+nbDataset=$(($(readlineval $ficConf 3) ))
+nbDatasetShape=$(($(readlineval $ficConf 4) ))
+datasetInferenceProperties=$(($(readlineval $ficConf 5) ))
+nbMeasures=$(($(readlineval $ficConf 6) ))
+infraComponents=$(($(readlineval $ficConf 7) ))
 
 #################################################################
 ## Declaration in the form file of the params used to generate this form
@@ -254,7 +238,6 @@ infraComponents=$(($(readlineval $ficConf 8) ))
 #################################################################
 echo "[Config]  # DO NOT MODIFY"
 echo " ├nbAlgo=$nbAlgo                                              #Number of Algorithm object occurrences in the form"
-echo " ├nbAlgoHyperparamVal=$nbAlgoHyperparamVal                    #Number of Hyperparameter Value object occurrences per Algorithm in the form"
 echo " ├nbDataset=$nbDataset                                        #Number of Dataset object occurrences in the form"
 echo " ├nbDatasetShape=$nbDatasetShape                              #Number of Shape object occurrences per Dataset in the form"
 echo " ├datasetInferenceProperties=$datasetInferenceProperties      #Number of InferenceProperties object occurrences per Dataset in the form"
@@ -416,7 +399,6 @@ do
 
             #Here, to allow generating a number of occurrences of certain objects, we capture the position in the array of the object start
             if [[ $strName == "algorithms End" ]]; then nbIter=$nbAlgo ; fi
-            if [[ $strName == "values End" ]]; then nbIter=$nbAlgoHyperparamVal ; fi
             if [[ $strName == "shape End" ]]; then nbIter=$nbDatasetShape ; fi
             if [[ $strName == "inferenceProperties End" ]]; then nbIter=$datasetInferenceProperties ; fi
             if [[ $strName == "components End" ]]; then nbIter=$infraComponents ; fi
