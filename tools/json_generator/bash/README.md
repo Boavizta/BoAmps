@@ -6,6 +6,8 @@ Convert your energy consumption data to the BoAmps format with this conversion t
 
 This tool converts energy consumption data from various formats (e.g., CodeCarbon CSV) to the standardized BoAmps JSON format. While the core scripts are format-agnostic, the provided configuration files are specifically designed for CodeCarbon CSV output. For other formats, you'll need to customize the configuration files.
 
+🎬 To easily learn how to use the tool, watch [this explanatory video](https://www.youtube.com/watch?v=k1H_wLmXPa8) !!
+
 If you want to discover the BoAmps model or create your first report from scratch, I recommend that you use this tool instead, as it is easier to learn : https://huggingface.co/spaces/boavizta/BoAmps_report_creation.
 
 Once you know the datamodel and you collected energy consumption data on a larger scale, you can use this tool to generate BoAmps reports in an industrialized manner.
