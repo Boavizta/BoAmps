@@ -10,6 +10,8 @@ If you want to discover the BoAmps model or create your first report from scratc
 
 Once you know the datamodel and you collected energy consumption data on a larger scale, you can use this tool to generate BoAmps reports in an industrialized manner.
 
+🎬 To easily learn how to use the tool, watch [this explanatory video](https://www.youtube.com/watch?v=k1H_wLmXPa8) !!
+
 ### Two-Step Conversion Process
 
 1. **Form Generation**: Creates a human-readable text form pre-filled with your data
