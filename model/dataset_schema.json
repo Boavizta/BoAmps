@@ -8,7 +8,7 @@
       "dataUsage":{
         "type": "string",
         "enum": [ "input", "output"],
-        "description": "the use of the dataset: is it used as model input or output ?"
+        "description": "the use of the dataset: is it used as model input or output?"
       },
       "dataType":{
         "type": "string",

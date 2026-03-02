@@ -3,9 +3,9 @@ https://creativecommons.org/licenses/by/4.0/
 
 # Reporting of the AI's energy consumption
 
-Welcome to our README for Boamps !
+Welcome to our README for BoAmps!
 
-With few words Boamps is : 
+With few words BoAmps is : 
 - A datamodel to report energy consumption of AI/ML models
 - An open data repository linked with it [HERE](https://huggingface.co/datasets/boavizta/open_data_boamps) to store that generated data
 - Some tools to help understand the datamodel and fill it manually for the first time ([HuggingFace tools](https://huggingface.co/spaces/boavizta/BoAmps_report_creation) or a bash tool that is much more automated for generating reports in larger quantities)
@@ -57,13 +57,13 @@ We have two main goals :
 - Second one is to build a large, open, database of energy consumption of IT / AI tasks depending on data nature, algorithms, hardware, etc., in order to improve energy efficiency approaches based on empiric knowledge. Of course based on this datamodel (See the repository on HuggingFace [HERE](https://huggingface.co/datasets/boavizta/open_data_boamps))
 - To create these reports, we have built 2 tools : a simplified tool for people discovering the project or wanting to create only few boamps report manually (available [here on HuggingFace](https://huggingface.co/spaces/boavizta/BoAmps_report_creation)) & a more advanced tool to convert bigger amount of data collected (coming from automatic benchmarks for example) into files having the boamps format (available here in this repo in the folder /tools/json_generator/bash).
 
-Why ?  
+Why?  
 - Globally it is to setup a simple and resilient digital ecosystem, so as to gather homogeneous, well-formated measures of energy consumption from an atomic software task in general and Machine Learning / Deep Learning / AI / GenAI tasks in particular.
 - More concretely, this knowledge may be used in applied research to improve frugal approaches in AI and avoid energy-intensive tasks, know more about ML/AI models consumption...
 
 So to unsure that this base is solid and useful, please read carefully the documentation so that everyone can take comparable measurements.
 
-## 2. Who could participate ? 
+## 2. Who could participate? 
 
 Anyone who runs machine learning models of any kind can use the model and contribute to the dataset. 
 You just need to set up a measurement tool to be able to measure the energy consumption of your machine learning algorithms.
@@ -84,7 +84,7 @@ It is assumed that the measurement of an atomic task can be achieved by one or s
 ### Hardware-based 
 - Direct physical measure with a Watt-meter.
 
-## 4. How and What is to measure ?
+## 4. How and What is to measure?
 
 ### Simple system 
 
@@ -160,14 +160,14 @@ These could typically inspire the ground for a format of reporting.
 
 Three main tools are available:
 
-1. **JSON Generator Tools**: These tools automate the creation of reports in the Boamps JSON format. They can generate JSON files using CSV data produced by CodeCarbon or any other CSV file, provided you customize the configuration file accordingly.
+1. **JSON Generator Tools**: These tools automate the creation of reports in the BoAmps JSON format. They can generate JSON files using CSV data produced by CodeCarbon or any other CSV file, provided you customize the configuration file accordingly.
 
 2. **Schema Validator**: The script ensures that your report adheres to the correct format. If the report contains errors, the script provides detailed feedback to help you correct them easily.
 
 3. **JSON-to-CSV Converter**: This basic tool flattens JSON data into CSV format, facilitating integration with data lakes and enabling quick visualizations. Note that this tool is a work in progress (WIP) and requires further refinement to better handle tables and support more efficient future visualisation dashboards.
 
 
-## 8. Roadmaps :
+## 8. Roadmaps
 
 ### For the datamodel 
 
@@ -177,7 +177,7 @@ Three main tools are available:
 
 ![Roadmap Datamod Tools](Resources/Roadmap_OpenData.png)
 
-### For the datamodel tools :
+### For the datamodel tools
 
 ![Roadmap Datamod Tools](Resources/Functional-Roadmap.png)
 
