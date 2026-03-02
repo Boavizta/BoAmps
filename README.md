@@ -7,12 +7,11 @@ Welcome to our README for Boamps !
 
 With few words Boamps is : 
 - A datamodel to report energy consumption of AI/ML models
-- A OpenData linked with it [HERE](https://huggingface.co/datasets/boavizta/open_data_boamps) to store that generated data (first temporary test repo)
-- Some tools to help fill the datamodel and validate it ( [HuggingFace tools](https://huggingface.co/spaces/boavizta/BoAmps_report_creation), 
-bash and excel tool)
+- An open data repository linked with it [HERE](https://huggingface.co/datasets/boavizta/open_data_boamps) to store that generated data
+- Some tools to help understand the datamodel and fill it manually for the first time ([HuggingFace tools](https://huggingface.co/spaces/boavizta/BoAmps_report_creation) or a bash tool that is much more automated for generating reports in larger quantities)
   
   
-You should find here all the information that you want/need to :
+Here you will find detailed information about the data model, the tools and how they work to integrate into the initiative:
 
 ## Table Of Content
 
@@ -20,11 +19,11 @@ You should find here all the information that you want/need to :
   - [Table Of Content](#table-of-content)
   - [0. Version](#0-version)
   - [1. Goals](#1-goals)
-  - [2. Who could participate ?](#2-who-could-participate-)
+  - [2. Who could participate?](#2-who-could-participate-)
   - [3. Energy Measurement](#3-energy-measurement)
     - [Software-based](#software-based)
     - [Hardware-based](#hardware-based)
-  - [4. How and What is to measure ?](#4-how-and-what-is-to-measure-)
+  - [4. How and what is to measure?](#4-how-and-what-is-to-measure-)
     - [Simple system](#simple-system)
     - [Complex system with API](#complex-system-with-api)
     - [The Calibration process](#the-calibration-process)
@@ -48,15 +47,15 @@ You should find here all the information that you want/need to :
 
 As release in main branch, you will find : 
  - The last version of the datamodel
- - Some tools that are not yep adpated to the last format of the datamodel (Work In progress) 
+ - Some tools to fill and validate the reports (according to the datamodel)
 
 
 ## 1. Goals
 
 We have two main goals : 
 - First one is to standardize the way of reporting energy consumption of ML/AI models by creating a datamodel in json. (This Repo)
-- Second one is to build a large, open, database of energy consumption of IT / AI tasks depending on data nature, algorithms, hardware, etc., in order to improve energy efficiency approaches based on empiric knowledge. Of course based on this datamodel (See our first test version on HuggingFace [HERE](https://huggingface.co/datasets/boavizta/open_data_boamps))
-- To create these reports, we have built 2 tools : a simplified tool for people discovering the project or wanting to create only few boamps report manually (available [here on HuggingFace](https://huggingface.co/spaces/boavizta/BoAmps_report_creation) & a more advanced tool to convert bigger amount of datat collected (coming from automatic benchmarks for example) into files having the boamps format (available here in this repo in the folder /tools/json_generator/bash).
+- Second one is to build a large, open, database of energy consumption of IT / AI tasks depending on data nature, algorithms, hardware, etc., in order to improve energy efficiency approaches based on empiric knowledge. Of course based on this datamodel (See the repository on HuggingFace [HERE](https://huggingface.co/datasets/boavizta/open_data_boamps))
+- To create these reports, we have built 2 tools : a simplified tool for people discovering the project or wanting to create only few boamps report manually (available [here on HuggingFace](https://huggingface.co/spaces/boavizta/BoAmps_report_creation)) & a more advanced tool to convert bigger amount of data collected (coming from automatic benchmarks for example) into files having the boamps format (available here in this repo in the folder /tools/json_generator/bash).
 
 Why ?  
 - Globally it is to setup a simple and resilient digital ecosystem, so as to gather homogeneous, well-formated measures of energy consumption from an atomic software task in general and Machine Learning / Deep Learning / AI / GenAI tasks in particular.
@@ -159,24 +158,13 @@ These could typically inspire the ground for a format of reporting.
 
 ## 7. The tools
 
-### Schema validator
+Three main tools are available:
 
-The validate-schema.py script (in the folder 'tools>schema_validator') allows you to validate that the json you have created correctly follows the schema we have defined (in the folder 'model').
+1. **JSON Generator Tools**: These tools automate the creation of reports in the Boamps JSON format. They can generate JSON files using CSV data produced by CodeCarbon or any other CSV file, provided you customize the configuration file accordingly.
 
-We provide you with few examples to understand how to create a report by following the schema correctly (in the folder '../../examples').
-The script validate-schema.py allows you to check that your report follows the format correctly, and if it doesn't, it details the errors so that you can easily correct them.
+2. **Schema Validator**: The script ensures that your report adheres to the correct format. If the report contains errors, the script provides detailed feedback to help you correct them easily.
 
-To use it, you need to have Python installed, as well as the modules described in the requirements.txt document.
-
-Then, you just need to run : python validate-schema.py <json-report-name>
-
-For example :  python validate-schema.py ..\..\examples\energy-report-example-1.json
-
-### Json Generator :
-
-To make the use of this data model easier and more efficient, we want to develop some tools that automates the report creation, to automate the conversion into format usable by datalakes and quick displays, as well as integrate them into codecarbon for a starter. This in multiple formats and languages like Excel with VBA, bash script and python.
-
-**We made some progress and you can find the bash tool in the folder 'tools>json_generator>small-automation>bash' that will help you to generate a json report from scratch or from a csv file generated by CodeCarbon.**
+3. **JSON-to-CSV Converter**: This basic tool flattens JSON data into CSV format, facilitating integration with data lakes and enabling quick visualizations. Note that this tool is a work in progress (WIP) and requires further refinement to better handle tables and support more efficient future visualisation dashboards.
 
 
 ## 8. Roadmaps :
