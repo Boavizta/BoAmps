@@ -2484,11 +2484,11 @@
       "locked": false,
       "fontSize": 20,
       "fontFamily": 1,
-      "text": "HuggingFace ?",
+      "text": "HuggingFace?",
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": "Bbl34EzwORnPDFyQdvz8t",
-      "originalText": "HuggingFace ?",
+      "originalText": "HuggingFace?",
       "lineHeight": 1.25,
       "baseline": 21
     },
