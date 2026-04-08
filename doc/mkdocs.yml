@@ -1,4 +1,5 @@
 site_name: BoAmps Documentation
+site_url: https://bamthomas.github.io/BoAmps/
 
 theme:
   name: material
