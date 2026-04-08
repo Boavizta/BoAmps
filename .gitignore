@@ -77,5 +77,4 @@ coverage.xml
 poetry.lock
 
 # MkDoc generated docs
-doc/docs
 doc/site
