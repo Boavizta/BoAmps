@@ -1,0 +1,39 @@
+site_name: BoAmps Documentation
+
+theme:
+  name: material
+
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - gen_pages.py
+  - json-schema:
+      json_schema: ../model/report_schema.json
+      markdown_tag: "{report_schema}"
+  - json-schema:
+      json_schema: ../model/hardware_schema.json
+      markdown_tag: "{hardware_schema}"
+  - json-schema:
+      json_schema: ../model/algorithm_schema.json
+      markdown_tag: "{algorithm_schema}"
+  - json-schema:
+      json_schema: ../model/dataset_schema.json
+      markdown_tag: "{dataset_schema}"
+  - json-schema:
+      json_schema: ../model/measure_schema.json
+      markdown_tag: "{measure_schema}"
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Model:
+    - Report: model/report.md
+    - Hardware: model/hardware.md
+    - Algorithm: model/algorithm.md
+    - Dataset: model/dataset.md
+    - Measure: model/measure.md
