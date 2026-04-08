@@ -13,7 +13,7 @@ mkdocs = "^1.5.0"
 mkdocs-material = "^9.0.0"
 mkdocs-gen-files = "*"
 mkdocs-macros-plugin = "*"
-mkdocsjsonschemaplugin = "*"
+mkdocsjsonschemaplugin = {git = "git@github.com:bamthomas/mkdocs-json-schema-plugin.git"}
 
 [build-system]
 requires = ["poetry-core"]
