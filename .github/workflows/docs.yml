@@ -25,9 +25,6 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install --no-root --with doc
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
       - name: Build with mkdocs
         working-directory: doc
         run: poetry run mkdocs build -d site
