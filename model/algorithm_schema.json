@@ -58,8 +58,9 @@
         "description" : "the algorithm used to optimize the models weights, e.g. gridSearch, lora, adam"
       },
       "quantization":{
-        "type":"string", 
+        "type":"string",
         "description": "the type of quantization used : fp32, fp16, b16, int8 ... "
       }
-    }
+    },
+    "required": []
   }

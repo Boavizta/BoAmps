@@ -72,3 +72,9 @@ coverage.xml
 *.iws
 *.ipr
 *.iml
+
+# Poetry
+poetry.lock
+
+# MkDoc generated docs
+doc/site
