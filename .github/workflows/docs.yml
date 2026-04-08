@@ -27,7 +27,7 @@ jobs:
         run: poetry install --no-root --with doc
       - name: Build with mkdocs
         working-directory: doc
-        run: poetry run mkdocs build -d site
+        run: mkdir -p docs && poetry run mkdocs build -d site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
