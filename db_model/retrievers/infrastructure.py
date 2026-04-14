@@ -2,9 +2,10 @@ from typing import Optional
 
 import pandas as pd
 
-from db_model.constants import (
-    COMPONENT_TYPE, INFRASTRUCTURE_PARQUET, MANUFACTURER, REPORT_ID,
-)
+from db_model.constants import COMPONENT_TYPE
+from db_model.constants import INFRASTRUCTURE_PARQUET
+from db_model.constants import MANUFACTURER
+from db_model.constants import REPORT_ID
 from db_model.retrievers.utils import fetch_from_parquet
 
 

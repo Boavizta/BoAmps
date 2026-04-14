@@ -1,8 +1,11 @@
 from typing import Optional
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field
+from sqlmodel import SQLModel
 
-from db_model.schema.enums import DataSource, DataType, DataUsage
+from db_model.schema.enums import DataSource
+from db_model.schema.enums import DataType
+from db_model.schema.enums import DataUsage
 
 
 class DatasetRow(SQLModel):

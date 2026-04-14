@@ -2,22 +2,21 @@ from datetime import datetime
 from typing import Optional
 
 from pydantic import field_validator
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field
+from sqlmodel import SQLModel
 
-from db_model.schema.enums import (
-    ConfidentialityLevel,
-    InfraType,
-    PowerSource,
-    PowerSupplierType,
-    Quality,
-    ReportStatus,
-)
+from db_model.schema.enums import ConfidentialityLevel
+from db_model.schema.enums import InfraType
+from db_model.schema.enums import PowerSource
+from db_model.schema.enums import PowerSupplierType
+from db_model.schema.enums import Quality
+from db_model.schema.enums import ReportStatus
 
 DATETIME_FORMATS = [
-    "%Y-%m-%dT%H:%M:%S.%f",
-    "%Y-%m-%dT%H:%M:%S",
-    "%Y-%m-%d %H:%M:%S",
-    "%Y-%m-%d",
+    '%Y-%m-%dT%H:%M:%S.%f',
+    '%Y-%m-%dT%H:%M:%S',
+    '%Y-%m-%d %H:%M:%S',
+    '%Y-%m-%d',
 ]
 
 
@@ -37,7 +36,7 @@ class ReportRow(SQLModel):
     format_version_specification_uri: Optional[str] = None
     report_datetime: Optional[datetime] = None
 
-    @field_validator("report_datetime", mode="before")
+    @field_validator('report_datetime', mode='before')
     @classmethod
     def coerce_datetime(cls, v):
         if v is None or isinstance(v, datetime):

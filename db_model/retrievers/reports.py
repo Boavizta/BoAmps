@@ -3,11 +3,17 @@ from typing import Optional
 import duckdb
 import pandas as pd
 
-from db_model.constants import (
-    CONFIDENTIALITY_LEVEL, DATASET_PARQUET, INFRASTRUCTURE_PARQUET,
-    INFRA_TYPE, MEASURE_PARQUET, PUBLISHER_NAME, QUALITY, REPORT_DATETIME,
-    REPORT_PARQUET, REPORT_STATUS, TASK_FAMILY, TASK_STAGE,
-)
+from db_model.constants import CONFIDENTIALITY_LEVEL
+from db_model.constants import DATASET_PARQUET
+from db_model.constants import INFRA_TYPE
+from db_model.constants import INFRASTRUCTURE_PARQUET
+from db_model.constants import MEASURE_PARQUET
+from db_model.constants import PUBLISHER_NAME
+from db_model.constants import QUALITY
+from db_model.constants import REPORT_PARQUET
+from db_model.constants import REPORT_STATUS
+from db_model.constants import TASK_FAMILY
+from db_model.constants import TASK_STAGE
 from db_model.retrievers.utils import fetch_from_parquet
 
 
@@ -74,5 +80,3 @@ def get_reports_cross_table() -> pd.DataFrame:
         GROUP BY r.report_id, task_label
     """
     return duckdb.execute(query).df()
-
-

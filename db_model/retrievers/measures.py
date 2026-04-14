@@ -2,7 +2,9 @@ from typing import Optional
 
 import pandas as pd
 
-from db_model.constants import MEASURE_PARQUET, MEASUREMENT_METHOD, REPORT_ID
+from db_model.constants import MEASURE_PARQUET
+from db_model.constants import MEASUREMENT_METHOD
+from db_model.constants import REPORT_ID
 from db_model.retrievers.utils import fetch_from_parquet
 
 

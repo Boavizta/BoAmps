@@ -2,9 +2,11 @@ from typing import Optional
 
 import pandas as pd
 
-from db_model.constants import (
-    DATA_TYPE, DATA_USAGE, DATASET_PARQUET, REPORT_ID, SOURCE,
-)
+from db_model.constants import DATA_TYPE
+from db_model.constants import DATA_USAGE
+from db_model.constants import DATASET_PARQUET
+from db_model.constants import REPORT_ID
+from db_model.constants import SOURCE
 from db_model.retrievers.utils import fetch_from_parquet
 
 

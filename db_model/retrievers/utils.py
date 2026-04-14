@@ -8,8 +8,8 @@ def fetch_from_parquet(parquet: Path, filters: dict) -> pd.DataFrame:
     """
     Build and execute a simple equality-filtered query on a Parquet file.
     """
-    clauses = " AND ".join(f"{k} = ?" for k in filters)
-    where = f" WHERE {clauses}" if clauses else ""
+    clauses = ' AND '.join(f"{k} = ?" for k in filters)
+    where = f" WHERE {clauses}" if clauses else ''
     query = f"SELECT * FROM read_parquet('{parquet}'){where}"
     return duckdb.execute(query, list(filters.values())).df()
 
@@ -30,4 +30,3 @@ def export_to_csv(getter, dest: Path, **filters) -> None:
     """
     df = getter(**filters)
     to_csv(df, dest)
-

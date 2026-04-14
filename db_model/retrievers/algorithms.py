@@ -2,10 +2,12 @@ from typing import Optional
 
 import pandas as pd
 
-from db_model.constants import (
-    ALGORITHM_PARQUET, ALGORITHM_TYPE, FOUNDATION_MODEL_NAME, FRAMEWORK,
-    QUANTIZATION, REPORT_ID,
-)
+from db_model.constants import ALGORITHM_PARQUET
+from db_model.constants import ALGORITHM_TYPE
+from db_model.constants import FOUNDATION_MODEL_NAME
+from db_model.constants import FRAMEWORK
+from db_model.constants import QUANTIZATION
+from db_model.constants import REPORT_ID
 from db_model.retrievers.utils import fetch_from_parquet
 
 
