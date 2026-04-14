@@ -72,3 +72,5 @@ coverage.xml
 *.iws
 *.ipr
 *.iml
+
+data
