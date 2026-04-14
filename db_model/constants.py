@@ -1,0 +1,113 @@
+from pathlib import Path
+
+PARQUET_DIR = Path(__file__).parent.parent / 'data'
+
+REPORT = 'report'
+MEASURE = 'measure'
+ALGORITHM = 'algorithm'
+DATASET = 'dataset'
+INFRASTRUCTURE = 'infrastructure'
+
+TABLES = [REPORT, MEASURE, ALGORITHM, DATASET, INFRASTRUCTURE]
+
+REPORT_PARQUET = PARQUET_DIR / f"{REPORT}.parquet"
+MEASURE_PARQUET = PARQUET_DIR / f"{MEASURE}.parquet"
+ALGORITHM_PARQUET = PARQUET_DIR / f"{ALGORITHM}.parquet"
+DATASET_PARQUET = PARQUET_DIR / f"{DATASET}.parquet"
+INFRASTRUCTURE_PARQUET = PARQUET_DIR / f"{INFRASTRUCTURE}.parquet"
+
+PARQUET_FILES = {
+    REPORT: REPORT_PARQUET,
+    MEASURE: MEASURE_PARQUET,
+    ALGORITHM: ALGORITHM_PARQUET,
+    DATASET: DATASET_PARQUET,
+    INFRASTRUCTURE: INFRASTRUCTURE_PARQUET,
+}
+
+REPORT_ID = 'report_id'
+LICENSING = 'licensing'
+FORMAT_VERSION = 'format_version'
+FORMAT_VERSION_SPECIFICATION_URI = 'format_version_specification_uri'
+REPORT_DATETIME = 'report_datetime'
+REPORT_STATUS = 'report_status'
+PUBLISHER_NAME = 'publisher_name'
+PUBLISHER_DIVISION = 'publisher_division'
+PUBLISHER_PROJECT_NAME = 'publisher_project_name'
+CONFIDENTIALITY_LEVEL = 'confidentiality_level'
+TASK_STAGE = 'task_stage'
+TASK_FAMILY = 'task_family'
+NB_REQUEST = 'nb_request'
+MEASURED_ACCURACY = 'measured_accuracy'
+ESTIMATED_ACCURACY = 'estimated_accuracy'
+TASK_DESCRIPTION = 'task_description'
+OS = 'os'
+DISTRIBUTION = 'distribution'
+DISTRIBUTION_VERSION = 'distribution_version'
+LANGUAGE = 'language'
+SOFTWARE_VERSION = 'software_version'
+INFRA_TYPE = 'infra_type'
+CLOUD_PROVIDER = 'cloud_provider'
+CLOUD_INSTANCE = 'cloud_instance'
+CLOUD_SERVICE = 'cloud_service'
+COUNTRY = 'country'
+LATITUDE = 'latitude'
+LONGITUDE = 'longitude'
+LOCATION = 'location'
+POWER_SUPPLIER_TYPE = 'power_supplier_type'
+POWER_SOURCE = 'power_source'
+POWER_SOURCE_CARBON_INTENSITY = 'power_source_carbon_intensity'
+QUALITY = 'quality'
+
+MEASUREMENT_METHOD = 'measurement_method'
+MANUFACTURER = 'manufacturer'
+VERSION = 'version'
+CPU_TRACKING_MODE = 'cpu_tracking_mode'
+GPU_TRACKING_MODE = 'gpu_tracking_mode'
+AVERAGE_UTILIZATION_CPU = 'average_utilization_cpu'
+AVERAGE_UTILIZATION_GPU = 'average_utilization_gpu'
+POWER_CALIBRATION_MEASUREMENT = 'power_calibration_measurement'
+DURATION_CALIBRATION_MEASUREMENT = 'duration_calibration_measurement'
+POWER_CONSUMPTION = 'power_consumption'
+MEASUREMENT_DURATION = 'measurement_duration'
+MEASUREMENT_DATETIME = 'measurement_datetime'
+
+TRAINING_TYPE = 'training_type'
+ALGORITHM_TYPE = 'algorithm_type'
+ALGORITHM_NAME = 'algorithm_name'
+ALGORITHM_URI = 'algorithm_uri'
+FOUNDATION_MODEL_NAME = 'foundation_model_name'
+FOUNDATION_MODEL_URI = 'foundation_model_uri'
+PARAMETERS_NUMBER = 'parameters_number'
+FRAMEWORK = 'framework'
+FRAMEWORK_VERSION = 'framework_version'
+CLASS_PATH = 'class_path'
+LAYERS_NUMBER = 'layers_number'
+EPOCHS_NUMBER = 'epochs_number'
+OPTIMIZER = 'optimizer'
+QUANTIZATION = 'quantization'
+
+DATA_USAGE = 'data_usage'
+DATA_TYPE = 'data_type'
+DATA_FORMAT = 'data_format'
+DATA_SIZE = 'data_size'
+DATA_QUANTITY = 'data_quantity'
+SHAPE = 'shape'
+SOURCE = 'source'
+SOURCE_URI = 'source_uri'
+OWNER = 'owner'
+DATASET_NAME = 'dataset_name'
+DATASET_DESCRIPTION = 'dataset_description'
+
+COMPONENT_NAME = 'component_name'
+COMPONENT_TYPE = 'component_type'
+NB_COMPONENT = 'nb_component'
+MEMORY_SIZE = 'memory_size'
+FAMILY = 'family'
+SERIES = 'series'
+SHARE = 'share'
+COMPONENT_DESCRIPTION = 'component_description'
+
+TASK_LABEL = 'task_label'
+TOTAL_DATA_QUANTITY = 'total_data_quantity'
+TOTAL_POWER_CONSUMPTION = 'total_power_consumption'
+TOTAL_GPU_MEMORY = 'total_gpu_memory'

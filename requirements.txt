@@ -1,0 +1,7 @@
+duckdb==1.4.3
+huggingface_hub>=0.20.0
+jsonschema==4.22.0
+pandas==2.3.1
+plotly>=5.0.0
+referencing==0.35.1
+sqlmodel==0.0.24
