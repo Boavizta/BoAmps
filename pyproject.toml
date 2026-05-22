@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "BoAmps"
+version = "0.0.1"
+description = "json ontology standard describing a power consumption measure in a given software/hardware context, noticeably in machine learning tasks. It also provides the tooling for conversion to tabular datasets. "
+authors = ["Boavizta <contact@boavizta.org>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.doc.dependencies]
+mkdocs = "^1.5.0"
+mkdocs-material = "^9.0.0"
+mkdocs-gen-files = "*"
+mkdocs-macros-plugin = "*"
+mkdocsjsonschemaplugin = {git = "https://github.com/bamthomas/mkdocs-json-schema-plugin.git"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
