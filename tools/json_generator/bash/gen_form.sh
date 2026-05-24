@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##########################################
-# Script for generating a text form for the Boamps data model
+# Script for generating a text form for the BoAmps data model
 # Author : dfovet
 # Version : 1.0
 # Date : 20251010
@@ -15,7 +15,7 @@ usage()
 echo "-----------------------------------------------------"
 echo "Wrong Usage WARNING"
 echo "-----------------------------------------------------"
-echo "Purpose of the script: Generate a form for the ai power measurement data model : Boamps"
+echo "Purpose of the script: Generate a form for the ai power measurement data model : BoAmps"
 echo ""
 echo "Command structure: "
 echo "./gen_form_en.sh <Generation Type> <Reference CSV> <Parameter File> <Input File Name> <Input File Line Number to Integrate>"
