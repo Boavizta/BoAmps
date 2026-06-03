@@ -1,0 +1,3 @@
+# Hardware
+
+{hardware_schema}
