@@ -2,6 +2,12 @@ This energy report format is published under Creative Commons 4.0.
 https://creativecommons.org/licenses/by/4.0/
 
 
+# Unreleased
+
+## Features
+
+- Publish documentation at <https://boavizta.github.io/BoAmps> (See PR: <https://github.com/Boavizta/BoAmps/pull/26>).
+
 # 1.1.0
 Date: 2025-03-19 
 ## Features 

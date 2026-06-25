@@ -74,3 +74,8 @@ coverage.xml
 *.iml
 
 data
+# Poetry
+poetry.lock
+
+# MkDoc generated docs
+doc/site
