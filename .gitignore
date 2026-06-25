@@ -33,7 +33,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-.idea/ 
+.idea/
 
 # Installer logs
 pip-log.txt
@@ -73,6 +73,7 @@ coverage.xml
 *.ipr
 *.iml
 
+data
 # Poetry
 poetry.lock
 
