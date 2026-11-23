@@ -1,5 +1,6 @@
 site_name: BoAmps Documentation
 site_url: https://boavizta.github.io/BoAmps/
+repo_url: https://github.com/Boavizta/BoAmps
 
 theme:
   name: material
