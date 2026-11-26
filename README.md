@@ -5,6 +5,8 @@ This energy report format is published under Creative Commons 4.0.
 
 Welcome to our README for BoAmps !
 
+**Want to contribute measurements?** Follow the [data contribution guide](CONTRIBUTE_DATA.md).
+
 With few words BoAmps is :
 
 - A data model to report energy consumption of AI/ML models
